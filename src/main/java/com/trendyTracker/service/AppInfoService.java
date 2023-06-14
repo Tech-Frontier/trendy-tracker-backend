@@ -19,12 +19,10 @@ public class AppInfoService {
     public AppInfo getAppInfo() {
         Optional<AppInfo> appInfos = appInfoRepository.getAppInfo();
 
-        if (appInfos.isPresent()) {
-            AppInfo appInfo = appInfos.get();
-            return appInfo;
-        }
+        if (!appInfos.isPresent())
+            return null;
 
-        return null;
+        return appInfos.get();
     }
 
     @Transactional
