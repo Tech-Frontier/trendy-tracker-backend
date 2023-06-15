@@ -19,10 +19,19 @@ public class AppInfoService {
     public AppInfo getAppInfo() {
         Optional<AppInfo> appInfos = appInfoRepository.getAppInfo();
 
+<<<<<<< HEAD
         if (!appInfos.isPresent())
             return null;
 
         return appInfos.get();
+=======
+        if (appInfos.isPresent()) {
+            AppInfo appInfo = appInfos.get();
+            return appInfo;
+        }
+
+        return null;
+>>>>>>> 32d3f22 (app_info 테이블 생성 및 뼈대 설정)
     }
 
     @Transactional
