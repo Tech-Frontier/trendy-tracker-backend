@@ -37,7 +37,11 @@ public class AppInfoController {
     public Response<String> getAppVersion() {
         String appVersion = appInfoService.getAppInfo().getVersion();
 
+<<<<<<< HEAD
         return Response.success(200, "버전이 정상 조회되었습니다.", appVersion);
+=======
+        return Response.success(200, "엡 버전이 정상 조회되었습니다.", appVersion);
+>>>>>>> 66d5845 (api controller 설정)
     }
 
     @Operation(summary = "서비스 약관 조회")
@@ -45,7 +49,11 @@ public class AppInfoController {
     public Response<String> getAppTerms() {
         String appTerm = appInfoService.getAppInfo().getTerms();
 
+<<<<<<< HEAD
         return Response.success(200, "약관이 정상 조회되었습니다", appTerm);
+=======
+        return Response.success(200, "앱 약관이 정상 조회되었습니다", appTerm);
+>>>>>>> 66d5845 (api controller 설정)
     }
 
     @Operation(summary = "서비스 정보 입력")
@@ -57,7 +65,11 @@ public class AppInfoController {
 
         appInfoService.saveAppInfo(version, terms);
 
+<<<<<<< HEAD
         return Response.success(200, "서비스 정보 등록이 완료되었습니다.", null);
+=======
+        return Response.success(200, "앱 정보 등록이 완료되었습니다.", null);
+>>>>>>> 66d5845 (api controller 설정)
     }
 
     @Data
