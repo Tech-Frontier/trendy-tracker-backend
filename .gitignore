@@ -1,6 +1,17 @@
-# Java Spring
+### Java Spring ###
 .classpath
 .project
 .settings/
 target/
 bin/
+
+### Build ###
+HELP.md
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/main/resources/application.yml
+
+### VS Code ###
+.vscode/
