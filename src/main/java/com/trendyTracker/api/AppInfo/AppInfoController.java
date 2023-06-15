@@ -24,75 +24,51 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/appInfo")
 @RestController
 public class AppInfoController {
-    private final AppInfoService appInfoService;
+        private final AppInfoService appInfoService;
 
-    @Operation(summary = "health check")
-    @GetMapping("/health-check")
-    public String getHealthCheck() {
-        return "ok";
-    }
+        @Operation(summary = "health check")
+        @GetMapping("/health-check")
+        public String getHealthCheck() {
+                return "ok";
+        }
 
-    @Operation(summary = "서비스 버전 조회")
-    @GetMapping("/get-version")
-    public Response<String> getAppVersion() {
-        String appVersion = appInfoService.getAppInfo().getVersion();
+        @Operation(summary = "서비스 버전 조회")
+        @GetMapping("/get-version")
+        public Response<String> getAppVersion() {
+                String appVersion = appInfoService.getAppInfo().getVersion();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-        return Response.success(200, "버전이 정상 조회되었습니다.", appVersion);
-=======
-        return Response.success(200, "엡 버전이 정상 조회되었습니다.", appVersion);
->>>>>>> 66d5845 (api controller 설정)
-=======
-        return Response.success(200, "버전이 정상 조회되었습니다.", appVersion);
->>>>>>> 433f679 (feed back 반영)
-    }
+                return Response.success(200, "버전이 정상 조회되었습니다.", appVersion);
+        }
 
-    @Operation(summary = "서비스 약관 조회")
-    @GetMapping("/get-term")
-    public Response<String> getAppTerms() {
-        String appTerm = appInfoService.getAppInfo().getTerms();
+        @Operation(summary = "서비스 약관 조회")
+        @GetMapping("/get-term")
+        public Response<String> getAppTerms() {
+                String appTerm = appInfoService.getAppInfo().getTerms();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-        return Response.success(200, "약관이 정상 조회되었습니다", appTerm);
-=======
-        return Response.success(200, "앱 약관이 정상 조회되었습니다", appTerm);
->>>>>>> 66d5845 (api controller 설정)
-=======
-        return Response.success(200, "약관이 정상 조회되었습니다", appTerm);
->>>>>>> 433f679 (feed back 반영)
-    }
+                return Response.success(200, "약관이 정상 조회되었습니다", appTerm);
+        }
 
-    @Operation(summary = "서비스 정보 입력")
-    @PostMapping("/save")
-    @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "앱 정보 등록이 완료되었습니다.") })
-    public Response<Void> SaveAppInfo(@RequestBody @Validated appInfoRequest appInfoRequest) {
-        String version = appInfoRequest.getVersion();
-        String terms = appInfoRequest.getTerms();
+        @Operation(summary = "서비스 정보 입력")
+        @PostMapping("/save")
+        @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "앱 정보 등록이 완료되었습니다.") })
+        public Response<Void> SaveAppInfo(@RequestBody @Validated appInfoRequest appInfoRequest) {
+                String version = appInfoRequest.getVersion();
+                String terms = appInfoRequest.getTerms();
 
-        appInfoService.saveAppInfo(version, terms);
+                appInfoService.saveAppInfo(version, terms);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-        return Response.success(200, "서비스 정보 등록이 완료되었습니다.", null);
-=======
-        return Response.success(200, "앱 정보 등록이 완료되었습니다.", null);
->>>>>>> 66d5845 (api controller 설정)
-=======
-        return Response.success(200, "서비스 정보 등록이 완료되었습니다.", null);
->>>>>>> 433f679 (feed back 반영)
-    }
+                return Response.success(200, "서비스 정보 등록이 완료되었습니다.", null);
+        }
 
-    @Data
-    static class appInfoRequest {
-        @NotNull
-        @Schema(description = "버전", example = "1.0", type = "String")
-        private String version;
+        @Data
+        static class appInfoRequest {
+                @NotNull
+                @Schema(description = "버전", example = "1.0", type = "String")
+                private String version;
 
-        @NotNull
-        @Schema(description = "약관", example = "약관", type = "String")
-        private String terms;
+                @NotNull
+                @Schema(description = "약관", example = "약관", type = "String")
+                private String terms;
 
-    }
+        }
 }
