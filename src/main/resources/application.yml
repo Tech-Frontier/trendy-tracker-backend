@@ -1,0 +1,15 @@
+server:
+  port:
+spring:
+  datasource:
+    url:
+    username:
+    password:
+    driver-class-name:
+  jpa:
+    hibernate:
+      ddl-auto:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
