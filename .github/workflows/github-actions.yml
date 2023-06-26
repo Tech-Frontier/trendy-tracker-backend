@@ -33,7 +33,9 @@ jobs:
         run: ./gradlew clean build
 
       - name: Docker build
-        run: docker build -t trendy-tracker-backend:latest -f ./src/build/Dockerfile .
+        run: |
+          cp src/build/Dockerfile .
+          docker build -t trendy-tracker-backend:latest .
 
       - name: Docker Hub login
         run: docker login --username=${{ secrets.USERNAME }} --password=${{ secrets.PASSWORD }}
