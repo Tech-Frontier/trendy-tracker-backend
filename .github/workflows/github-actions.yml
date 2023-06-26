@@ -35,7 +35,7 @@ jobs:
       - name: Docker build
         run: |
           cp src/build/Dockerfile .
-          docker build -t trendy-tracker-backend:latest .
+          docker build -t jinsujj/trendy-tracker-backend:latest .
 
       - name: Docker Hub login
         run: docker login --username=${{ secrets.USERNAME }} --password=${{ secrets.PASSWORD }}
