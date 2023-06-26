@@ -9,8 +9,10 @@ WORKDIR /app
 # Gradle Wrapper를 사용하여 프로젝트 빌드
 RUN gradle build --no-daemon
 
-FROM openjdk:17.0-slim
+FROM adoptopenjdk:17.0.0_11-jdk-hotspot-focal
 EXPOSE 8080
 WORKDIR /app
-COPY --from=builder /app/build/libs/ /app/
+COPY --from=builder /app/build/libs/*.jar /app/trendy-tracker.jar
+
+
 ENTRYPOINT ["java", "-jar", "trendy-tracker.jar"]
