@@ -12,5 +12,5 @@ RUN gradle build --no-daemon
 FROM openjdk:17.0-slim
 EXPOSE 8080
 WORKDIR /app
-COPY --from=builder /app/build/libs/*.jar /app/trendy-tracker.jar
+COPY --from=builder /app/build/libs/ /app/trendy-tracker.jar
 ENTRYPOINT ["java", "-jar", "trendy-tracker.jar"]
