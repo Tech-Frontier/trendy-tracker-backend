@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
-    branches: [main, dev]
+    branches: [main]
 
 jobs:
   build:
@@ -32,10 +32,16 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew clean build
 
-      - name: Docker build
-        run: |
-          cp src/build/Dockerfile .
-          docker build -t jinsujj/trendy-tracker-backend:latest .
+      - name: Docker 빌드
+        runs-on: ubuntu-latest
+        strategy:
+          matrix:
+            platform: [linux/amd64, linux/arm64/v8]
+        steps:
+          - name: 소스 코드 복사
+            run: cp src/build/Dockerfile .
+          - name: 도커 빌드
+            run: docker build -t jinsujj/trendy-tracker-backend:latest . --platform ${{ matrix.platform }}
 
       - name: Docker Hub login
         run: docker login --username=${{ secrets.USERNAME }} --password=${{ secrets.PASSWORD }}
