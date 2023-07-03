@@ -24,10 +24,8 @@ jobs:
           cat ./src/main/resources/application.yml
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-
-      - name: Install QEMU dependencies
-        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends qemu-user-static
+        run: |
+          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
