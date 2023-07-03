@@ -34,7 +34,6 @@ jobs:
 
       - name: Build with Gradle
         run: |
-          ./gradlew wrapper
           ./gradlew clean build
 
       - name: Docker Hub login
