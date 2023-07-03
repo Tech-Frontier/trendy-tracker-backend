@@ -40,6 +40,6 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
-          context: .
+          context: ./src/build
           push: true
           tags: jinsujj/trendy-tracker-backend:latest
