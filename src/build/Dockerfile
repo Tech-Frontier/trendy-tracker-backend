@@ -7,9 +7,6 @@ COPY --chown=gradle:gradle . /app
 # 작업 디렉터리 생성
 WORKDIR /app
 
-# Gradle Wrapper를 설치합니다.
-RUN gradle wrapper
-
 # Gradle Wrapper를 사용하여 프로젝트 빌드
 RUN ./gradlew build --no-daemon
 
