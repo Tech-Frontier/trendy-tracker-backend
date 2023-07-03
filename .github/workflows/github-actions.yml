@@ -8,7 +8,9 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
+    container:
+      image: arm64v8/ubuntu:20.04
 
     steps:
       - uses: actions/checkout@v2
