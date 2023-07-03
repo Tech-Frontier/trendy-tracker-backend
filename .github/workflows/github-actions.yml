@@ -25,7 +25,7 @@ jobs:
 
       - name: Set up QEMU
         run: |
-          docker run --rm --privileged aptman/qus -s -- -p x86_64
+          docker run --rm --privileged aptman/qus -- -r
 
       - name: Install QEMU dependencies
         run: sudo apt-get update && sudo apt-get install -y --no-install-recommends qemu-user-static
