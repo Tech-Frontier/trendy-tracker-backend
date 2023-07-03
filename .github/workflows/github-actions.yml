@@ -48,7 +48,5 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          build-args: |
-            --platform linux/arm64
           push: true
           tags: jinsujj/trendy-tracker-backend:latest
