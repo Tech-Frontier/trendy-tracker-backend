@@ -1,5 +1,5 @@
 # 빌드 단계에서 사용할 ARM 아키텍처에 맞는 JDK 이미지
-FROM --platform=linux/arm64 gradle:jdk17 AS builder
+FROM  gradle:jdk17 AS builder
 
 # 소스 코드를 현재 디렉토리로 복사합니다.
 COPY --chown=gradle:gradle . /app
@@ -13,7 +13,7 @@ RUN chmod +x ./gradlew
 RUN ./gradlew build --no-daemon
 
 # 실행 단계에서 사용할 ARM 아키텍처에 맞는 JDK 이미지
-FROM --platform=linux/arm64 openjdk:17.0-slim
+FROM  openjdk:17.0-slim
 
 EXPOSE 8080
 
