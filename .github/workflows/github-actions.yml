@@ -49,6 +49,6 @@ jobs:
         with:
           context: .
           build-args: |
-            --platform linux/arm64
+            --platform linux/arm64/v8
           push: true
           tags: jinsujj/trendy-tracker-backend:latest
