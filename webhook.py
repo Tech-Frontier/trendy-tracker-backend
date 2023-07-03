@@ -21,7 +21,7 @@ def handle_webhook():
     password = config['docker_hub']['password']
     
     login_command = f'docker login --username={username} --password={password}'
-    pull_command = f'docker pull {repository}:{tag}'
+    pull_command = f'docker pull {repository}:latest'
     
     # Docker 이미지 정보 
     print("********* docker image info **********")
