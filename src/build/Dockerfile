@@ -11,7 +11,7 @@ WORKDIR /app
 RUN ./gradlew build --no-daemon
 
 # 실행 단계에서 사용할 ARM 아키텍처에 맞는 JDK 이미지
-FROM openjdk:17.0-slim
+FROM --platform=linux/arm64 openjdk:17.0-slim
 
 EXPOSE 8080
 
