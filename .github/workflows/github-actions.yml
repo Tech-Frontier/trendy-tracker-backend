@@ -41,21 +41,12 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
 
-      # - name: Docker build
-      #   run: |
-      #     cp src/build/Dockerfile .
-      #     docker build -t jinsujj/trendy-tracker-backend:latest . --platform ${{ matrix.platform }}
-
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
-          context: .
+          context: ./src/build
           build-args: |
             --platform linux/amd64
             --platform linux/arm64
           push: true
           tags: jinsujj/trendy-tracker-backend:latest
-
-      # - name: Docker push
-      #   run: |
-      #     docker push jinsujj/trendy-tracker-backend:latest
