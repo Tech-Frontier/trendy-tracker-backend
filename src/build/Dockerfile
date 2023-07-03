@@ -3,6 +3,7 @@ FROM --platform=linux/arm64 gradle:jdk17 AS builder
 
 # 소스 코드를 현재 디렉토리로 복사합니다.
 COPY --chown=gradle:gradle . /app
+COPY gradlew /app/gradlew
 
 # 작업 디렉터리 생성
 WORKDIR /app
