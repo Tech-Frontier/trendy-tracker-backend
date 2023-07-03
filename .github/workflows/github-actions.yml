@@ -25,7 +25,7 @@ jobs:
 
       - name: Set up QEMU
         run: |
-          docker run --rm --privileged aptman/qus -s -- -p aarch64
+          docker run --rm --privileged aptman/qus -- -r
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
