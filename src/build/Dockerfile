@@ -9,7 +9,7 @@ WORKDIR /app
 
 # Gradle Wrapper를 사용하여 프로젝트 빌드
 RUN chmod +x ./gradlew
-RUN ./gradlew build --no-daemon
+RUN ./gradlew --no-daemon
 
 # 실행 단계에서 사용할 ARM 아키텍처에 맞는 JDK 이미지
 FROM --platform=linux/arm64 openjdk:17.0-slim
