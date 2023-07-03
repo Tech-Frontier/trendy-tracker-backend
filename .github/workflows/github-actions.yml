@@ -26,6 +26,9 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
 
+      - name: Install QEMU dependencies
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends qemu-user-static
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
