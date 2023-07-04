@@ -5,7 +5,7 @@ plugins {
 }
 
 bootJar {
-    enabled = true  // 실행 가능한 JAR 파일 생성 비활성화
+    enabled = true  
 	archiveFileName = 'trendy-tracker.jar' // 원하는 JAR 파일 이름으로 설정
 }
 
