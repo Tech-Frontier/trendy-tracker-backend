@@ -3,6 +3,7 @@ package com.trendyTracker.service;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 
 import com.trendyTracker.domain.AppInfo;
 import com.trendyTracker.repository.AppInfoRepositoryImpl;
@@ -18,6 +19,8 @@ public class AppInfoService {
 
     public AppInfo getAppInfo() {
         Optional<AppInfo> appInfos = appInfoRepository.getAppInfo();
+
+        appInfos.orElseThrow(() -> new NotFoundException("dwqdqwd"));
 
         if (!appInfos.isPresent())
             return null;

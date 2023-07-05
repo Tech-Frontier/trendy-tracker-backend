@@ -13,11 +13,14 @@ import com.trendyTracker.util.UrlReader;
 import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
 import kr.co.shineware.nlp.komoran.core.Komoran;
 import kr.co.shineware.nlp.komoran.model.KomoranResult;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Service
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class AnalyzeTextService {
+    /*
+     * KOMORAN 한글 형태소 분석 로직 ( Legacy )
+     */
     private Map<String, Set<String>> nounMap = new HashMap<String, Set<String>>();
 
     private Set<String> koreanSet = new HashSet<String>();

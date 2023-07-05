@@ -17,7 +17,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 
-@Tag(name = "recruit Url", description = "채용 공고")
+@Tag(name = "Recruit", description = "채용 공고")
 @RequestMapping("/api/recruit")
 @RequiredArgsConstructor
 @RestController
