@@ -13,8 +13,17 @@ import com.trendyTracker.common.Exception.ExceptionDetail.NoResultException;
 @ControllerAdvice
 public class ApiExceptionHandler {
     /*
-     * Custom Exception 에 대한 Handler
+     * Exception 에 대한 전역 Handler 처리
      */
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<?> handleRuntimeException(RuntimeException ex) {
+        List<String> errors = new ArrayList<>();
+        errors.add(ex.getMessage());
+
+        ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "runtime error", errors);
+        return new ResponseEntity<>(apiError, apiError.getStatus());
+    }
 
     @ExceptionHandler(NoResultException.class)
     public ResponseEntity<?> handleNoResult(NoResultException ex) {
