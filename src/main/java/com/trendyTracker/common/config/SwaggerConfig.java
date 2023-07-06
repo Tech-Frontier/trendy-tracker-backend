@@ -29,7 +29,7 @@ public class SwaggerConfig {
         public OpenAPI customOpenAPI() {
                 return new OpenAPI()
                                 .servers(Arrays.asList(
-                                                new Server().url("https://api.trendy-tracker.kr/").description("Production server"),
+                                                new Server().url("https://api.trendy-tracker.kr").description("Production server"),
                                                 new Server().url("http://localhost:8080").description("local server")))
                                 .info(new Info().title("Trendy-Tracker")
                                                 .description("API documentation using springdoc-openapi and OpenAPI 3.0")
