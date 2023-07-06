@@ -1,6 +1,7 @@
 package com.trendyTracker.common.config;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.servers.Server;
 
 @Configuration
 public class SwaggerConfig {
@@ -26,6 +28,9 @@ public class SwaggerConfig {
         @Bean
         public OpenAPI customOpenAPI() {
                 return new OpenAPI()
+                                .servers(Arrays.asList(
+                                                new Server().url("https://api.trendy-tracker.kr").description("Production server"),
+                                                new Server().url("http://localhost:8080").description("local server")))
                                 .info(new Info().title("Trendy-Tracker")
                                                 .description("API documentation using springdoc-openapi and OpenAPI 3.0")
                                                 .version("1.0.0")
