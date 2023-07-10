@@ -19,8 +19,8 @@ public class Company {
     @Column(name ="company_id")
     private long id;
 
-    @Column(name="company", unique = true)
-    private String company;
+    @Column(name="company_name", unique = true)
+    private String company_name;
 
     private LocalDateTime updated_time;
 }

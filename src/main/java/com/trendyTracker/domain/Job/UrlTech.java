@@ -25,6 +25,6 @@ public class UrlTech {
     @JoinColumn(name ="recruit_id")
     private Recruit recruit;
 
-    @Column(name="tech", unique = true)
-    private String tech;
+    @Column(name="tech_name", unique = true)
+    private String tech_name;
 }

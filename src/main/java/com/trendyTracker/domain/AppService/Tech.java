@@ -18,6 +18,6 @@ public class Tech {
     @Column(name ="tech_id")
     private long id;
     
-    @Column(name="name", unique = true)
-    private String name;
+    @Column(name="tech_name", unique = true)
+    private String tech_name;
 }
