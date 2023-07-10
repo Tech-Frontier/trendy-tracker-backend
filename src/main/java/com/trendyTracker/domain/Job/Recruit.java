@@ -28,7 +28,7 @@ public class Recruit {
     private long id;
 
     @OneToMany(mappedBy = "recruit", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<UrlTech> urlTechs;
+    private List<RecruitTech> urlTechs;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="company_id")

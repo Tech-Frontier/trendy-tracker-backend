@@ -1,5 +1,7 @@
 package com.trendyTracker.domain.Job;
 
+import com.trendyTracker.domain.AppService.Tech;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -13,18 +15,19 @@ import lombok.Setter;
 
 @Getter @Setter
 @Entity
-@Table(name ="url_tech", schema = "public")
-public class UrlTech {
+@Table(name ="recruit_tech", schema = "public")
+public class RecruitTech {
 
     @Id
     @GeneratedValue
-    @Column(name ="url_tech_id")
+    @Column(name ="recruit_tech_id")
     private long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="recruit_id")
     private Recruit recruit;
 
-    @Column(name="tech_name", unique = true)
-    private String tech_name;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name ="tech_id")
+    private Tech tech;
 }

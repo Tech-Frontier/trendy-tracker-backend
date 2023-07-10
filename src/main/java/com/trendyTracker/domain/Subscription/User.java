@@ -11,6 +11,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -31,6 +33,7 @@ public class User {
     private List<Template> templates;
     
     @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_subscribe_companies", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "company_id"))
     private List<Company> companies;
 
     private String email;
