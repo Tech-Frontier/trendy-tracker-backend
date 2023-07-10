@@ -3,13 +3,15 @@ package com.trendyTracker.domain.Job;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.trendyTracker.domain.AppService.Company;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.Index;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -17,8 +19,7 @@ import lombok.Setter;
 
 @Getter @Setter
 @Entity
-@Table(name ="recruit", schema = "public"
-    , indexes = @Index(name = "company", columnList = "company, create_time"))
+@Table(name ="recruit", schema = "public")
 public class Recruit {
     @Id
     @GeneratedValue
@@ -28,7 +29,8 @@ public class Recruit {
     @OneToMany(mappedBy = "recruit", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<UrlTech> urlTechs;
     
-    private String company;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Company company;
 
     private String occupation;
 

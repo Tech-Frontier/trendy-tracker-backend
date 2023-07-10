@@ -1,5 +1,7 @@
 package com.trendyTracker.domain.AppService;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,14 +12,15 @@ import lombok.Setter;
 
 @Getter @Setter
 @Entity
-@Table(name ="tech", schema = "public")
-public class Tech {
-
+@Table(name = "company" ,schema="public")
+public class Company {
     @Id
     @GeneratedValue
-    @Column(name ="tech_id")
+    @Column(name ="company_id")
     private long id;
-    
-    @Column(name="name", unique = true)
-    private String name;
+
+    @Column(name="company", unique = true)
+    private String company;
+
+    private LocalDateTime updated_time;
 }

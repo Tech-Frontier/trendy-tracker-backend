@@ -3,6 +3,8 @@ package com.trendyTracker.domain.Subscription;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.trendyTracker.domain.AppService.Company;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,6 +29,9 @@ public class User {
 
     @OneToMany(mappedBy="user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Template> templates;
+    
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Company> companies;
 
     private String email;
 

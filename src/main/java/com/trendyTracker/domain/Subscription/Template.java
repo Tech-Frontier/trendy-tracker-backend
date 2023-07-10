@@ -2,6 +2,8 @@ package com.trendyTracker.domain.Subscription;
 
 import java.util.List;
 
+import com.trendyTracker.domain.AppService.Company;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,7 +37,7 @@ public class Template {
 
     private String title;
 
-    @Lob
+    @Column(columnDefinition = "TEXT") 
     private String content;
 
     // 연관관계 메서드

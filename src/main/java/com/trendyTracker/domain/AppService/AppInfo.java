@@ -8,9 +8,8 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter @Setter
 @Entity
-@Getter
-@Setter
 @Table(name = "app_info", schema = "public")
 public class AppInfo {
 
