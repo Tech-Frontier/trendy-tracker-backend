@@ -1,7 +1,5 @@
 package com.trendyTracker.domain.Job;
 
-import com.trendyTracker.domain.AppService.Tech;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

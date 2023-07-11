@@ -1,11 +1,10 @@
-package com.trendyTracker.domain.Subscription;
+package com.trendyTracker.domain.AppService;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.trendyTracker.domain.AppService.Company;
+import com.trendyTracker.domain.Job.Company;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -29,12 +28,9 @@ public class User {
     @Column(name ="user_id")
     private long id;
 
-    @OneToMany(mappedBy="user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Template> templates;
-    
     @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_subscribe_companies", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "company_id"))
-    private List<Company> companies;
+    private List<Company> companies; 
 
     private String email;
 
@@ -46,8 +42,7 @@ public class User {
         this.create_time = LocalDateTime.now();
     }
 
-    public void addTemplate(Template templates){
-        templates.setUser(this);
-        this.templates.add(templates);
+    public void addCompanies(Company company){
+        this.companies.add(company);
     }
 }

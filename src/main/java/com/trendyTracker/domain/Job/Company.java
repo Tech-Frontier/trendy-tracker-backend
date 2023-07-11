@@ -1,4 +1,4 @@
-package com.trendyTracker.domain.AppService;
+package com.trendyTracker.domain.Job;
 
 import java.time.LocalDateTime;
 

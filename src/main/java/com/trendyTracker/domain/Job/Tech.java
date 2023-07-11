@@ -1,4 +1,4 @@
-package com.trendyTracker.domain.AppService;
+package com.trendyTracker.domain.Job;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

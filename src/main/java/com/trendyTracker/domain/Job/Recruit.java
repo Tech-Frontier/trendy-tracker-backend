@@ -3,8 +3,6 @@ package com.trendyTracker.domain.Job;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.trendyTracker.domain.AppService.Company;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
