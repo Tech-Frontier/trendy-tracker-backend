@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.trendyTracker.domain.Template;
-import com.trendyTracker.domain.User;
+import com.trendyTracker.domain.Subscription.Template;
+import com.trendyTracker.domain.Subscription.User;
 
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
@@ -20,13 +20,13 @@ public class AlarmRepositoryImplTest {
     private EntityManager em;
 
     @Test
-    void testCreateUser() {
+    void testDelete() {
         // arrage 
         User user = new User();
         user.addUser("wlstncjs1!@#");
 
         Template template = new Template();
-        template.addTemplate( "hello", "nojam");
+        template.addTemplate(user, "hello", "nojam");
         user.setTemplates(List.of(template));
         em.persist(user);
 
@@ -38,10 +38,5 @@ public class AlarmRepositoryImplTest {
 
         // assert
         Assertions.assertThat(template2).isNull();
-    }
-
-    @Test
-    void testRegistTemplate() {
-
     }
 }

@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
-import com.trendyTracker.domain.AppInfo;
+import com.trendyTracker.domain.AppService.AppInfo;
 import com.trendyTracker.repository.AppInfoRepositoryImpl;
 
 import jakarta.transaction.Transactional;

@@ -5,8 +5,8 @@ import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.trendyTracker.domain.AppInfo;
-import com.trendyTracker.domain.QAppInfo;
+import com.trendyTracker.domain.AppService.AppInfo;
+import com.trendyTracker.domain.AppService.QAppInfo;
 
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;

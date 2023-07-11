@@ -1,6 +1,6 @@
 package com.trendyTracker.repository;
 
-import com.trendyTracker.domain.User;
+import com.trendyTracker.domain.Subscription.User;
 
 public interface AlarmRepository {
     void createUser(User user);
