@@ -1,9 +1,6 @@
 package com.trendyTracker.domain.AppService;
 
 import java.time.LocalDateTime;
-import java.util.List;
-
-import com.trendyTracker.domain.Job.Company;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,8 +8,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,9 +24,13 @@ public class User {
     @Column(name ="user_id")
     private long id;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_subscribe_companies", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "company_id"))
-    private List<Company> companies; 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name ="user_subscribe_templates_id")
+    private UserSubscribeTemplates userSubscribeTemplates;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name ="user_subscribe_companies_id")
+    private UserSubscribeCompanies userSubscribeCompanies;
 
     private String email;
 
@@ -42,7 +42,5 @@ public class User {
         this.create_time = LocalDateTime.now();
     }
 
-    public void addCompanies(Company company){
-        this.companies.add(company);
-    }
+   
 }

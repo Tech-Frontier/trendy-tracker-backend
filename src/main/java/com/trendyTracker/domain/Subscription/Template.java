@@ -2,7 +2,7 @@ package com.trendyTracker.domain.Subscription;
 
 import java.util.List;
 
-import com.trendyTracker.domain.AppService.User;
+import com.trendyTracker.domain.AppService.UserSubscribeTemplates;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -11,7 +11,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -26,10 +26,10 @@ public class Template {
     @GeneratedValue
     @Column(name ="template_id")
     private long id;
-    
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinTable(name ="user_subscription_template", joinColumns = @JoinColumn(name="template_id"), inverseJoinColumns = @JoinColumn(name="user_id"))
-    private List<User> users;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_subscribe_templates_id")
+    private UserSubscribeTemplates userSubscribeTemplates;
 
     @OneToMany(mappedBy = "template", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Scheduling> schedulings;
@@ -40,9 +40,8 @@ public class Template {
     private String content;
 
     // 연관관계 메서드
-    public void addTemplate(User user, String title, String content){
+    public void addTemplate(String title, String content){
         this.title = title;
         this.content = content;
-        this.users.add(user);
     }
 }
