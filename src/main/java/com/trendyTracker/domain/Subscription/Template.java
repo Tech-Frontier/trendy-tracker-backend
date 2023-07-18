@@ -1,8 +1,7 @@
 package com.trendyTracker.domain.Subscription;
 
+import java.time.LocalDateTime;
 import java.util.List;
-
-import com.trendyTracker.domain.AppService.UserSubscribeTemplates;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -10,8 +9,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -27,10 +24,6 @@ public class Template {
     @Column(name ="template_id")
     private long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_subscribe_templates_id")
-    private UserSubscribeTemplates userSubscribeTemplates;
-
     @OneToMany(mappedBy = "template", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Scheduling> schedulings;
 
@@ -39,9 +32,12 @@ public class Template {
     @Column(columnDefinition = "TEXT") 
     private String content;
 
+    private LocalDateTime create_time;
+
     // 연관관계 메서드
     public void addTemplate(String title, String content){
         this.title = title;
         this.content = content;
+        this.create_time = LocalDateTime.now();
     }
 }

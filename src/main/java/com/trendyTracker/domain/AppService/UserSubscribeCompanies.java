@@ -1,7 +1,6 @@
 package com.trendyTracker.domain.AppService;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import org.hibernate.annotations.ColumnDefault;
 
@@ -13,7 +12,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,11 +27,13 @@ public class UserSubscribeCompanies {
     @Column(name ="user_subscribe_companies_id")
     private long id;
 
-    @OneToMany(mappedBy="userSubscribeCompanies", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<User> users;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @OneToMany(mappedBy ="userSubscribeCompanies", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Company> company;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "company_id")
+    private Company company;
 
     @ColumnDefault("true")
     private Boolean is_active;

@@ -20,4 +20,8 @@ public class Tech {
     
     @Column(name="tech_name", unique = true)
     private String tech_name;
+
+    public void addTech(String tech_name){
+        this.tech_name = tech_name;
+    }
 }
