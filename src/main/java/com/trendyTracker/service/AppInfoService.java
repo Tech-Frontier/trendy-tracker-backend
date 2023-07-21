@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
-import com.trendyTracker.domain.AppInfo;
+import com.trendyTracker.domain.AppService.AppInfo;
 import com.trendyTracker.repository.AppInfoRepositoryImpl;
 
 import jakarta.transaction.Transactional;
@@ -19,13 +19,21 @@ public class AppInfoService {
 
     public AppInfo getAppInfo() {
         Optional<AppInfo> appInfos = appInfoRepository.getAppInfo();
+        try{
+            appInfos.orElseThrow(() -> new NotFoundException("dwqdqwd"));
 
-        appInfos.orElseThrow(() -> new NotFoundException("dwqdqwd"));
+            if (!appInfos.isPresent())
+                return null;
 
-        if (!appInfos.isPresent())
-            return null;
-
-        return appInfos.get();
+            return appInfos.get();
+        }
+        catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        finally{
+            AppInfo appInfo = new AppInfo();
+            return appInfo;
+        }
     }
 
     @Transactional
