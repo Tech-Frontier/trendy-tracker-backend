@@ -3,15 +3,12 @@ package com.trendyTracker.repository;
 import java.util.List;
 import java.util.Optional;
 
-import com.trendyTracker.Dto.Tech.CompanyTechStackDto;
-import com.trendyTracker.Dto.Tech.TechDto;
-
 public interface TechRepository {
-    void registTechStack(TechDto techDto);
+    Boolean isTechRegist(String tech_name);
+    
+    void registTechStack(String tech_name);
 
-    void deleteTechStack(String url);
+    void deleteTechStack(String tech_name);
 
-    Optional<List<CompanyTechStackDto>> getTechList();
-
-    Optional<TechDto> getTechInfo(String url);
+    Optional<List<String>> getTechList();
 }

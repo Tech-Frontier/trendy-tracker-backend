@@ -5,34 +5,62 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
-import com.trendyTracker.Dto.Tech.CompanyTechStackDto;
-import com.trendyTracker.Dto.Tech.TechDto;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.trendyTracker.domain.Job.QTech;
+import com.trendyTracker.domain.Job.Tech;
+
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 
 @Repository
+@RequiredArgsConstructor
 public class TechRepositoryImpl implements TechRepository {
+    private final EntityManager em;
+    private JPAQueryFactory queryFactory;
 
     @Override
-    public void registTechStack(TechDto techDto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'registTechStack'");
+    @Transactional
+    public void registTechStack(String tech_name) {
+        Tech tech = new Tech();
+        tech.addTech(tech_name);
+
+        em.persist(tech);
     }
 
     @Override
-    public Optional<List<CompanyTechStackDto>> getTechList() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getTechList'");
+    public Boolean isTechRegist(String tech_name) {
+        queryFactory = new JPAQueryFactory(em);
+
+        QTech qTech = QTech.tech;
+        Tech fetchFirst = queryFactory.selectFrom(qTech)
+                                .where(qTech.tech_name.eq(tech_name))
+                                .fetchFirst();
+
+        if (fetchFirst == null)
+            return false;
+        
+        return true;
     }
 
     @Override
-    public Optional<TechDto> getTechInfo(String url) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getTechInfo'");
+    @Transactional
+    public void deleteTechStack(String tech_name) {
+        Tech tech = em.find(Tech.class, tech_name);
+        em.remove(tech);
+
+        return;
     }
 
     @Override
-    public void deleteTechStack(String url) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteTechStack'");
+    public Optional<List<String>> getTechList() {
+        queryFactory = new JPAQueryFactory(em);
+
+        QTech qTech = QTech.tech;
+        List<String> fetch = queryFactory.select(qTech.tech_name)
+                                .from(qTech).fetch();
+
+        return Optional.of(fetch);
     }
 
 }

@@ -14,10 +14,6 @@ import lombok.Setter;
 public class Tech {
 
     @Id
-    @GeneratedValue
-    @Column(name ="tech_id")
-    private long id;
-    
     @Column(name="tech_name", unique = true)
     private String tech_name;
 
