@@ -22,9 +22,7 @@ public class TechRepositoryImpl implements TechRepository {
     @Override
     @Transactional
     public void registTechStack(String tech_name) {
-        Tech tech = new Tech();
-        tech.addTech(tech_name);
-
+        Tech tech = new Tech(tech_name);
         em.persist(tech);
     }
 
@@ -47,9 +45,8 @@ public class TechRepositoryImpl implements TechRepository {
     @Transactional
     public void deleteTechStack(String tech_name) {
         Tech tech = em.find(Tech.class, tech_name);
-        em.remove(tech);
-
-        return;
+        if (tech != null)
+            em.remove(tech);
     }
 
     @Override

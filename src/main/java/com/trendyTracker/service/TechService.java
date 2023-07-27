@@ -8,6 +8,7 @@ import org.webjars.NotFoundException;
 
 import com.trendyTracker.common.Exception.ExceptionDetail.AlreadyExistException;
 import com.trendyTracker.repository.TechRepository;
+import com.trendyTracker.util.TechListSingleton;
 
 import lombok.RequiredArgsConstructor;
 
@@ -34,6 +35,10 @@ public class TechService {
     public List<String> getTechList() {
         Optional<List<String>> techList = techRepository.getTechList();
         techList.orElseThrow(() -> new NotFoundException("개발 스택 내용이 없습니다"));
+
+        // Singleton 데이터 삽입
+        TechListSingleton techListSingleton = TechListSingleton.getInstance();
+        techListSingleton.setTechList(techList.get());
 
         return techList.get();
     }
