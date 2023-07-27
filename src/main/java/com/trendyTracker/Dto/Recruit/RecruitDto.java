@@ -1,6 +1,9 @@
 package com.trendyTracker.Dto.Recruit;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
+import com.trendyTracker.domain.Job.Company;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -24,4 +27,17 @@ public class RecruitDto {
 
     @Schema(description = "생성 시간", example = "YYYY-MM-DD HH24:mi:ss")
     private LocalDateTime createdTime;
+
+    @Schema(description = "테크 항목", example = "[C#, Java]")
+    private List<String> techList;
+    
+
+    public RecruitDto(long id, Company company, String occupation, String url, LocalDateTime createTime){
+        this.id = id;
+        this.company =company.getCompany_name();
+        this.occupation = occupation;
+        this.url = url;
+        this.createdTime = createTime;
+        this.techList = null;
+    }
 }
