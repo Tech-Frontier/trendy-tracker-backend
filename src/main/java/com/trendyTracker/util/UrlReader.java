@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 public class UrlReader {
     static RestTemplate restTemplate = new RestTemplate();
 
+    // TODO 제대로 동작하게 수정 필요
     public static Set<String> getUrlContent(String url) throws IOException {
         // 기준 정보 Tech 추출
         TechListSingleton techListSingleton = TechListSingleton.getInstance();
