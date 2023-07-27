@@ -26,6 +26,12 @@ public class RecruitTech {
     private Recruit recruit;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name ="tech_id")
+    @JoinColumn(name ="tech_name")
     private Tech tech;
+
+    // 연관관계 메서드
+    public void addRecruitTech(Recruit recruit, Tech tech){
+        this.recruit = recruit;
+        this.tech = tech;
+    }
 }
