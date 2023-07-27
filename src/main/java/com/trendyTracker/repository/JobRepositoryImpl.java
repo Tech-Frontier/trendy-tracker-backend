@@ -5,17 +5,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.trendyTracker.domain.Job.*;
 import org.springframework.stereotype.Repository;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.trendyTracker.Dto.Recruit.RecruitDto;
-import com.trendyTracker.domain.AppService.QCompany;
-import com.trendyTracker.domain.Job.Company;
-import com.trendyTracker.domain.Job.QRecruit;
-import com.trendyTracker.domain.Job.Recruit;
-import com.trendyTracker.domain.Job.RecruitTech;
-import com.trendyTracker.domain.Job.Tech;
 
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
