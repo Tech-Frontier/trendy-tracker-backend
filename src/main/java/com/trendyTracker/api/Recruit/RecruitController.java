@@ -48,7 +48,7 @@ public class RecruitController {
         return Response.success(200, "공고 목록이 조회되었습니다", recruitInfo);
     }
 
-    @Operation(summary = "회사별 채용 공고 조회")
+    @Operation(summary = "전체 채용 공고 조회")
     @GetMapping(value = "/list")
     public Response<List<RecruitDto>> getRecruitsByCompany() throws NoResultException {
 
