@@ -19,7 +19,10 @@ public class UrlReader {
         TechListSingleton techListSingleton = TechListSingleton.getInstance();
         List<String> techList = techListSingleton.getTechList();
 
-        System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+        // [ MacOS ]
+        // System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+        // [ RaspberryPi ]
+        System.setProperty("webdriver.chrome.driver", "/usr/lib/chromium-browser/chromedriver");
         ChromeOptions options = new ChromeOptions().addArguments("--headless");
         WebDriver driver = new ChromeDriver(options);
         
