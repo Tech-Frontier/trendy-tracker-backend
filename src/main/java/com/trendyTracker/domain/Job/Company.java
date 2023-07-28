@@ -23,4 +23,10 @@ public class Company {
     private String company_name;
 
     private LocalDateTime updated_time;
+
+    // 연관관계 메서드
+    public void addCompany(String company_name){
+        this.company_name = company_name;
+        this.updated_time = LocalDateTime.now();
+    }
 }

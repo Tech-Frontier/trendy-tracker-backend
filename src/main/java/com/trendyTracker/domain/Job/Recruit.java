@@ -14,11 +14,13 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter
 @Entity
 @Table(name ="recruit", schema = "public")
+@NoArgsConstructor
 public class Recruit {
     @Id
     @GeneratedValue
@@ -41,5 +43,19 @@ public class Recruit {
     private LocalDateTime updated_time;
 
     private Boolean is_active;
+
+    // 연관관계 메서드
+    public void addRecruit(String url, Company company, String occupation){
+        this.url = url;
+        this.company = company;
+        this.occupation = occupation;
+        this.create_time = LocalDateTime.now();
+        this.is_active = false;
+    }
+
+    public void updateTechList(List<RecruitTech> techList){
+        this.urlTechs = techList;
+        this.is_active = true;
+    }
 
 }
