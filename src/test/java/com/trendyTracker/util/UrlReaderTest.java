@@ -12,9 +12,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class UrlReaderTest {
 
-    @Test
-    @DisplayName("url 정보 파싱")
-    public void getUrlContent() throws Exception {
+    // @Test
+    // @DisplayName("url 정보 파싱")
+    // public void getUrlContent() throws Exception {
         // given
         // var testUrl = "https://www.owl-dev.me/blog/62";
 
@@ -25,5 +25,5 @@ public class UrlReaderTest {
         // Assertions.assertThat(urlContent.contains("Java")).isTrue();
         
 
-    }
+    // }
 }
