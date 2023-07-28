@@ -29,10 +29,7 @@ public class AppInfoService {
         }
         catch (Exception ex){
             System.out.println(ex.getMessage());
-        }
-        finally{
-            AppInfo appInfo = new AppInfo();
-            return appInfo;
+            return new AppInfo();
         }
     }
 
