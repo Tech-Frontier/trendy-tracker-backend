@@ -8,7 +8,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
@@ -23,7 +25,8 @@ public class UrlReader {
         
         try {
             driver.get(url);
-            String pageSource = driver.getPageSource();
+            WebElement bodyElement = driver.findElement(By.tagName("body"));
+            String pageSource = bodyElement.getText();
 
             // 영어 단어를 추출하는 정규 표현식
             String regex = "\\b[a-zA-Z]+\\b";
