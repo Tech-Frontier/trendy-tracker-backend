@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.trendyTracker.common.Exception.ExceptionDetail.AlreadyExistException;
+import com.trendyTracker.common.config.Loggable;
 import com.trendyTracker.common.response.Response;
 import com.trendyTracker.service.TechService;
 
@@ -21,6 +22,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+@Loggable
 @Tag(name = "Tech", description = "기술 스택")
 @RequestMapping("/api/tech")
 @RestController
