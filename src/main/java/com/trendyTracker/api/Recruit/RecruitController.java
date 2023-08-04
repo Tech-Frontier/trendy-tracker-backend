@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.trendyTracker.Dto.Recruit.RecruitDto;
 import com.trendyTracker.common.Exception.ExceptionDetail.NoResultException;
+import com.trendyTracker.common.config.Loggable;
 import com.trendyTracker.common.response.Response;
 import com.trendyTracker.service.RecruitService;
 
@@ -24,6 +25,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+@Loggable
 @Tag(name = "Recruit", description = "채용 공고")
 @RequestMapping("/api/recruit")
 @RequiredArgsConstructor
