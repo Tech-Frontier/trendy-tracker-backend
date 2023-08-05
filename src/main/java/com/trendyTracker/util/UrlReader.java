@@ -1,5 +1,6 @@
 package com.trendyTracker.util;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,15 +17,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 public class UrlReader {
     public static Set<String> getUrlContent(String url) throws IOException {
-        TechListSingleton techListSingleton = TechListSingleton.getInstance();
-        List<String> techList = techListSingleton.getTechList();
-
-        // [ MacOS ]
-        // System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
-        // [ RaspberryPi ]
-        System.setProperty("webdriver.chrome.driver", "/usr/lib/chromium-browser/chromedriver");
-        ChromeOptions options = new ChromeOptions().addArguments("--headless");
-        WebDriver driver = new ChromeDriver(options);
+        List<String> techList = TechListSingleton.getInstance().getTechList();
+        WebDriver driver = setChromeDriver();
         
         try {
             driver.get(url);
@@ -46,8 +40,22 @@ public class UrlReader {
                 .collect(Collectors.toSet());
 
         } finally {
-            // 드라이버 종료
             driver.quit();
         }
+    }
+
+    private static WebDriver setChromeDriver() {
+        String osName = System.getProperty("os.name").toLowerCase();
+        if (osName.contains("mac")) 
+            System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+
+        else if (osName.contains("linux") && osName.contains("arm")) 
+            System.setProperty("webdriver.chrome.driver", "/usr/lib/chromium-browser/chromedriver");
+
+        else 
+            throw new RuntimeException("chrome driver not exist");
+        
+        ChromeOptions options = new ChromeOptions().addArguments("--headless");
+        return new ChromeDriver(options);
     }
 }
