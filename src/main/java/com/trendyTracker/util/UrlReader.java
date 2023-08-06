@@ -1,6 +1,5 @@
 package com.trendyTracker.util;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +13,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class UrlReader {
+    static Logger logger = LoggerFactory.getLogger(UrlReader.class);
+
     public static Set<String> getUrlContent(String url) throws IOException {
         List<String> techList = TechListSingleton.getInstance().getTechList();
         WebDriver driver = setChromeDriver();
@@ -39,23 +42,42 @@ public class UrlReader {
                 .anyMatch(word -> tech.equalsIgnoreCase(word)))
                 .collect(Collectors.toSet());
 
-        } finally {
+        } catch(Exception ex){
+            logger.info("getUrlContent");
+            logger.error(ex.getMessage());
+            return null;
+        }
+         finally {
             driver.quit();
         }
     }
 
     private static WebDriver setChromeDriver() {
+        try{
         String osName = System.getProperty("os.name").toLowerCase();
+        // mac
         if (osName.contains("mac")) 
             System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
 
+        // raspberryPi
         else if (osName.contains("linux") && osName.contains("arm")) 
             System.setProperty("webdriver.chrome.driver", "/usr/lib/chromium-browser/chromedriver");
 
-        else 
-            throw new RuntimeException("chrome driver not exist");
+        // docker container
+        else if (osName.contains("linux")){
+            System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+        }
         
         ChromeOptions options = new ChromeOptions().addArguments("--headless");
+        options.addArguments("--remote-debugging-address=" + "172.17.0.2");
+        options.addArguments("--remote-debugging-port=" + "4444");
+
         return new ChromeDriver(options);
+        }
+        catch(Exception ex){
+            logger.info("setChromeDriver");
+            logger.error(ex.getMessage());
+            return null;
+        }
     }
 }
