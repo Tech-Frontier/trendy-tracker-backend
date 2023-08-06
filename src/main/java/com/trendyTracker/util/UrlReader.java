@@ -70,7 +70,6 @@ public class UrlReader {
         
         ChromeOptions options = new ChromeOptions().addArguments("--headless");
         options.addArguments("--remote-debugging-address=" + "172.17.0.2");
-        options.addArguments("--remote-debugging-port=" + "4444");
 
         return new ChromeDriver(options);
         }
