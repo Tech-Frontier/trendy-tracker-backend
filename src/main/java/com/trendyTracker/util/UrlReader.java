@@ -68,9 +68,10 @@ public class UrlReader {
                 System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
             }
             
-            String[] allowedIps = {"172.17.*.*"}; // 허용할 IP 주소 목록을 적절하게 수정하세요.
+            String[] allowedIps = {"172.17.*.*"};
             ChromeOptions options = new ChromeOptions().addArguments("--headless");
             options.addArguments("--allowed-ips=" + String.join(",", allowedIps));
+            options.addArguments("--port=9515");
 
             return new ChromeDriver(options);
         }
