@@ -72,6 +72,7 @@ public class UrlReader {
                 serviceBuilder.usingDriverExecutable(new File("/usr/local/bin/chromedriver"));
             
             ChromeDriverService service = serviceBuilder.usingPort(9515).build();
+            Thread.sleep(1000); // 1초 대기
             service.start();
             
             ChromeOptions options = new ChromeOptions();
