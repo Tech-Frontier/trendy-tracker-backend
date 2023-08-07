@@ -1,5 +1,6 @@
 package com.trendyTracker.util;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,25 +57,29 @@ public class UrlReader {
     private static WebDriver setChromeDriver() {
         try{
             String osName = System.getProperty("os.name").toLowerCase();
+            ChromeDriverService.Builder serviceBuilder = new ChromeDriverService.Builder();
+        
             // mac
             if (osName.contains("mac")) 
-                System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+                serviceBuilder.usingDriverExecutable(new File("/usr/local/bin/chromedriver"));
 
             // raspberryPi
             else if (osName.contains("linux") && osName.contains("arm")) 
-                System.setProperty("webdriver.chrome.driver", "/usr/lib/chromium-browser/chromedriver");
+                serviceBuilder.usingDriverExecutable(new File("/usr/lib/chromium-browser/chromedriver"));
 
             // docker container
-            else if (osName.contains("linux")){
-                System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
-            }
+            else if (osName.contains("linux"))
+                serviceBuilder.usingDriverExecutable(new File("/usr/local/bin/chromedriver"));
             
-            String[] allowedIps = {"172.17.*.*"};
+            ChromeDriverService service = serviceBuilder.usingPort(9515).build();
+            service.start();
+            
             ChromeOptions options = new ChromeOptions().addArguments("--headless");
+            String[] allowedIps = {"172.17.*.*"};
             options.addArguments("--allowed-ips=" + String.join(",", allowedIps));
             options.addArguments("--port=9515");
 
-            return new ChromeDriver(options);
+            return new ChromeDriver(service, options);
         }
         catch(Exception ex){
             logger.info("setChromeDriver");
