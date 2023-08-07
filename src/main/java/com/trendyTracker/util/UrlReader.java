@@ -78,6 +78,7 @@ public class UrlReader {
             String[] allowedIps = {"172.17.*.*"};
             options.addArguments("--headless"); // headless 모드 활성화
             options.addArguments("--no-sandbox"); // no-sandbox 옵션 추가
+            options.addArguments("--remote-debugging-port=9515"); // unknown error: DevToolsActivePort file doesn't exist
             options.addArguments("--allowed-ips=" + String.join(",", allowedIps));
 
 
