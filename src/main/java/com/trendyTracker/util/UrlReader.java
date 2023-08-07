@@ -54,24 +54,25 @@ public class UrlReader {
 
     private static WebDriver setChromeDriver() {
         try{
-        String osName = System.getProperty("os.name").toLowerCase();
-        // mac
-        if (osName.contains("mac")) 
-            System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+            String osName = System.getProperty("os.name").toLowerCase();
+            // mac
+            if (osName.contains("mac")) 
+                System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
 
-        // raspberryPi
-        else if (osName.contains("linux") && osName.contains("arm")) 
-            System.setProperty("webdriver.chrome.driver", "/usr/lib/chromium-browser/chromedriver");
+            // raspberryPi
+            else if (osName.contains("linux") && osName.contains("arm")) 
+                System.setProperty("webdriver.chrome.driver", "/usr/lib/chromium-browser/chromedriver");
 
-        // docker container
-        else if (osName.contains("linux")){
-            System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
-        }
-        
-        ChromeOptions options = new ChromeOptions().addArguments("--headless");
-        options.addArguments("--remote-debugging-address=" + "172.17.0.2");
+            // docker container
+            else if (osName.contains("linux")){
+                System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+            }
+            
+            String[] allowedIps = {"172.17.*.*"}; // 허용할 IP 주소 목록을 적절하게 수정하세요.
+            ChromeOptions options = new ChromeOptions().addArguments("--headless");
+            options.addArguments("--allowed-ips=" + String.join(",", allowedIps));
 
-        return new ChromeDriver(options);
+            return new ChromeDriver(options);
         }
         catch(Exception ex){
             logger.info("setChromeDriver");
