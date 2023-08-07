@@ -74,10 +74,12 @@ public class UrlReader {
             ChromeDriverService service = serviceBuilder.usingPort(9515).build();
             service.start();
             
-            ChromeOptions options = new ChromeOptions().addArguments("--headless");
+            ChromeOptions options = new ChromeOptions();
             String[] allowedIps = {"172.17.*.*"};
+            options.addArguments("--headless"); // headless 모드 활성화
+            options.addArguments("--no-sandbox"); // no-sandbox 옵션 추가
             options.addArguments("--allowed-ips=" + String.join(",", allowedIps));
-            options.addArguments("--port=9515");
+
 
             return new ChromeDriver(service, options);
         }
