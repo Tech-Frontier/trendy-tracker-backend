@@ -61,7 +61,7 @@ public class UrlReader {
         
             // mac
             if (osName.contains("mac")) 
-                serviceBuilder.usingDriverExecutable(new File("/usr/local/bin/chromedriver"));
+                serviceBuilder.usingDriverExecutable(new File("/opt/homebrew/bin/chromedriver"));
 
             // raspberryPi
             else if (osName.contains("linux") && osName.contains("arm")) 
@@ -72,16 +72,13 @@ public class UrlReader {
                 serviceBuilder.usingDriverExecutable(new File("/usr/local/bin/chromedriver"));
             
             ChromeDriverService service = serviceBuilder.usingPort(9515).build();
-            Thread.sleep(1000); // 1초 대기
             service.start();
             
             ChromeOptions options = new ChromeOptions();
-            String[] allowedIps = {"172.17.*.*"};
             options.addArguments("--headless"); // headless 모드 활성화
             options.addArguments("--no-sandbox"); // no-sandbox 옵션 추가
-            options.addArguments("--remote-debugging-port=9515"); // unknown error: DevToolsActivePort file doesn't exist
-            options.addArguments("--allowed-ips=" + String.join(",", allowedIps));
-            options.addArguments("--disable-dev-shm-usage");
+            // options.addArguments("--remote-debugging-port=9515"); // unknown error: DevToolsActivePort file doesn't exist
+            // options.addArguments("--disable-dev-shm-usage");
 
 
             return new ChromeDriver(service, options);
