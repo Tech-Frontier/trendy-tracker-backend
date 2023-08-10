@@ -91,6 +91,7 @@ public class UrlReader {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--headless"); // headless 모드 활성화
             options.addArguments("--no-sandbox"); // no-sandbox 옵션 추가
+            options.addArguments("--disable-dev-shm-usage"); //  unknown error: session deleted because of page crash
 
             return new ChromeDriver(service, options);
         }
