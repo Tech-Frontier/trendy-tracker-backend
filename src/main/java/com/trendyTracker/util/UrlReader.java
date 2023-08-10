@@ -2,6 +2,7 @@ package com.trendyTracker.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -15,11 +16,16 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class UrlReader {
     static Logger logger = LoggerFactory.getLogger(UrlReader.class);
+    
+    // 웹 페이지 로딩을 위한 대기 시간 (초 단위)
+    private static final int PAGE_LOAD_TIMEOUT = 10;
 
     public static Set<String> getUrlContent(String url) throws IOException {
         List<String> techList = TechListSingleton.getInstance().getTechList();
@@ -27,8 +33,16 @@ public class UrlReader {
         
         try {
             driver.get(url);
+
+            // 웹 페이지가 로딩될 때까지 대기
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(PAGE_LOAD_TIMEOUT));
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
+
             WebElement bodyElement = driver.findElement(By.tagName("body"));
             String pageSource = bodyElement.getText();
+            logger.info("*****************");
+            logger.info(pageSource);
+            logger.info("*****************");
 
             // 영어 단어를 추출하는 정규 표현식
             String regex = "\\b[a-zA-Z]+\\b";
@@ -77,7 +91,6 @@ public class UrlReader {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--headless"); // headless 모드 활성화
             options.addArguments("--no-sandbox"); // no-sandbox 옵션 추가
-
 
             return new ChromeDriver(service, options);
         }
