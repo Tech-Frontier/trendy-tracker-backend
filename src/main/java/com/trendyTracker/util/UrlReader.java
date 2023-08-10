@@ -77,8 +77,6 @@ public class UrlReader {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--headless"); // headless 모드 활성화
             options.addArguments("--no-sandbox"); // no-sandbox 옵션 추가
-            // options.addArguments("--remote-debugging-port=9515"); // unknown error: DevToolsActivePort file doesn't exist
-            // options.addArguments("--disable-dev-shm-usage");
 
 
             return new ChromeDriver(service, options);

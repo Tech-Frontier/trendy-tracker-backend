@@ -15,7 +15,7 @@ RUN ./gradlew clean build --no-daemon -x test
 FROM openjdk:17.0-slim
 
 # 필요한 라이브러리 설치
-RUN apt-get update && apt-get install -y libglib2.0-0 libnss3 libxcb1 wget unzip chromium
+RUN apt-get update && apt-get install -y libglib2.0-0 libnss3 libxcb1 wget unzip
 
 EXPOSE 8080
 
