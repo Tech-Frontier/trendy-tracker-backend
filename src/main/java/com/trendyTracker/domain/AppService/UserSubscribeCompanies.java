@@ -3,6 +3,8 @@ package com.trendyTracker.domain.AppService;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import com.trendyTracker.domain.Job.Company;
 
@@ -29,10 +31,12 @@ public class UserSubscribeCompanies {
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "company_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Company company;
 
     @ColumnDefault("true")

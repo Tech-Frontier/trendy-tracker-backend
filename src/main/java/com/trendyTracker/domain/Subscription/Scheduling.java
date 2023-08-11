@@ -3,6 +3,8 @@ package com.trendyTracker.domain.Subscription;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,6 +29,7 @@ public class Scheduling {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="template_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Template template;
 
     private LocalDateTime create_time;

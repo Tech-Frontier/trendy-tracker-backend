@@ -3,6 +3,9 @@ package com.trendyTracker.domain.Job;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,6 +35,7 @@ public class Recruit {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="company_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Company company;
 
     private String occupation;
