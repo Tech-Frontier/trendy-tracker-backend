@@ -1,5 +1,8 @@
 package com.trendyTracker.domain.Job;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -23,9 +26,11 @@ public class RecruitTech {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="recruit_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Recruit recruit;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name ="tech_name")
     private Tech tech;
 
