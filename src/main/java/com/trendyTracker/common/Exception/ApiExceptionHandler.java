@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.trendyTracker.common.Exception.ExceptionDetail.AlreadyExistException;
 import com.trendyTracker.common.Exception.ExceptionDetail.NoResultException;
 
+import jakarta.validation.ValidationException;
+
 @ControllerAdvice
 public class ApiExceptionHandler {
     /*
@@ -42,6 +44,16 @@ public class ApiExceptionHandler {
         errors.add(ex.getMessage());
 
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, "already exist", errors);
+
+        return new ResponseEntity<>(apiError, apiError.getStatus());
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<?> handleValidationException(ValidationException ex) {
+        List<String> errors = new ArrayList<>();
+        errors.add(ex.getMessage());
+
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, "validation error", errors);
 
         return new ResponseEntity<>(apiError, apiError.getStatus());
     }

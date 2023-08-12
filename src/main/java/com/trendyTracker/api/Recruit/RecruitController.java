@@ -1,6 +1,7 @@
 package com.trendyTracker.api.Recruit;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.validation.annotation.Validated;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.trendyTracker.Dto.Recruit.RecruitDto;
@@ -22,6 +24,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotNull;
+import jakarta.xml.bind.ValidationException;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -36,7 +39,8 @@ public class RecruitController {
 
     @Operation(summary = "채용 공고 등록")
     @PostMapping(value = "/regist")
-    public Response<Long> regisitJobPostion(@RequestBody @Validated recruitRequest request) throws NoResultException, IOException {
+    public Response<Long> regisitJobPostion(
+        @RequestBody @Validated recruitRequest request) throws NoResultException, IOException {
 
         long id = recruitService.regisitJobPostion(request.url, request.company, request.occupation);
         return Response.success(200, "공고 목록이 조회되었습니다", id);
@@ -44,7 +48,8 @@ public class RecruitController {
 
     @Operation(summary = "채용 공고 조회")
     @GetMapping(value = "/id/{recruit_id}")
-    public Response<RecruitDto> getRecruitDetail(@PathVariable(name = "recruit_id") Long recruit_id) {
+    public Response<RecruitDto> getRecruitDetail(
+        @PathVariable(name = "recruit_id") Long recruit_id) {
 
         RecruitDto recruitInfo = recruitService.getRecruitInfo(recruit_id);
         return Response.success(200, "공고 목록이 조회되었습니다", recruitInfo);
@@ -52,10 +57,19 @@ public class RecruitController {
 
     @Operation(summary = "전체 채용 공고 조회")
     @GetMapping(value = "/list")
-    public Response<List<RecruitDto>> getRecruitsByCompany() throws NoResultException {
+    public Response<HashMap<String,Object>> getRecruits(
+        @RequestParam(name ="company", required = false, defaultValue = "*") String[] companies,
+        @RequestParam(name ="jobCategory",required = false) String[] jobCategories,
+        @RequestParam(name ="tech",required = false) String[] techs,
+        @RequestParam(name ="pageNo" ,required = false) Integer pageNo,
+        @RequestParam(name= "pageSize",required = false) Integer pageSize) throws NoResultException, ValidationException {
 
-        List<RecruitDto> recruitList = recruitService.getRecruitList();
-        return Response.success(200, "공고 목록이 조회되었습니다", recruitList);
+        List<RecruitDto> recruitList = recruitService.getRecruitList(companies,jobCategories,techs,pageNo,pageSize);
+        HashMap<String,Object> result = new HashMap<>();
+        result.put("totalCount", recruitList.size());
+        result.put("recruitList", recruitList);
+
+        return Response.success(200, "공고 목록이 조회되었습니다", result);
     }
 
     @Data

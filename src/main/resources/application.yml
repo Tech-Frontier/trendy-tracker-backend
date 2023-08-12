@@ -9,10 +9,8 @@ spring:
   jpa:
     hibernate:
       ddl-auto:
-    properties:
       hibernate:
-        show_sql: true
-        format_sql: true
-docker_hub:
-  username:
-  password:
+        show_sql:
+        format_sql:
+token:
+  value:
