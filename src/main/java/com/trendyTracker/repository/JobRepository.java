@@ -13,6 +13,6 @@ public interface JobRepository {
 
     Optional<RecruitDto> getRecruit(long id);
 
-    List<RecruitDto> getRecruitList();
+    List<RecruitDto> getRecruitList(String[] companies, String[] jobCategories, String[] techs);
 
 }

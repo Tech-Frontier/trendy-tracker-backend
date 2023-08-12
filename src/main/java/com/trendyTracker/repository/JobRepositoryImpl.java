@@ -1,6 +1,8 @@
 package com.trendyTracker.repository;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -9,6 +11,7 @@ import com.trendyTracker.domain.Job.*;
 import org.springframework.stereotype.Repository;
 
 import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.trendyTracker.Dto.Recruit.RecruitDto;
 
@@ -26,6 +29,9 @@ public class JobRepositoryImpl implements JobRepository {
     @Override
     @Transactional
     public Company registeCompany(String company) {
+    /*
+     * 'Company' Table 저장
+     */
         queryFactory = new JPAQueryFactory(em);
         QCompany qCompany = QCompany.company;
         Company newCompany = new Company();
@@ -46,6 +52,9 @@ public class JobRepositoryImpl implements JobRepository {
     @Override
     @Transactional
     public long registJobPosition(String url, Company company, String jobPosition, List<String> techList) {
+    /*
+     * 'Recruit',  'RecruitTech'  Table 저장
+     */
         List<RecruitTech> recruitTechList = new ArrayList<>();
         Recruit recruit = new Recruit();
         recruit.addRecruit(url, company, jobPosition);
@@ -65,6 +74,9 @@ public class JobRepositoryImpl implements JobRepository {
     //#region [READ]
     @Override
     public Optional<RecruitDto> getRecruit(long recruit_id) {
+    /*
+     * recruit_id 로 채용공고 조회
+     */
         Recruit recruit = em.find(Recruit.class, recruit_id);
 
         List<String> techList = recruit.getUrlTechs()
@@ -72,51 +84,65 @@ public class JobRepositoryImpl implements JobRepository {
             .collect(Collectors.toList());
 
         RecruitDto result = new RecruitDto(recruit_id, recruit.getCompany(), 
-                                            recruit.getOccupation(),recruit.getUrl(), 
+                                            recruit.getJobCategory(),recruit.getUrl(), 
                                             recruit.getCreate_time());
         result.setTechList(techList);
         return Optional.of(result);    
     }
 
     @Override
-    public List<RecruitDto> getRecruitList() {
+    public List<RecruitDto> getRecruitList(String[] companies, String[] jobCategories, String[] techs) {
+    /*
+     * 'companies', 'jobCategories', 'techs' 별 채용공고 필터링
+     */
         queryFactory = new JPAQueryFactory(em);
         QRecruit qRecruit = QRecruit.recruit;
 
-        List<RecruitDto> recruitDtoList = queryFactory.select(Projections.constructor(RecruitDto.class, 
-                        qRecruit.id, qRecruit.company, qRecruit.occupation,
+        JPAQuery<RecruitDto> query = queryFactory.select(Projections.constructor(RecruitDto.class, 
+                        qRecruit.id, qRecruit.company, qRecruit.jobCategory,
                         qRecruit.url, qRecruit.create_time))
-                    .from(qRecruit)
-                    .fetch();
+                    .from(qRecruit);
+        
+        if (companies != null && companies.length >0)
+            query.where(qRecruit.company.company_name.in(companies));
+        
+        if (jobCategories != null && jobCategories.length >0)
+            query.where(qRecruit.jobCategory.in(jobCategories));
 
-        for (int i =0; i < recruitDtoList.size(); i++) {
-            List<String> techList = em.find(Recruit.class ,recruitDtoList.get(i).getId()).getUrlTechs()
-                .stream().map(recruitTech -> recruitTech.getTech().getTech_name())
-                .collect(Collectors.toList());
-                
-            recruitDtoList.get(i).setTechList(techList);
-        }
+        List<RecruitDto> recruitDtoList = filteringTechs(techs, query.fetch());
         return recruitDtoList;
     }
 
-    public List<RecruitDto> getRecruitListByCompany(String company) {
-        queryFactory = new JPAQueryFactory(em);
-        QRecruit qRecruit = QRecruit.recruit;
+    private List<RecruitDto> filteringTechs(String[] techs, List<RecruitDto> recruitDtoList) {
+    /**
+     * 사용자가 지정한 tech 가 있으면 필터링
+     */
+        List<Integer> indexList = new ArrayList<>();
+        List<String> techList = new ArrayList<>();
 
-        List<RecruitDto> recruitDtoList = queryFactory.select(Projections.constructor(RecruitDto.class, 
-                        qRecruit.id, qRecruit.company, qRecruit.occupation,
-                        qRecruit.url, qRecruit.create_time))
-                    .from(qRecruit).where(qRecruit.company.company_name.eq(company))
-                    .fetch();
+        if (techs != null && techs.length >0) 
+            techList = Arrays.asList(techs);
 
         for (int i =0; i < recruitDtoList.size(); i++) {
-            List<String> techList = em.find(Recruit.class ,recruitDtoList.get(i).getId()).getUrlTechs()
+            List<String> recruitTechList = em.find(Recruit.class ,recruitDtoList.get(i).getId()).getUrlTechs()
                 .stream().map(recruitTech -> recruitTech.getTech().getTech_name())
+                .map(String::toLowerCase)
                 .collect(Collectors.toList());
-                
-            recruitDtoList.get(i).setTechList(techList);
+            
+            // 사용자 지정 tech 없는 index 추출 
+            if (techList.size() >0) 
+                if(recruitTechList.stream().noneMatch(techList::contains)) 
+                    indexList.add(i);
+
+            recruitDtoList.get(i).setTechList(recruitTechList);
         }
+        // 실제 필터링
+        Collections.sort(indexList, Collections.reverseOrder());
+        for (int integer : indexList) 
+            recruitDtoList.remove(integer);
+        
         return recruitDtoList;
     }
+   
     //#endregion
 }
