@@ -40,9 +40,6 @@ public class UrlReader {
 
             WebElement bodyElement = driver.findElement(By.tagName("body"));
             String pageSource = bodyElement.getText();
-            logger.info("*****************");
-            logger.info(pageSource);
-            logger.info("*****************");
 
             // 영어 단어를 추출하는 정규 표현식
             String regex = "\\b[a-zA-Z]+\\b";

@@ -56,24 +56,6 @@ public class TechController {
         return Response.success(200, "개발 스택 목록이 조회됐습니다", techList);
     }
 
-    @GetMapping(value ="/techListSingleton")
-    public Response<List<String>>getTechListSingleton(){
-        TechListSingleton instance = TechListSingleton.getInstance();
-        List<String> techList = instance.getTechList();
-
-        return Response.success(200, "개발 스택조회",techList);
-    }
-
-    @GetMapping(value ="/setTechListSingleton")
-    public Response<List<String>>setTechListSingleton(){
-        List<String> techList = techService.getTechList();
-        TechListSingleton instance = TechListSingleton.getInstance();
-        instance.setTechList(techList);
-        List<String> techList2 = instance.getTechList();
-
-        return Response.success(200, "개발 스택조회",techList2);
-    }
-
     @Data
     static class techRequest {
         @NotNull
