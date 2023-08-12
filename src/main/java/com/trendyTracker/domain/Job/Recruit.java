@@ -38,8 +38,9 @@ public class Recruit {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Company company;
 
-    private String occupation;
+    private String jobCategory;
 
+    @Column(length = 300)
     private String url;
 
     private LocalDateTime create_time;
@@ -49,10 +50,10 @@ public class Recruit {
     private Boolean is_active;
 
     // 연관관계 메서드
-    public void addRecruit(String url, Company company, String occupation){
+    public void addRecruit(String url, Company company, String jobCategory){
         this.url = url;
         this.company = company;
-        this.occupation = occupation;
+        this.jobCategory = jobCategory;
         this.create_time = LocalDateTime.now();
         this.is_active = false;
     }
