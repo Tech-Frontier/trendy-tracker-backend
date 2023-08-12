@@ -14,6 +14,7 @@ import com.trendyTracker.common.Exception.ExceptionDetail.AlreadyExistException;
 import com.trendyTracker.common.config.Loggable;
 import com.trendyTracker.common.response.Response;
 import com.trendyTracker.service.TechService;
+import com.trendyTracker.util.TechListSingleton;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;

@@ -2,4 +2,7 @@ docker-build:
 	docker build -f ./Dockerfile -t trendy-tracker .
 
 docker-run:
-	docker run -p 80:8080 trendy-tracker 
+	docker run --network host trendy-tracker 
+
+docker-set:
+	docker cp /usr/local/bin/ infallible_bell:/usr/local/

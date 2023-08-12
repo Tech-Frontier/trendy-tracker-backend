@@ -2,6 +2,7 @@ package com.trendyTracker.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -13,15 +14,30 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class UrlReader {
+    static Logger logger = LoggerFactory.getLogger(UrlReader.class);
+    
+    // 웹 페이지 로딩을 위한 대기 시간 (초 단위)
+    private static final int PAGE_LOAD_TIMEOUT = 10;
+
     public static Set<String> getUrlContent(String url) throws IOException {
         List<String> techList = TechListSingleton.getInstance().getTechList();
         WebDriver driver = setChromeDriver();
         
         try {
             driver.get(url);
+
+            // 웹 페이지가 로딩될 때까지 대기
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(PAGE_LOAD_TIMEOUT));
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
+
             WebElement bodyElement = driver.findElement(By.tagName("body"));
             String pageSource = bodyElement.getText();
 
@@ -39,23 +55,47 @@ public class UrlReader {
                 .anyMatch(word -> tech.equalsIgnoreCase(word)))
                 .collect(Collectors.toSet());
 
-        } finally {
+        } catch(Exception ex){
+            logger.info("getUrlContent");
+            logger.error(ex.getMessage());
+            return null;
+        }
+         finally {
             driver.quit();
         }
     }
 
     private static WebDriver setChromeDriver() {
-        String osName = System.getProperty("os.name").toLowerCase();
-        if (osName.contains("mac")) 
-            System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
-
-        else if (osName.contains("linux") && osName.contains("arm")) 
-            System.setProperty("webdriver.chrome.driver", "/usr/lib/chromium-browser/chromedriver");
-
-        else 
-            throw new RuntimeException("chrome driver not exist");
+        try{
+            String osName = System.getProperty("os.name").toLowerCase();
+            ChromeDriverService.Builder serviceBuilder = new ChromeDriverService.Builder();
         
-        ChromeOptions options = new ChromeOptions().addArguments("--headless");
-        return new ChromeDriver(options);
+            // mac
+            if (osName.contains("mac")) 
+                serviceBuilder.usingDriverExecutable(new File("/opt/homebrew/bin/chromedriver"));
+
+            // raspberryPi
+            else if (osName.contains("linux") && osName.contains("arm")) 
+                serviceBuilder.usingDriverExecutable(new File("/usr/lib/chromium-browser/chromedriver"));
+
+            // docker container
+            else if (osName.contains("linux"))
+                serviceBuilder.usingDriverExecutable(new File("/usr/local/bin/chromedriver"));
+            
+            ChromeDriverService service = serviceBuilder.usingPort(9515).build();
+            service.start();
+            
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--headless"); // headless 모드 활성화
+            options.addArguments("--no-sandbox"); // no-sandbox 옵션 추가
+            options.addArguments("--disable-dev-shm-usage"); //  unknown error: session deleted because of page crash
+
+            return new ChromeDriver(service, options);
+        }
+        catch(Exception ex){
+            logger.info("setChromeDriver");
+            logger.error(ex.getMessage());
+            return null;
+        }
     }
 }
