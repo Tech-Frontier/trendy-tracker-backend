@@ -14,12 +14,10 @@ RUN ./gradlew clean build --no-daemon -x test
 # 실행 단계에서 사용할 ARM 아키텍처에 맞는 JDK 이미지
 FROM openjdk:17.0-slim
 
-# 필요한 라이브러리 설치
-RUN apt-get update && apt-get install -y libglib2.0-0 libnss3 libxcb1 wget unzip
-
 # Chromium 관련 패키지 설치
-RUN apt-get install -y chromium-common=112.0.5615.138-1~deb11u1 chromium-sandbox
-RUN apt-get install -y chromium=112.0.5615.138-1~deb11u1 chromium-driver=112.0.5615.138-1~deb11u1
+RUN apt-get update
+RUN apt-get install -y chromium # 115 version
+RUN apt-get install -y chromium-driver # 115 version
 
 # Chromedriver 복사
 RUN cp /usr/bin/chromedriver /usr/local/bin/
