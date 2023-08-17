@@ -1,5 +1,5 @@
 docker-build:
-	docker build -f ./Dockerfile -t trendy-tracker .
+	docker build -f ./Dockerfile -t jinsujj/trendy-tracker-backend:latest .
 
 docker-run:
 	docker run --network host trendy-tracker 
