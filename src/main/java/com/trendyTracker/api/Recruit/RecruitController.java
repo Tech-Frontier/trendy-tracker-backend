@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,6 +54,15 @@ public class RecruitController {
 
         RecruitDto recruitInfo = recruitService.getRecruitInfo(recruit_id);
         return Response.success(200, "공고 목록이 조회되었습니다", recruitInfo);
+    }
+
+    @Operation(summary = "채용 공고 삭제")
+    @DeleteMapping(value = "delete/id/{recruit_id}")
+    public Response<Void> deleteRecruitDetail(
+        @PathVariable(name = "recruit_id") Long recruit_id) {
+
+        recruitService.deleteRecruit(recruit_id);
+        return Response.success(200, "공고 목록이 삭제되었습니다.");
     }
 
     @Operation(summary = "전체 채용 공고 조회")

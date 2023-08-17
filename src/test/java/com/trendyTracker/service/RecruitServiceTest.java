@@ -1,5 +1,7 @@
 package com.trendyTracker.service;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.webjars.NotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -21,20 +23,33 @@ public class RecruitServiceTest {
     @Autowired
     private RecruitService recruitService;
 
+    // Test 채용공고 
+    private final String url = "https://www.owl-dev.me/blog/26";
+    private final String company = "owl";
+    private final String jobCategory ="fullstack";
+
    
     @Test
     @DisplayName("채용 공고 등록")
     public void regisitJobPostion() throws NoResultException, IOException{
-        // given 
-        String url = "https://www.owl-dev.me/blog/26";
-        String company ="owl";
-        String jobCategory ="fullstack";
-
-        // when 
+        // given, when 
         long recruit_id = recruitService.regisitJobPostion(url, company, jobCategory);
 
         // then 
         Assertions.assertThat(recruit_id).isGreaterThan(0);
+    }
+
+    @Test
+    @DisplayName("채용 공고 삭제")
+    public void deleteJobPostion() throws NoResultException, IOException{
+        // given 
+        long recruit_id = recruitService.regisitJobPostion(url, company, jobCategory);
+
+        // when 
+        recruitService.deleteRecruit(recruit_id);
+
+        // then 
+        assertThrows(NotFoundException.class, () -> recruitService.getRecruitInfo(recruit_id));
     }
     
     @Test
@@ -72,7 +87,7 @@ public class RecruitServiceTest {
     public void getRecruitsByCompanies_jobCategory() throws ValidationException, NoResultException {
         // given 
         String[] companies = {"toss","naver"};
-        String[] jobCategories = {"backend", "robotics"};
+        String[] jobCategories = {"backend", "Embeded"};
 
         //when
         List<RecruitDto> recruitList = recruitService.getRecruitList(
@@ -115,4 +130,6 @@ public class RecruitServiceTest {
         // then
         Assertions.assertThat(recruitList.size()).isGreaterThan(0);
     }
+
+
 }

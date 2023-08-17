@@ -30,6 +30,10 @@ public class Response<T> {
         return new Response<T>(httpStatusCode, msg, data);
     }
 
+    public static <T> Response<T> success(int httpStatusCode, String msg) {
+        return new Response<T>(httpStatusCode, msg, null);
+    }
+
     public static <T> Response<T> fail(int httpStatusCode, String errorMessage) {
         return new Response<T>(httpStatusCode, errorMessage, null);
     }

@@ -30,7 +30,7 @@ public class JobRepositoryImpl implements JobRepository {
     @Transactional
     public Company registeCompany(String company) {
     /*
-     * 'Company' Table 저장
+     * 'Company' 저장
      */
         queryFactory = new JPAQueryFactory(em);
         QCompany qCompany = QCompany.company;
@@ -53,7 +53,7 @@ public class JobRepositoryImpl implements JobRepository {
     @Transactional
     public long registJobPosition(String url, Company company, String jobPosition, List<String> techList) {
     /*
-     * 'Recruit',  'RecruitTech'  Table 저장
+     * 'Recruit',  'RecruitTech'  저장
      */
         List<RecruitTech> recruitTechList = new ArrayList<>();
         Recruit recruit = new Recruit();
@@ -71,6 +71,20 @@ public class JobRepositoryImpl implements JobRepository {
     }
     //#endregion
 
+    //#region [UPDATE]
+    @Override
+    @Transactional
+    public void deleteJobPosition(long recruit_id) {
+    /*
+     * 'Recruit' 비활성화
+     */
+        Recruit recruit = em.find(Recruit.class, recruit_id);
+        recruit.setIs_active(false);
+
+        em.persist(recruit);
+    }
+    //#endregion
+
     //#region [READ]
     @Override
     public Optional<RecruitDto> getRecruit(long recruit_id) {
@@ -78,6 +92,8 @@ public class JobRepositoryImpl implements JobRepository {
      * recruit_id 로 채용공고 조회
      */
         Recruit recruit = em.find(Recruit.class, recruit_id);
+        if(!recruit.getIs_active()) 
+            return Optional.empty();
 
         List<String> techList = recruit.getUrlTechs()
             .stream().map(recruitTech -> recruitTech.getTech().getTech_name())
@@ -101,7 +117,7 @@ public class JobRepositoryImpl implements JobRepository {
         JPAQuery<RecruitDto> query = queryFactory.select(Projections.constructor(RecruitDto.class, 
                         qRecruit.id, qRecruit.company, qRecruit.jobCategory,
                         qRecruit.url, qRecruit.create_time))
-                    .from(qRecruit);
+                    .from(qRecruit).where(qRecruit.is_active.eq(true));
         
         if (companies != null && companies.length >0)
             query.where(qRecruit.company.company_name.in(companies));
@@ -143,6 +159,6 @@ public class JobRepositoryImpl implements JobRepository {
         
         return recruitDtoList;
     }
-   
+
     //#endregion
 }
