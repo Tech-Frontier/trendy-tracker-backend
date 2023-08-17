@@ -57,7 +57,7 @@ public class RecruitController {
     }
 
     @Operation(summary = "채용 공고 삭제")
-    @DeleteMapping(value = "/id/{recruit_id}")
+    @DeleteMapping(value = "delete/id/{recruit_id}")
     public Response<Void> deleteRecruitDetail(
         @PathVariable(name = "recruit_id") Long recruit_id) {
 
