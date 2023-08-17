@@ -56,7 +56,6 @@ public class UrlReader {
                 .collect(Collectors.toSet());
 
         } catch(Exception ex){
-            logger.info("getUrlContent");
             logger.error(ex.getMessage());
             return null;
         }
@@ -93,7 +92,6 @@ public class UrlReader {
             return new ChromeDriver(service, options);
         }
         catch(Exception ex){
-            logger.info("setChromeDriver");
             logger.error(ex.getMessage());
             return null;
         }
