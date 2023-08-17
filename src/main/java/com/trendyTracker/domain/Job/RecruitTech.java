@@ -30,7 +30,6 @@ public class RecruitTech {
     private Recruit recruit;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name ="tech_name")
     private Tech tech;
 
