@@ -55,12 +55,6 @@ public class Recruit {
         this.company = company;
         this.jobCategory = jobCategory;
         this.create_time = LocalDateTime.now();
-        this.is_active = false;
-    }
-
-    public void updateTechList(List<RecruitTech> techList){
-        this.urlTechs = techList;
         this.is_active = true;
     }
-
 }

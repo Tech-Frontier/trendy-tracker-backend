@@ -11,6 +11,8 @@ public interface JobRepository {
 
     long registJobPosition(String url, Company company, String jobPosition, List<String> techList);
 
+    void deleteJobPosition(long recruit_id);
+
     Optional<RecruitDto> getRecruit(long id);
 
     List<RecruitDto> getRecruitList(String[] companies, String[] jobCategories, String[] techs);

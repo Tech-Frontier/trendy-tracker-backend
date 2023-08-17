@@ -33,6 +33,11 @@ public class RecruitService {
         return jobRepository.registJobPosition(url, newCompany, jobCategory.toLowerCase(), new ArrayList<>(techList));
     }
 
+    public void deleteRecruit(long recruit_id){
+        var recruitInfo = getRecruitInfo(recruit_id);
+        jobRepository.deleteJobPosition(recruitInfo.getId());
+    }
+
     public RecruitDto getRecruitInfo(long recruit_id) {
         Optional<RecruitDto> result = jobRepository.getRecruit(recruit_id);
         result.orElseThrow(() -> new NotFoundException("공고 목록이 없습니다"));
