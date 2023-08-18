@@ -8,7 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.trendyTracker.domain.Job.Tech;
+import com.trendyTracker.Job.domain.Tech;
 
 @SpringBootTest
 public class UrlReaderTest {

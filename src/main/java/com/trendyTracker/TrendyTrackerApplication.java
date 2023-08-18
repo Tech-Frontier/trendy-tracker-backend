@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-import com.trendyTracker.service.TechService;
+import com.trendyTracker.Job.service.TechService;
 
 import lombok.RequiredArgsConstructor;
 

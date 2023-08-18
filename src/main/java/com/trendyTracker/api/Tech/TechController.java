@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.trendyTracker.Job.service.TechService;
 import com.trendyTracker.common.Exception.ExceptionDetail.AlreadyExistException;
 import com.trendyTracker.common.config.Loggable;
 import com.trendyTracker.common.response.Response;
-import com.trendyTracker.service.TechService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;

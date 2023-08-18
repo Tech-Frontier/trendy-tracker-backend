@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.trendyTracker.Dto.Recruit.RecruitDto;
+import com.trendyTracker.Job.dto.RecruitDto;
+import com.trendyTracker.Job.service.RecruitService;
 import com.trendyTracker.common.Exception.ExceptionDetail.NoResultException;
 import com.trendyTracker.common.Exception.ExceptionDetail.NotAllowedValueException;
 import com.trendyTracker.common.config.Loggable;
 import com.trendyTracker.common.response.Response;
-import com.trendyTracker.service.RecruitService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
