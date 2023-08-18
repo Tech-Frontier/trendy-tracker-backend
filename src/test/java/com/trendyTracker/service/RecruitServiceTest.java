@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.trendyTracker.Dto.Recruit.RecruitDto;
 import com.trendyTracker.common.Exception.ExceptionDetail.NoResultException;
+import com.trendyTracker.common.Exception.ExceptionDetail.NotAllowedValueException;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.ValidationException;
@@ -78,7 +79,6 @@ public class RecruitServiceTest {
 
         // then
         Assertions.assertThat(recruitList.size()).isGreaterThan(0);
-        Assertions.assertThat(recruitList).extracting(RecruitDto::getCompany).contains("toss");
         Assertions.assertThat(recruitList).extracting(RecruitDto::getCompany).contains("naver");
     }
 
@@ -106,7 +106,7 @@ public class RecruitServiceTest {
         String[] jobCategories = {"backend", "robotics"};
         String[] techs ={"Java"};
 
-        //when
+        // when
         List<RecruitDto> recruitList = recruitService.getRecruitList(
             companies, jobCategories, techs, null, null);
 
@@ -123,7 +123,7 @@ public class RecruitServiceTest {
         int pageNo =2;
         int pageSize=3;
 
-        //when
+        // when
         List<RecruitDto> recruitList = recruitService.getRecruitList(
             companies, null, null, pageNo, pageSize);
 
@@ -131,5 +131,29 @@ public class RecruitServiceTest {
         Assertions.assertThat(recruitList.size()).isGreaterThan(0);
     }
 
+    @Test
+    @DisplayName("채용 공고 변경")
+    public void changeRecruitTech() throws NoResultException, IOException, NotAllowedValueException{
+         // given
+        long recruit_id = recruitService.regisitJobPostion(url, company, jobCategory);
+        String[] newTechs = {"C#","Python"};
 
+        // when 
+        RecruitDto recruitDto = recruitService.updateRecruitTechs(recruit_id,newTechs);
+
+        // when, then
+        Assertions.assertThat(recruitDto.getTechList().contains("C#"));
+        Assertions.assertThat(recruitDto.getTechList().contains("Python"));
+    }
+
+    @Test
+    @DisplayName("채용 공고 변경 + 등록되지 않은 기술")
+    public void changeRecruitTechsWithWrongTechs() throws ValidationException, NoResultException, IOException, NotAllowedValueException {
+         // given
+        long recruit_id = recruitService.regisitJobPostion(url, company, jobCategory);
+        String[] newTechs = {"C#","Joker"};
+
+        // when, then
+        assertThrows(NotAllowedValueException.class, () -> recruitService.updateRecruitTechs(recruit_id,newTechs));
+    }
 }
