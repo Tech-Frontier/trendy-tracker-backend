@@ -1,7 +1,8 @@
 package com.trendyTracker.repository;
 
 import java.util.List;
-import java.util.Optional;
+
+import com.trendyTracker.domain.Job.Tech;
 
 public interface TechRepository {
     Boolean isTechRegist(String tech_name);
@@ -10,5 +11,5 @@ public interface TechRepository {
 
     void deleteTechStack(String tech_name);
 
-    Optional<List<String>> getTechList();
+    List<Tech> getTechList();
 }

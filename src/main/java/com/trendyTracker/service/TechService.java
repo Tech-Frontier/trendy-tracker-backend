@@ -1,12 +1,13 @@
 package com.trendyTracker.service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
 import com.trendyTracker.common.Exception.ExceptionDetail.AlreadyExistException;
+import com.trendyTracker.domain.Job.Tech;
 import com.trendyTracker.repository.TechRepository;
 import com.trendyTracker.util.TechListSingleton;
 
@@ -33,13 +34,17 @@ public class TechService {
     }
 
     public List<String> getTechList() {
-        Optional<List<String>> techList = techRepository.getTechList();
-        techList.orElseThrow(() -> new NotFoundException("개발 스택 내용이 없습니다"));
+        List<Tech> techList = techRepository.getTechList();
+        if (techList.size() ==0)
+            throw new NotFoundException("개발 스택 내용이 없습니다");
 
         // Singleton 데이터 삽입
         TechListSingleton techListSingleton = TechListSingleton.getInstance();
-        techListSingleton.setTechList(techList.get());
+        techListSingleton.setTechList(techList);
 
-        return techList.get();
+        List<String> techs = techList.stream()
+                                .map(tech -> tech.getTech_name())
+                                .collect(Collectors.toList());
+        return techs;
     }
 }

@@ -3,9 +3,11 @@ package com.trendyTracker.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.trendyTracker.domain.Job.Tech;
+
 public class TechListSingleton {
     private static TechListSingleton instance;
-    private List<String> techList;
+    private List<Tech> techList;
 
     private TechListSingleton(){
         techList = new ArrayList<>();
@@ -18,11 +20,11 @@ public class TechListSingleton {
         return instance;
     }
 
-    public void setTechList(List<String> techList){
+    public void setTechList(List<Tech> techList){
         this.techList = techList;
     }
 
-    public List<String> getTechList(){
+    public List<Tech> getTechList(){
         return techList;
     }
 }
