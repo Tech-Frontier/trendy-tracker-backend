@@ -57,11 +57,7 @@ public class RecruitController {
     }
 
     @Operation(summary = "채용 공고 삭제")
-<<<<<<< HEAD
     @DeleteMapping(value = "delete/id/{recruit_id}")
-=======
-    @DeleteMapping(value = "/id/{recruit_id}")
->>>>>>> dbfe8ae (채용공고 삭제 로직 추가)
     public Response<Void> deleteRecruitDetail(
         @PathVariable(name = "recruit_id") Long recruit_id) {
 
