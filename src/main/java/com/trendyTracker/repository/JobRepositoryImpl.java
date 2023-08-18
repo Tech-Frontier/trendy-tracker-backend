@@ -93,15 +93,18 @@ public class JobRepositoryImpl implements JobRepository {
      * 'RecruitTech' 변경
      */
         Recruit recruit = em.find(Recruit.class, recruit_id);
-        recruit.updateUrlTechs(techList);
+        List<RecruitTech> urlTechs = recruit.getUrlTechs();
+        for (RecruitTech recruitTech : urlTechs) {
+            em.remove(recruitTech);
+        }
 
+        recruit.updateUrlTechs(techList);
         em.persist(recruit);
         
-        List<String> techNameList = TechUtils.getTechNameList(techList);
         RecruitDto result = new RecruitDto(recruit_id, recruit.getCompany(), 
-                                            recruit.getJobCategory(),recruit.getUrl(), 
-                                            recruit.getCreate_time(),
-                                            techNameList);
+                                    recruit.getJobCategory(),recruit.getUrl(), 
+                                    recruit.getCreate_time(),
+                                    TechUtils.getTechNameList(techList));
         return Optional.of(result);
     }
     //#endregion
