@@ -12,8 +12,11 @@ import org.webjars.NotFoundException;
 
 import com.trendyTracker.Dto.Recruit.RecruitDto;
 import com.trendyTracker.common.Exception.ExceptionDetail.NoResultException;
+import com.trendyTracker.common.Exception.ExceptionDetail.NotAllowedValueException;
 import com.trendyTracker.domain.Job.Company;
+import com.trendyTracker.domain.Job.Tech;
 import com.trendyTracker.repository.JobRepository;
+import com.trendyTracker.util.TechUtils;
 import com.trendyTracker.util.UrlReader;
 
 import jakarta.validation.ValidationException;
@@ -25,7 +28,10 @@ public class RecruitService {
     private final JobRepository jobRepository;
 
      public long regisitJobPostion(String url, String companyName, String jobCategory) throws NoResultException, IOException {
-        Set<String> techList = UrlReader.getUrlContent(url);
+    /*
+     * url, company, jobCategory 를 활용해 채용공고 등록합니다
+     */
+        Set<Tech> techList = UrlReader.getUrlContent(url);
         if (techList.size() == 0)
             throw new NoResultException("해당 url 에서 tech 가 발견되지 않았습니다");
 
@@ -33,20 +39,43 @@ public class RecruitService {
         return jobRepository.registJobPosition(url, newCompany, jobCategory.toLowerCase(), new ArrayList<>(techList));
     }
 
-    public void deleteRecruit(long recruit_id){
-        var recruitInfo = getRecruitInfo(recruit_id);
-        jobRepository.deleteJobPosition(recruitInfo.getId());
-    }
-
     public RecruitDto getRecruitInfo(long recruit_id) {
+    /*
+     * 채용공고 조회합니다.
+     */
         Optional<RecruitDto> result = jobRepository.getRecruit(recruit_id);
         result.orElseThrow(() -> new NotFoundException("공고 목록이 없습니다"));
 
         return result.get();
     }
 
+    public void deleteRecruit(long recruit_id){
+    /*
+     * 채용공고 비활성화 합니다.
+     */
+        var recruitInfo = getRecruitInfo(recruit_id);
+        jobRepository.deleteJobPosition(recruitInfo.getId());
+    }
+
+    public RecruitDto updateRecruitTechs(long recruit_id, String[] techs) throws NotAllowedValueException{
+    /*
+     * 채용 공고의 기술 스택을 변경합니다.
+     */
+        var recruitInfo = getRecruitInfo(recruit_id);
+        if(TechUtils.isTechNotExist(techs))
+            throw new NotAllowedValueException("존재하지 않는 기술이 존재합니다");
+
+        List<Tech> techList = TechUtils.makeTechs(techs);
+        Optional<RecruitDto> result = jobRepository.updateRecruitTech(recruitInfo.getId(),techList);
+        return result.get();
+    }
+
+
     public List<RecruitDto> getRecruitList(String[] companies, String[] jobCategories, String[] techs,
                                             Integer pageNo, Integer pageSize) throws NoResultException, ValidationException{
+    /*
+     * 채용 공고를 필터별로 조회합니다
+     */
         // 페이징 파리미터 처리 
         if ((pageNo == null && pageSize != null) || (pageNo != null && pageSize == null))
             throw new ValidationException("pageNo, pageSize Error");

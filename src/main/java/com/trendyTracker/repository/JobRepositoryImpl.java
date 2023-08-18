@@ -8,6 +8,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.trendyTracker.domain.Job.*;
+import com.trendyTracker.util.TechUtils;
+
 import org.springframework.stereotype.Repository;
 
 import com.querydsl.core.types.Projections;
@@ -51,7 +53,7 @@ public class JobRepositoryImpl implements JobRepository {
 
     @Override
     @Transactional
-    public long registJobPosition(String url, Company company, String jobPosition, List<String> techList) {
+    public long registJobPosition(String url, Company company, String jobPosition, List<Tech> techList) {
     /*
      * 'Recruit',  'RecruitTech'  저장
      */
@@ -59,9 +61,9 @@ public class JobRepositoryImpl implements JobRepository {
         Recruit recruit = new Recruit();
         recruit.addRecruit(url, company, jobPosition);
 
-        for (String newTech : techList) {
+        for (Tech newTech : techList) {
             RecruitTech recruitTech = new RecruitTech();
-            recruitTech.addRecruitTech(recruit, new Tech(newTech));
+            recruitTech.addRecruitTech(recruit, newTech);
             recruitTechList.add(recruitTech);
         }
         
@@ -82,6 +84,25 @@ public class JobRepositoryImpl implements JobRepository {
         recruit.setIs_active(false);
 
         em.persist(recruit);
+    }
+
+    @Override
+    @Transactional
+    public Optional<RecruitDto> updateRecruitTech(long recruit_id, List<Tech> techList) {
+    /*
+     * 'RecruitTech' 변경
+     */
+        Recruit recruit = em.find(Recruit.class, recruit_id);
+        recruit.updateUrlTechs(techList);
+
+        em.persist(recruit);
+        
+        List<String> techNameList = TechUtils.getTechNameList(techList);
+        RecruitDto result = new RecruitDto(recruit_id, recruit.getCompany(), 
+                                            recruit.getJobCategory(),recruit.getUrl(), 
+                                            recruit.getCreate_time(),
+                                            techNameList);
+        return Optional.of(result);
     }
     //#endregion
 
@@ -140,7 +161,8 @@ public class JobRepositoryImpl implements JobRepository {
             techList = Arrays.asList(techs);
 
         for (int i =0; i < recruitDtoList.size(); i++) {
-            List<String> recruitTechList = em.find(Recruit.class ,recruitDtoList.get(i).getId()).getUrlTechs()
+            List<String> recruitTechList = em.find(Recruit.class ,recruitDtoList.get(i).getId())
+                .getUrlTechs()
                 .stream().map(recruitTech -> recruitTech.getTech().getTech_name())
                 .map(String::toLowerCase)
                 .collect(Collectors.toList());
