@@ -3,7 +3,7 @@ package com.trendyTracker.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.trendyTracker.domain.Job.Tech;
+import com.trendyTracker.Job.domain.Tech;
 
 public class TechListSingleton {
     private static TechListSingleton instance;

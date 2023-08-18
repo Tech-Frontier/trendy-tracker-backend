@@ -11,7 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.trendyTracker.Dto.Recruit.RecruitDto;
+import com.trendyTracker.Job.dto.RecruitDto;
+import com.trendyTracker.Job.service.RecruitService;
 import com.trendyTracker.common.Exception.ExceptionDetail.NoResultException;
 import com.trendyTracker.common.Exception.ExceptionDetail.NotAllowedValueException;
 
