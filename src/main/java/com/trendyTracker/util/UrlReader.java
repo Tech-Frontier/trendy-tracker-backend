@@ -21,14 +21,16 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.trendyTracker.domain.Job.Tech;
+
 public class UrlReader {
     static Logger logger = LoggerFactory.getLogger(UrlReader.class);
     
     // 웹 페이지 로딩을 위한 대기 시간 (초 단위)
     private static final int PAGE_LOAD_TIMEOUT = 10;
 
-    public static Set<String> getUrlContent(String url) throws IOException {
-        List<String> techList = TechListSingleton.getInstance().getTechList();
+    public static Set<Tech> getUrlContent(String url) throws IOException {
+        List<Tech> techList = TechListSingleton.getInstance().getTechList();
         WebDriver driver = setChromeDriver();
         
         try {
@@ -52,7 +54,7 @@ public class UrlReader {
 
             return techList.stream()
                 .filter(tech -> englishWords.stream()
-                .anyMatch(word -> tech.equalsIgnoreCase(word)))
+                .anyMatch(word -> tech.getTech_name().equalsIgnoreCase(word)))
                 .collect(Collectors.toSet());
 
         } catch(Exception ex){

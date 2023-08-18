@@ -1,6 +1,7 @@
 package com.trendyTracker.domain.Job;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.annotations.OnDelete;
@@ -56,5 +57,16 @@ public class Recruit {
         this.jobCategory = jobCategory;
         this.create_time = LocalDateTime.now();
         this.is_active = true;
+    }
+    
+    public void updateUrlTechs(List<Tech> techsList){
+        List<RecruitTech> newRecruitTechs = new ArrayList<>();
+
+        for (Tech tech : techsList) {
+            RecruitTech recruitTech = new RecruitTech();
+            recruitTech.addRecruitTech(this, tech);
+            newRecruitTechs.add(recruitTech);
+        }
+        this.urlTechs = newRecruitTechs;
     }
 }

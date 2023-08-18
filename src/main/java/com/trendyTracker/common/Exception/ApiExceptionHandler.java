@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.trendyTracker.common.Exception.ExceptionDetail.AlreadyExistException;
 import com.trendyTracker.common.Exception.ExceptionDetail.NoResultException;
+import com.trendyTracker.common.Exception.ExceptionDetail.NotAllowedValueException;
 
 import jakarta.validation.ValidationException;
 
@@ -54,6 +55,16 @@ public class ApiExceptionHandler {
         errors.add(ex.getMessage());
 
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, "validation error", errors);
+
+        return new ResponseEntity<>(apiError, apiError.getStatus());
+    }
+
+    @ExceptionHandler(NotAllowedValueException.class)
+    public ResponseEntity<?> handleNotAllow(NotAllowedValueException ex) {
+        List<String> errors = new ArrayList<>();
+        errors.add(ex.getMessage());
+
+        ApiError apiError = new ApiError(HttpStatus.NOT_ACCEPTABLE, "not allowed value error", errors);
 
         return new ResponseEntity<>(apiError, apiError.getStatus());
     }

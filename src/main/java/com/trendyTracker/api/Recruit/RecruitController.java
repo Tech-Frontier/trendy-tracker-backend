@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.trendyTracker.Dto.Recruit.RecruitDto;
 import com.trendyTracker.common.Exception.ExceptionDetail.NoResultException;
+import com.trendyTracker.common.Exception.ExceptionDetail.NotAllowedValueException;
 import com.trendyTracker.common.config.Loggable;
 import com.trendyTracker.common.response.Response;
 import com.trendyTracker.service.RecruitService;
@@ -64,6 +66,17 @@ public class RecruitController {
         recruitService.deleteRecruit(recruit_id);
         return Response.success(200, "공고 목록이 삭제되었습니다.");
     }
+
+    @Operation(summary = "채용 공고 기술 수정")
+    @PutMapping(value = "update/id/{recruit_id}")
+    public Response<RecruitDto> updateRecruit(
+        @PathVariable(name = "recruit_id") Long recruit_id,
+        @RequestParam(name ="tech",required = true) String[] techs) throws NotAllowedValueException {
+        
+        RecruitDto recruitInfo = recruitService.updateRecruitTechs(recruit_id,techs);
+        return Response.success(200, "공고 스택이 변경되었습니다.",recruitInfo);
+    }
+
 
     @Operation(summary = "전체 채용 공고 조회")
     @GetMapping(value = "/list")

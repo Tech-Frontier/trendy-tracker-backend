@@ -1,11 +1,14 @@
 package com.trendyTracker.util;
 
+import java.util.List;
 import java.util.Set;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import com.trendyTracker.domain.Job.Tech;
 
 @SpringBootTest
 public class UrlReaderTest {
@@ -17,12 +20,11 @@ public class UrlReaderTest {
         var testUrl = "https://www.owl-dev.me/blog/62";
 
         // when
-        Set<String> urlContent = UrlReader.getUrlContent(testUrl);
+        Set<Tech> techs = UrlReader.getUrlContent(testUrl);
 
         // then
-        Assertions.assertThat(urlContent.contains("Java")).isTrue();
-        Assertions.assertThat(urlContent.contains("Python")).isTrue();
-        
-
+        List<String> techList = TechUtils.getTechNameList(techs);
+        Assertions.assertThat(techList.contains("Java")).isTrue();
+        Assertions.assertThat(techList.contains("Python")).isTrue();
     }
 }

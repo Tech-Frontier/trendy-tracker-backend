@@ -1,7 +1,6 @@
 package com.trendyTracker.repository;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
@@ -50,14 +49,13 @@ public class TechRepositoryImpl implements TechRepository {
     }
 
     @Override
-    public Optional<List<String>> getTechList() {
+    public List<Tech> getTechList() {
         queryFactory = new JPAQueryFactory(em);
 
         QTech qTech = QTech.tech;
-        List<String> fetch = queryFactory.select(qTech.tech_name)
-                                .from(qTech).fetch();
+        List<Tech> techList = queryFactory.select(qTech).from(qTech).fetch();
 
-        return Optional.of(fetch);
+        return techList;
     }
 
 }

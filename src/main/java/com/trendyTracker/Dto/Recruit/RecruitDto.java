@@ -40,4 +40,13 @@ public class RecruitDto {
         this.createdTime = createTime;
         this.techList = null;
     }
+
+    public RecruitDto(long id, Company company, String occupation, String url, LocalDateTime createTime, List<String> techList){
+        this.id = id;
+        this.company =company.getCompany_name();
+        this.occupation = occupation;
+        this.url = url;
+        this.createdTime = createTime;
+        this.techList = techList;
+    }
 }
