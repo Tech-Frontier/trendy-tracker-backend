@@ -1,8 +1,10 @@
 package com.trendyTracker.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.trendyTracker.domain.Job.Tech;
 
@@ -23,12 +25,17 @@ public class TechUtils {
     }
 
     public static List<Tech> makeTechs(String[] techs){
-        List<Tech> techSet = new ArrayList<>();
-        for (String tech : techs) {
-            Tech newTech = new Tech(tech);
-            techSet.add(newTech);
-        }
-        return techSet;
+    /*
+     * techs 를 List<Tech> 로 변환 합니다.
+     */
+        var instance = TechListSingleton.getInstance();
+        List<String> techNameList = getTechNameList(instance.getTechList());
+
+        return techNameList.stream()
+            .filter(techName -> Arrays.stream(techs)
+            .anyMatch(tech -> techName.equalsIgnoreCase(tech)))
+            .map(Tech::new)
+            .collect(Collectors.toList());
     }
     
     public static List<String> getTechNameList(Set<Tech> techs) {
