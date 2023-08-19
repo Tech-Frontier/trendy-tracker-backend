@@ -19,9 +19,9 @@ jobs:
 
       - name: Install chromium and chromedriver
         run: |
-          apt-get update
-          apt-get install -y chromium
-          apt-get install -y chromium-driver
+          sudo apt-get update
+          sudo apt-get install -y chromium
+          sudo apt-get install -y chromium-driver
 
       - uses: actions/checkout@v3
       - name: Create application.yml
