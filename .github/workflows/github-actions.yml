@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
 
+  pull_request:
+    branches: [main]
+
 jobs:
   build:
     runs-on: self-hosted
@@ -14,6 +17,12 @@ jobs:
           distribution: "adopt"
           java-version: "17"
 
+      - name: Install chromium and chromedriver
+        run: |
+          apt-get update
+          apt-get install -y chromium
+          apt-get install -y chromium-driver
+
       - uses: actions/checkout@v3
       - name: Create application.yml
         run: |
@@ -21,6 +30,15 @@ jobs:
           echo "${{ secrets.APPLICATION }}" > ./src/main/resources/application.yml
           cat ./src/main/resources/application.yml
 
+      - name: Copy chromedriver binary
+        run: |
+          cp /app/chromedriver/chromedriver /usr/local/bin/
+      
+      - name: Make gradlew executable and build
+        run: |
+          chmod +x ./gradlew
+          ./gradlew clean build --no-daemon 
+          
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
