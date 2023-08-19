@@ -80,7 +80,7 @@ public class RecruitServiceTest {
 
         // then
         Assertions.assertThat(recruitList.size()).isGreaterThan(0);
-        Assertions.assertThat(recruitList).extracting(RecruitDto::getCompany).contains("naver");
+        Assertions.assertThat(recruitList).extracting(x -> x.company()).contains("naver");
     }
 
     @Test
@@ -96,7 +96,7 @@ public class RecruitServiceTest {
 
         // then
         Assertions.assertThat(recruitList.size()).isGreaterThan(0);
-        Assertions.assertThat(recruitList).extracting(RecruitDto::getCompany).contains("naver");
+        Assertions.assertThat(recruitList).extracting(x -> x.company()).contains("naver");
     }
 
     @Test
@@ -113,7 +113,7 @@ public class RecruitServiceTest {
 
         // then
         Assertions.assertThat(recruitList.size()).isGreaterThan(0);
-        Assertions.assertThat(recruitList).extracting(RecruitDto::getCompany).contains("toss");
+        Assertions.assertThat(recruitList).extracting(x -> x.company()).contains("toss");
     }
 
     @Test
@@ -143,8 +143,8 @@ public class RecruitServiceTest {
         RecruitDto recruitDto = recruitService.updateRecruitTechs(recruit_id,newTechs);
 
         // when, then
-        Assertions.assertThat(recruitDto.getTechList().contains("C#"));
-        Assertions.assertThat(recruitDto.getTechList().contains("Python"));
+        Assertions.assertThat(recruitDto.techList().contains("C#"));
+        Assertions.assertThat(recruitDto.techList().contains("Python"));
     }
 
     @Test
