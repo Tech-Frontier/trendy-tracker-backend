@@ -16,7 +16,7 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: '17'
-          architecture: 'arm64'
+          architecture: 'aarch64'
 
       - name: Install chromium and chromedriver
         run: |
