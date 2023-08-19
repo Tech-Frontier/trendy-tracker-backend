@@ -2,7 +2,6 @@ package com.trendyTracker.Job.repository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -129,9 +128,8 @@ public class JobRepositoryImpl implements JobRepository {
             .collect(Collectors.toList());
 
         RecruitDto result = new RecruitDto(recruit_id, recruit.getCompany(), 
-                                            recruit.getJobCategory(),recruit.getUrl(), 
-                                            recruit.getCreate_time());
-        result.setTechList(techList);
+                                    recruit.getJobCategory(),recruit.getUrl(), 
+                                    recruit.getCreate_time(),techList);
         return Optional.of(result);    
     }
 
@@ -163,30 +161,21 @@ public class JobRepositoryImpl implements JobRepository {
      * 사용자가 지정한 tech 가 있으면 필터링
      */
         List<Integer> indexList = new ArrayList<>();
-        List<String> techList = new ArrayList<>();
+        List<String> techList = techs != null ? Arrays.asList(techs) : new ArrayList<>();
 
-        if (techs != null && techs.length >0) 
-            techList = Arrays.asList(techs);
+        for (int i = recruitDtoList.size() - 1; i >= 0; i--) {
+            long recruit_id = recruitDtoList.get(i).id();
+            Recruit recruit = em.find(Recruit.class, recruit_id);
+            // tech stack 소문자로 추출
+            List<String> recruitTechList = recruit.getUrlTechs().stream()
+                    .map(recruitTech -> recruitTech.getTech().getTech_name().toLowerCase())
+                    .collect(Collectors.toList());
 
-        for (int i =0; i < recruitDtoList.size(); i++) {
-            List<String> recruitTechList = em.find(Recruit.class ,recruitDtoList.get(i).getId())
-                .getUrlTechs()
-                .stream().map(recruitTech -> recruitTech.getTech().getTech_name())
-                .map(String::toLowerCase)
-                .collect(Collectors.toList());
-            
-            // 사용자 지정 tech 없는 index 추출 
-            if (techList.size() >0) 
-                if(recruitTechList.stream().noneMatch(techList::contains)) 
-                    indexList.add(i);
-
-            recruitDtoList.get(i).setTechList(recruitTechList);
-        }
-        // 실제 필터링
-        Collections.sort(indexList, Collections.reverseOrder());
-        for (int integer : indexList) 
-            recruitDtoList.remove(integer);
-        
+            if (!techList.isEmpty() && recruitTechList.stream().noneMatch(tech ->techList.contains(tech))) 
+                indexList.add(i);
+        }   
+        // 매칭되지 않은 stack 필터링
+        indexList.forEach(idx -> recruitDtoList.remove(idx.intValue()));
         return recruitDtoList;
     }
 
