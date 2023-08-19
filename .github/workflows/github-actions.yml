@@ -31,10 +31,6 @@ jobs:
           echo "${{ secrets.APPLICATION }}" > ./src/main/resources/application.yml
           cat ./src/main/resources/application.yml
 
-      # - name: Copy chromedriver binary
-      #   run: |
-      #     cp /app/chromedriver/chromedriver /usr/local/bin/
-      
       - name: Grant execute permission to Gradlew
         run: chmod +x gradlew
 

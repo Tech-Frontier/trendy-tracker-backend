@@ -26,5 +26,6 @@ public class UrlReaderTest {
         List<String> techList = TechUtils.getTechNameList(techs);
         Assertions.assertThat(techList.contains("Java")).isTrue();
         Assertions.assertThat(techList.contains("Python")).isTrue();
+        Assertions.assertThat(techList.contains("Python")).isFalse();
     }
 }
