@@ -4,15 +4,25 @@ on:
   push:
     branches: [main]
 
+  pull_request:
+    branches: [main]
+
 jobs:
   build:
     runs-on: self-hosted
     steps:
-      - name: Set up JDK 17
+      - name: Set up JDK
         uses: actions/setup-java@v2
         with:
-          distribution: "adopt"
-          java-version: "17"
+          distribution: 'adopt'
+          java-version: '17'
+          architecture: 'aarch64'
+
+      - name: Install chromium and chromedriver
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium
+          sudo apt-get install -y chromium-driver
 
       - uses: actions/checkout@v3
       - name: Create application.yml
@@ -21,6 +31,12 @@ jobs:
           echo "${{ secrets.APPLICATION }}" > ./src/main/resources/application.yml
           cat ./src/main/resources/application.yml
 
+      - name: Grant execute permission to Gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew build
+          
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
