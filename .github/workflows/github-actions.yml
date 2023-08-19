@@ -22,6 +22,9 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y chromium
           sudo apt-get install -y chromium-driver
+          sudo apt-get install -y openjdk-17-jdk
+          echo "JAVA_HOME=$(readlink -f /usr/bin/javac | sed 's:/bin/javac::')" | sudo tee -a /etc/environment
+          source /etc/environment
 
       - uses: actions/checkout@v3
       - name: Create application.yml
