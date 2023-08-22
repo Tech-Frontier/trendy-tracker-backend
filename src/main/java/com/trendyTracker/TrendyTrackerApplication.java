@@ -5,14 +5,16 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.kafka.annotation.EnableKafka;
 
 import com.trendyTracker.Job.service.TechService;
 
 import lombok.RequiredArgsConstructor;
 
-@SpringBootApplication
-@EnableJpaAuditing
-@EnableAspectJAutoProxy
+@SpringBootApplication   // Spring boot
+@EnableJpaAuditing       // JPA
+@EnableAspectJAutoProxy  // AOP
+@EnableKafka             // Kafka
 @RequiredArgsConstructor
 public class TrendyTrackerApplication implements CommandLineRunner{
     private final TechService techService;
