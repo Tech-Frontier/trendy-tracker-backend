@@ -1,0 +1,2 @@
+- pipeline.id: kafka-test-logs
+  path.config: "config/logstash.conf"
