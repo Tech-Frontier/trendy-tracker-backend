@@ -10,5 +10,5 @@ pipeline.batch.delay: 50
 pipeline.workers: 4
 
 xpack.monitoring.enabled: true
-xpack.monitoring.elasticsearch.hosts: ["elasticsearch:9200"]
+xpack.monitoring.elasticsearch.hosts: ["https://localhost:9200"]
 
