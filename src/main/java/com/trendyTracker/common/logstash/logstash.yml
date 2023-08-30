@@ -1,0 +1,14 @@
+path.data: /usr/share/logstash/data
+path.logs: /usr/share/logstash/logs
+config.reload.automatic: true
+
+http.host: "0.0.0.0"
+http.port: 9600
+
+pipeline.batch.size: 125
+pipeline.batch.delay: 50
+pipeline.workers: 4
+
+xpack.monitoring.enabled: true
+xpack.monitoring.elasticsearch.hosts: ["https://localhost:9200"]
+
