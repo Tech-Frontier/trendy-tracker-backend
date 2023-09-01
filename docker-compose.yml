@@ -52,6 +52,7 @@ services:
     networks:
       - elk-network
     environment:
+      # TODO 수정 필요
       SERVER_PORT: 
       SPRING_DATASOURCE_URL: 
       SPRING_DATASOURCE_USERNAME: 
