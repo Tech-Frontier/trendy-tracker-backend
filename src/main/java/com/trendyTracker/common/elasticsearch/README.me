@@ -1,0 +1,20 @@
+## elastic search 계정 token command
+- bin/elasticsearch-service-tokens create elastic/kibana jinsu
+
+```
+POST /trendy-tracker/_delete_by_query
+{
+  "query": {
+    "match_all": {}
+  }
+}
+```
+
+```
+GET /trendy-tracker/_search
+{ 
+  "query": {
+    "match_all": {}
+  }
+}
+```
