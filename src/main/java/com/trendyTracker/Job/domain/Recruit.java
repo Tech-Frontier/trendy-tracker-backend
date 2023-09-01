@@ -69,4 +69,12 @@ public class Recruit {
         }
         this.urlTechs = newRecruitTechs;
     }
+
+     public List<String> getTechList(){
+        List<String> techList = new ArrayList<String>();
+        for (RecruitTech recruitTech : urlTechs) {
+            techList.add(recruitTech.getTech().getTech_name());
+        }
+        return techList;
+    }
 }
