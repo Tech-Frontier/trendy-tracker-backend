@@ -159,7 +159,8 @@ public class JobRepositoryImpl implements JobRepository {
             List<RecruitTech> urlTechs = recruit.getUrlTechs();
 
             if(techList.size() > 0){
-                if(urlTechs.stream().anyMatch(t -> techList.contains(t.getTech().getTech_name())))
+                if(urlTechs.stream().anyMatch(t -> techList.stream()
+                                    .anyMatch(tech -> tech.equalsIgnoreCase(t.getTech().getTech_name()))))
                     recruitDtoList.add(new RecruitDto(recruit.getId(), recruit.getCompany(), 
                                     recruit.getJobCategory(), recruit.getUrl(),
                                     recruit.getCreate_time(), recruit.getTechList()));
