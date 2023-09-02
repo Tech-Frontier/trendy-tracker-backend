@@ -10,5 +10,3 @@ services:
       - ELASTIC_PASSWORD=tech_frontier_by_software_engine
     ports:
       - "9200:9200"
-    networks:
-      - elk-network
