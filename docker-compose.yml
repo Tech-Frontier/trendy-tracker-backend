@@ -1,26 +1,10 @@
 version: '3.3'
 services:
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.1.2-arm64
-    container_name: elasticsearch
-    volumes:
-      - ./src/main/java/com/trendyTracker/common/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-    environment:
-      - discovery.type=single-node
-    # TODO 수정 필요
-      - ELASTIC_PASSWORD=
-    ports:
-      - "9200:9200"
-    networks:
-      - elk-network
-
   logstash:
     image: docker.elastic.co/logstash/logstash:8.1.2-arm64
     container_name: logstash
     volumes:
       - ./src/main/java/com/trendyTracker/common/logstash:/usr/share/logstash/config
-    depends_on:
-      - elasticsearch
     networks:
       - elk-network
 
@@ -32,37 +16,33 @@ services:
       - ./src/main/java/com/trendyTracker/common/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
     ports:
       - "5601:5601"
-    depends_on:
-      - elasticsearch
     networks:
       - elk-network
+
 
   trendy_tracker:
     image: jinsujj/trendy-tracker-backend
     ports:
       - '8080:8080'
     restart: always
+    container_name: trendy_tracker
     depends_on:
       - zookeeper-1
       - kafka-1
       - kafka-2
-      - kafka-3
       - kibana
-      - elasticsearch
-    networks:
-      - elk-network
+    network_mode: host
     environment:
-      # TODO 수정 필요
-      SERVER_PORT: 
-      SPRING_DATASOURCE_URL: 
+      SERVER_PORT: 8080
+      SPRING_DATASOURCE_URL: jdbc:postgresql://000.0.00.000:0000/
       SPRING_DATASOURCE_USERNAME: 
       SPRING_DATASOURCE_PASSWORD: 
-      SPRING_DATASOURCE_DRIVER_CLASS_NAME:
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME:  org.postgresql.Driver
       TOKEN_VALUE: 
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_HIBERNATE_SHOW_SQL: "off"
       SPRING_JPA_HIBERNATE_FORMAT_SQL: "off"
-      KAFKA_CONSUMER_BOOTSTRAP_SERVERS: kafka-1:29092 ,kafka-2:29093,kafka-3:29094
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: localhost:9092,localhost:9093,localhost:9094
       LOGGING_LEVEL_ORG_APACHE_KAFKA: "off"
 
 

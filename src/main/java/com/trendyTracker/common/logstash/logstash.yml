@@ -10,8 +10,7 @@ pipeline.batch.delay: 50
 pipeline.workers: 4
 
 xpack.monitoring.enabled: true
-xpack.monitoring.elasticsearch.hosts: ["http://elasticsearch:9200"]
+xpack.monitoring.elasticsearch.hosts: ["http://owl-dev.me:9200"]
 
 xpack.monitoring.elasticsearch.username: "elastic"
-# TODO 수정 필요
-xpack.monitoring.elasticsearch.password: 
+xpack.monitoring.elasticsearch.password: "tech_frontier_by_software_engine"
