@@ -25,6 +25,7 @@ services:
     ports:
       - '8080:8080'
     restart: always
+    container_name: trendy_tracker
     depends_on:
       - zookeeper-1
       - kafka-1
@@ -32,7 +33,6 @@ services:
       - kibana
     network_mode: host
     environment:
-      # TODO 수정 필요
       SERVER_PORT: 8080
       SPRING_DATASOURCE_URL: jdbc:postgresql://000.0.00.000:0000/
       SPRING_DATASOURCE_USERNAME: 
