@@ -7,8 +7,7 @@ services:
       - ./src/main/java/com/trendyTracker/common/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     environment:
       - discovery.type=single-node
-    # TODO 수정 필요
-      - ELASTIC_PASSWORD=
+      - ELASTIC_PASSWORD=tech_frontier_by_software_engine
     ports:
       - "9200:9200"
     networks:
