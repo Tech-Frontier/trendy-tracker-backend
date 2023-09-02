@@ -58,3 +58,6 @@ src/main/java/com/trendyTracker/common/kibana/kibana.yml
 - flask 에서 export 를 통한 환경변수 주입 필요.
 - 공개되지 않은 docker-compose.yml 파일 필요
 
+
+## DB modeling
+![image](https://github.com/Tech-Frontier/trendy-tracker-backend/assets/19955904/c8388e3d-4933-4dec-8330-752f4bd77af5)
