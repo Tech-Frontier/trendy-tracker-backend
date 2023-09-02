@@ -1,5 +1,9 @@
 # trendy-tracker-backend
 
+
+## 이벤트 스토밍
+![trendy-tracker](https://github.com/Tech-Frontier/trendy-tracker-backend/assets/19955904/4774e50b-40e7-42fe-abf3-ac3084241564)
+
 <br/>
 
 ## Setting
@@ -10,17 +14,23 @@
 - 2. Spring boot + kafka + zookeeper + kibana + logstash 백엔드 (RaspberryPi 4) 서버 
 
 2. Project 의 아래 경로는 각 logstash, kibana, elasticsearch 에 대한 환경설정 폴더를 만들어 docker volume 으로 지정해 docker-compose.yml 을 실행 시 같이 반영되어 실행된다.
-- > src/main/java/com/trendyTracker/common/
+```
+src/main/java/com/trendyTracker/common/
+```
  
 **[실행]**
 
 1. DB 서버에서 'Elastic Search' 를 구동 후에 Kibana 와 연동하기 위한 아래 인증 코드를 발행한다.
--  > bin/elasticsearch-service-tokens create elastic/kibana jinsu
+```
+bin/elasticsearch-service-tokens create elastic/kibana jinsu
+```
 
 2. 발급한 토큰을 Project kibana 의 kibana.yml 의 토큰에 기입해준다.
-- > src/main/java/com/trendyTracker/common/kibana/kibana.yml
+```
+src/main/java/com/trendyTracker/common/kibana/kibana.yml
+```
 
-3. Project root directory 의 docker-compose.yml 파일에서 "trendy_tracker" 에 대한 환경변수를 변경한다.
+4. Project root directory 의 docker-compose.yml 파일에서 "trendy_tracker" 에 대한 환경변수를 변경한다.
    ```
    environment:
       SERVER_PORT:                  #수정 필요
@@ -48,5 +58,3 @@
 - flask 에서 export 를 통한 환경변수 주입 필요.
 - 공개되지 않은 docker-compose.yml 파일 필요
 
-## 이벤트 스토밍
-![trendy-tracker](https://github.com/Tech-Frontier/trendy-tracker-backend/assets/19955904/4774e50b-40e7-42fe-abf3-ac3084241564)
