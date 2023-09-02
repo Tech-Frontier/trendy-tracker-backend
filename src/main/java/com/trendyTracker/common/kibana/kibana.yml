@@ -8,4 +8,4 @@ server.shutdownTimeout: "5s"
 elasticsearch.hosts: [ "http://owl-dev.me:9200" ]
 # TODO 수정 필요
 elasticsearch.serviceAccountToken:
-xpack.encryptedSavedObjects.encryptionKey: "tech_frontier_with_change_maker_by_software_power"
+xpack.encryptedSavedObjects.encryptionKey: "tech_frontier_by_software_engine"
