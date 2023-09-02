@@ -105,7 +105,7 @@ public class RecruitServiceTest {
         // given 
         String[] companies = {"toss","naver"};
         String[] jobCategories = {"backend", "robotics"};
-        String[] techs ={"Java"};
+        String[] techs ={"java"};
 
         // when
         List<RecruitDto> recruitList = recruitService.getRecruitList(

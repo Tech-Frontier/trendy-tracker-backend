@@ -13,7 +13,7 @@ public record RecruitDto(
         @Schema(description = "직군", example = "백엔드") String occupation,
         @Schema(description = "채용 페이지", example = "https://naver.com") String url,
         @Schema(description = "생성 시간", example = "YYYY-MM-DD HH24:mi:ss")LocalDateTime createdTime,
-        @Schema(description = "테크 항목", example = "[C#, Java]")List<String> techList
+        @Schema(description = "테크 항목", example = "[C#, Java]") List<String> techList
 ) {
     public RecruitDto(long id, Company company, String occupation, String url, LocalDateTime createTime) {
         this(id, company.getCompany_name(), occupation, url, createTime, null);

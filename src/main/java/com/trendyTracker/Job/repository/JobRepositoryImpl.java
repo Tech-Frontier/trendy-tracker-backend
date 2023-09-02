@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import com.trendyTracker.Job.domain.Company;
 import com.trendyTracker.Job.domain.QCompany;
@@ -13,11 +12,9 @@ import com.trendyTracker.Job.domain.Recruit;
 import com.trendyTracker.Job.domain.RecruitTech;
 import com.trendyTracker.Job.domain.Tech;
 import com.trendyTracker.Job.dto.RecruitDto;
-import com.trendyTracker.util.TechUtils;
 
 import org.springframework.stereotype.Repository;
 
-import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -107,8 +104,8 @@ public class JobRepositoryImpl implements JobRepository {
         
         RecruitDto result = new RecruitDto(recruit_id, recruit.getCompany(), 
                                     recruit.getJobCategory(),recruit.getUrl(), 
-                                    recruit.getCreate_time(),
-                                    TechUtils.getTechNameList(techList));
+                                    recruit.getCreate_time(),recruit.getTechList());
+                                    
         return Optional.of(result);
     }
     //#endregion
@@ -123,13 +120,9 @@ public class JobRepositoryImpl implements JobRepository {
         if(!recruit.getIs_active()) 
             return Optional.empty();
 
-        List<String> techList = recruit.getUrlTechs()
-            .stream().map(recruitTech -> recruitTech.getTech().getTech_name())
-            .collect(Collectors.toList());
-
         RecruitDto result = new RecruitDto(recruit_id, recruit.getCompany(), 
                                     recruit.getJobCategory(),recruit.getUrl(), 
-                                    recruit.getCreate_time(),techList);
+                                    recruit.getCreate_time(),recruit.getTechList());
         return Optional.of(result);    
     }
 
@@ -141,41 +134,43 @@ public class JobRepositoryImpl implements JobRepository {
         queryFactory = new JPAQueryFactory(em);
         QRecruit qRecruit = QRecruit.recruit;
 
-        JPAQuery<RecruitDto> query = queryFactory.select(Projections.constructor(RecruitDto.class, 
-                        qRecruit.id, qRecruit.company, qRecruit.jobCategory,
-                        qRecruit.url, qRecruit.create_time))
-                    .from(qRecruit).where(qRecruit.is_active.eq(true));
+        JPAQuery<Long> query = queryFactory.select(qRecruit.id)
+                        .from(qRecruit).where(qRecruit.is_active.eq(true));
         
         if (companies != null && companies.length >0)
             query.where(qRecruit.company.company_name.in(companies));
         
         if (jobCategories != null && jobCategories.length >0)
             query.where(qRecruit.jobCategory.in(jobCategories));
-
+        
         List<RecruitDto> recruitDtoList = filteringTechs(techs, query.fetch());
         return recruitDtoList;
     }
 
-    private List<RecruitDto> filteringTechs(String[] techs, List<RecruitDto> recruitDtoList) {
+    private List<RecruitDto> filteringTechs(String[] techs, List<Long> recruitIdList) {
     /**
-     * 사용자가 지정한 tech 가 있으면 필터링
+     * 사용자가 지정한 tech 필터링
      */
-        List<Integer> indexList = new ArrayList<>();
+        List<RecruitDto> recruitDtoList = new ArrayList<RecruitDto>();
         List<String> techList = techs != null ? Arrays.asList(techs) : new ArrayList<>();
 
-        for (int i = recruitDtoList.size() - 1; i >= 0; i--) {
-            long recruit_id = recruitDtoList.get(i).id();
-            Recruit recruit = em.find(Recruit.class, recruit_id);
-            // tech stack 소문자로 추출
-            List<String> recruitTechList = recruit.getUrlTechs().stream()
-                    .map(recruitTech -> recruitTech.getTech().getTech_name().toLowerCase())
-                    .collect(Collectors.toList());
+        for(int i=0; i< recruitIdList.size(); i++){
+            Recruit recruit = em.find(Recruit.class, recruitIdList.get(i));
+            List<RecruitTech> urlTechs = recruit.getUrlTechs();
 
-            if (!techList.isEmpty() && recruitTechList.stream().noneMatch(tech ->techList.contains(tech))) 
-                indexList.add(i);
-        }   
-        // 매칭되지 않은 stack 필터링
-        indexList.forEach(idx -> recruitDtoList.remove(idx.intValue()));
+            if(techList.size() > 0){
+                if(urlTechs.stream().anyMatch(t -> techList.stream()
+                                    .anyMatch(tech -> tech.equalsIgnoreCase(t.getTech().getTech_name()))))
+                    recruitDtoList.add(new RecruitDto(recruit.getId(), recruit.getCompany(), 
+                                    recruit.getJobCategory(), recruit.getUrl(),
+                                    recruit.getCreate_time(), recruit.getTechList()));
+            }
+            else 
+                recruitDtoList.add(new RecruitDto(recruit.getId(), recruit.getCompany(), 
+                                    recruit.getJobCategory(), recruit.getUrl(),
+                                    recruit.getCreate_time(), recruit.getTechList()));
+            
+        }
         return recruitDtoList;
     }
 
