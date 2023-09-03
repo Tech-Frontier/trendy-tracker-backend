@@ -97,11 +97,16 @@ docker-compose -f docker-compose.yml up -d
 > webhook
 - docker hub 로 push 가 정상적으로 수행되면 라즈베리파이 webhook flask 서버를 활용해서 docker image 를 가져와 docker-compse 를 실행시킨다 
 - flask 에서 export 를 통한 환경변수 주입 필요.
+<br/>
 
 ## DB modeling
 db 모델링 히스토리
 https://github.com/Tech-Frontier/trendy-tracker-backend/pull/15
+> @OneToMany , @manytoone 처럼 관습적으로 매핑하는 구조를 없애고 필요한 엔티티에만 @OnetoOne 으로 연관관계 매핑함
+   즉 User, Template, Company 테이블에 subscribe 에 해당하는 fk 칼럼을 따로 구성하지 않도록 한다
 
+> 각 바운디드 컨텍스트 마다 Repository 로 분리해서, 각 Repository 내의 Table 간 조인은 하지만, 바운디트 컨텍스트간(Repository)의 조인은 구조적으로 분리한다.
+> 
 ![image](https://github.com/Tech-Frontier/trendy-tracker-backend/assets/19955904/c8388e3d-4933-4dec-8330-752f4bd77af5)
 
 <br/>
