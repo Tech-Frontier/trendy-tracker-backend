@@ -2,6 +2,7 @@ version: '3.3'
 services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.1.2-arm64
+    restart: always
     container_name: elasticsearch
     volumes:
       - ./src/main/java/com/trendyTracker/common/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
