@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.trendyTracker.TrendyTrackerApplication;
 import com.trendyTracker.Job.dto.RecruitDto;
 import com.trendyTracker.Job.service.RecruitService;
 import com.trendyTracker.common.Exception.ExceptionDetail.NoResultException;
@@ -19,7 +20,7 @@ import com.trendyTracker.common.Exception.ExceptionDetail.NotAllowedValueExcepti
 import jakarta.transaction.Transactional;
 import jakarta.validation.ValidationException;
 
-@SpringBootTest
+@SpringBootTest(classes = TrendyTrackerApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
 public class RecruitServiceTest {
     @Autowired
