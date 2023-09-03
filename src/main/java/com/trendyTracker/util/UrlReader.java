@@ -77,7 +77,7 @@ public class UrlReader {
 
             // raspberryPi
             else if (osName.contains("linux") && osName.contains("arm")) 
-                serviceBuilder.usingDriverExecutable(new File("/usr/lib/chromium-browser/chromedriver"));
+                serviceBuilder.usingDriverExecutable(new File("/usr/bin/chromedriver"));
 
             // docker container
             else if (osName.contains("linux"))

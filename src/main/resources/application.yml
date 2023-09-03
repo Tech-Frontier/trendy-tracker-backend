@@ -1,19 +1,25 @@
 server:
-  port:
+  port: 
+
 spring:
   datasource:
-    url:
-    username:
-    password:
-    driver-class-name:
+    url: 
+    username: 
+    password: 
+    driver-class-name: 
   jpa:
     hibernate:
       ddl-auto:
-      hibernate:
-        show_sql:
-        format_sql:
+    show-sql: false
+    properties:
+      hibernate.format_sql: false
+
 token:
-  value:
+  value: 
+
 logging:
   level:
-    org.apache.kafka:
+    org.apache.kafka: off
+
+kafka:
+  bootstrap-servers: 

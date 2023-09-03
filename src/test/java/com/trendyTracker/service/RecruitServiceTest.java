@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.trendyTracker.TrendyTrackerApplication;
 import com.trendyTracker.Job.dto.RecruitDto;
 import com.trendyTracker.Job.service.RecruitService;
 import com.trendyTracker.common.Exception.ExceptionDetail.NoResultException;
@@ -19,7 +20,7 @@ import com.trendyTracker.common.Exception.ExceptionDetail.NotAllowedValueExcepti
 import jakarta.transaction.Transactional;
 import jakarta.validation.ValidationException;
 
-@SpringBootTest
+@SpringBootTest(classes = TrendyTrackerApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
 public class RecruitServiceTest {
     @Autowired
@@ -80,7 +81,7 @@ public class RecruitServiceTest {
 
         // then
         Assertions.assertThat(recruitList.size()).isGreaterThan(0);
-        Assertions.assertThat(recruitList).extracting(x -> x.company()).contains("naver");
+        Assertions.assertThat(recruitList).extracting(x -> x.company()).contains("toss");
     }
 
     @Test
@@ -96,7 +97,7 @@ public class RecruitServiceTest {
 
         // then
         Assertions.assertThat(recruitList.size()).isGreaterThan(0);
-        Assertions.assertThat(recruitList).extracting(x -> x.company()).contains("naver");
+        Assertions.assertThat(recruitList).extracting(x -> x.company()).contains("toss");
     }
 
     @Test
@@ -121,7 +122,7 @@ public class RecruitServiceTest {
     public void getRecruitsBypaging() throws ValidationException, NoResultException {
         // given 
         String[] companies = {"*"};
-        int pageNo =2;
+        int pageNo =1;
         int pageSize=3;
 
         // when
