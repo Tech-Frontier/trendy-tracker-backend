@@ -111,6 +111,10 @@ public class RecruitService {
         if (pageNo != null){
             int startIndex = (pageNo - 1) * pageSize;
             int endIndex = Math.min(startIndex + pageSize, recruitList.size());
+
+            if(endIndex < startIndex)
+                throw new ValidationException("pageNo is not exist");
+
             return recruitList.subList(startIndex, endIndex);    
         }
         return recruitList;

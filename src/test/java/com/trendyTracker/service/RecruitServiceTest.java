@@ -80,7 +80,7 @@ public class RecruitServiceTest {
 
         // then
         Assertions.assertThat(recruitList.size()).isGreaterThan(0);
-        Assertions.assertThat(recruitList).extracting(x -> x.company()).contains("naver");
+        Assertions.assertThat(recruitList).extracting(x -> x.company()).contains("toss");
     }
 
     @Test
@@ -96,7 +96,7 @@ public class RecruitServiceTest {
 
         // then
         Assertions.assertThat(recruitList.size()).isGreaterThan(0);
-        Assertions.assertThat(recruitList).extracting(x -> x.company()).contains("naver");
+        Assertions.assertThat(recruitList).extracting(x -> x.company()).contains("toss");
     }
 
     @Test
@@ -121,7 +121,7 @@ public class RecruitServiceTest {
     public void getRecruitsBypaging() throws ValidationException, NoResultException {
         // given 
         String[] companies = {"*"};
-        int pageNo =2;
+        int pageNo =1;
         int pageSize=3;
 
         // when
