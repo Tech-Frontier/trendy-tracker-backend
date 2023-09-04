@@ -174,5 +174,17 @@ public class JobRepositoryImpl implements JobRepository {
         return recruitDtoList;
     }
 
+    @Override
+    public long getTotalJobCnt() {
+        queryFactory = new JPAQueryFactory(em);
+        QRecruit qRecruit = QRecruit.recruit;
+
+        var result = queryFactory.select(qRecruit.count())
+                                    .from(qRecruit)
+                                    .where(qRecruit.is_active.eq(true))
+                                    .fetchOne();
+        return result;
+    }
+
     //#endregion
 }

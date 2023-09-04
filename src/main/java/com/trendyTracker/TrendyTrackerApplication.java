@@ -7,6 +7,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.kafka.annotation.EnableKafka;
 
+import com.trendyTracker.Job.service.RecruitService;
 import com.trendyTracker.Job.service.TechService;
 
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TrendyTrackerApplication implements CommandLineRunner{
     private final TechService techService;
+    private final RecruitService recruitService;
 
     public static void main(String[] args) {
         SpringApplication.run(TrendyTrackerApplication.class, args);
@@ -25,7 +27,10 @@ public class TrendyTrackerApplication implements CommandLineRunner{
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println("get TechList!.");
+        System.out.println("init get TechList.");
         techService.getTechList();
+
+        System.out.println("init get total job cnt.");
+        recruitService.getTotalJobCnt();
     }
 }

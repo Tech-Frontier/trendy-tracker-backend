@@ -16,6 +16,7 @@ import com.trendyTracker.Job.dto.RecruitDto;
 import com.trendyTracker.Job.repository.JobRepository;
 import com.trendyTracker.common.Exception.ExceptionDetail.NoResultException;
 import com.trendyTracker.common.Exception.ExceptionDetail.NotAllowedValueException;
+import com.trendyTracker.util.JobTotalCntSingleton;
 import com.trendyTracker.util.TechUtils;
 import com.trendyTracker.util.UrlReader;
 
@@ -26,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RecruitService {
     private final JobRepository jobRepository;
+    JobTotalCntSingleton jobTotalCntSingleton = JobTotalCntSingleton.getInstance();
 
      public long regisitJobPostion(String url, String companyName, String jobCategory) throws NoResultException, IOException {
     /*
@@ -36,6 +38,9 @@ public class RecruitService {
             throw new NoResultException("해당 url 에서 tech 가 발견되지 않았습니다");
 
         Company newCompany = jobRepository.registeCompany(companyName.toLowerCase());
+        // Singleton 데이터 변경
+        jobTotalCntSingleton.increaseCnt();
+
         return jobRepository.registJobPosition(url, newCompany, jobCategory.toLowerCase(), new ArrayList<>(techList));
     }
 
@@ -54,6 +59,9 @@ public class RecruitService {
      * 채용공고 비활성화 합니다.
      */
         var recruitInfo = getRecruitInfo(recruit_id);
+        // Singleton 데이터 변경
+        jobTotalCntSingleton.decreaseCnt();
+
         jobRepository.deleteJobPosition(recruitInfo.id());
     }
 
@@ -118,5 +126,14 @@ public class RecruitService {
             return recruitList.subList(startIndex, endIndex);    
         }
         return recruitList;
+    }
+
+    public long getTotalJobCnt(){
+        long totalJobCnt = jobRepository.getTotalJobCnt();
+
+        // Singleton 데이터 삽입
+        jobTotalCntSingleton.setTotalCnt(totalJobCnt);
+
+        return totalJobCnt;
     }
 }

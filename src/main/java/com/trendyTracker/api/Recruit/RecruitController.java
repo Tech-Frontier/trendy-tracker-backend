@@ -21,6 +21,7 @@ import com.trendyTracker.common.Exception.ExceptionDetail.NoResultException;
 import com.trendyTracker.common.Exception.ExceptionDetail.NotAllowedValueException;
 import com.trendyTracker.common.config.Loggable;
 import com.trendyTracker.common.response.Response;
+import com.trendyTracker.util.JobTotalCntSingleton;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -89,8 +90,11 @@ public class RecruitController {
 
         List<RecruitDto> recruitList = recruitService.getRecruitList(companies,jobCategories,techs,pageNo,pageSize);
         HashMap<String,Object> result = new HashMap<>();
-        result.put("totalCount", recruitList.size());
+        // Singleton 데이터 조회
+        JobTotalCntSingleton jobTotalCntSingleton = JobTotalCntSingleton.getInstance();
+        
         result.put("recruitList", recruitList);
+        result.put("totalCount", jobTotalCntSingleton.getTotalCnt());
 
         return Response.success(200, "공고 목록이 조회되었습니다", result);
     }

@@ -20,4 +20,6 @@ public interface JobRepository {
 
     List<RecruitDto> getRecruitList(String[] companies, String[] jobCategories, String[] techs);
 
+    long getTotalJobCnt();
+
 }
