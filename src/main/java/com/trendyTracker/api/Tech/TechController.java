@@ -1,7 +1,7 @@
 package com.trendyTracker.api.Tech;
 
-import java.util.List;
 
+import org.json.JSONArray;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,10 +49,10 @@ public class TechController {
 
     @Operation(summary = "기술 스택 목록 조회")
     @GetMapping(value = "/stack/list")
-    public Response<List<String>> getTechStackList() {
-        List<String> techList = techService.getTechList();
+    public Response<Object> getTechStackList() {
+        JSONArray techList = techService.getTechList();
 
-        return Response.success(200, "개발 스택 목록이 조회됐습니다", techList);
+        return Response.success(200, "개발 스택 목록이 조회됐습니다", techList.toList());
     }
 
     @Data
