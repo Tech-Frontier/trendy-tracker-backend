@@ -1,8 +1,8 @@
 package com.trendyTracker.Job.service;
-
+import org.json.JSONArray;
+import org.json.JSONObject;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
@@ -33,18 +33,22 @@ public class TechService {
         return "successfully deleted";
     }
 
-    public List<String> getTechList() {
+    public JSONArray getTechList() {
         List<Tech> techList = techRepository.getTechList();
         if (techList.size() ==0)
-            throw new NotFoundException("개발 스택 내용이 없습니다");
-
+        throw new NotFoundException("개발 스택 내용이 없습니다");
+        
         // Singleton 데이터 삽입
         TechListSingleton techListSingleton = TechListSingleton.getInstance();
         techListSingleton.setTechList(techList);
+        
+        List<JSONObject> toBeList = new ArrayList<>();
+        for (Tech tech : techList) {
+            JSONObject toBeItem = new JSONObject();
+            toBeItem.put("name", tech.getTech_name());
+            toBeList.add(0, toBeItem);
+        }
 
-        List<String> techs = techList.stream()
-                                .map(tech -> tech.getTech_name())
-                                .collect(Collectors.toList());
-        return techs;
+        return new JSONArray(toBeList);
     }
 }
