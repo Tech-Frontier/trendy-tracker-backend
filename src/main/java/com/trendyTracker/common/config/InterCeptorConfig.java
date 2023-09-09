@@ -12,7 +12,10 @@ public class InterCeptorConfig implements WebMvcConfigurer{
 
     @Override
     public void addInterceptors(InterceptorRegistry registry){
-        // JWT 토큰 검증을 적용할 URL 패턴 지정
+        // insert uuid at header
+        registry.addInterceptor(new UUIDInterceptor());
+
+        // validate jwt below api path
         registry.addInterceptor(new JwtInterceptor(tokenValue))
             // Tech
             .addPathPatterns("/api/tech/stack/create")
@@ -21,6 +24,5 @@ public class InterCeptorConfig implements WebMvcConfigurer{
             .addPathPatterns("/api/recruit/regist")
             .addPathPatterns("/api/recruit/delete/id/*")
             .addPathPatterns("/api/recruit/update/id/*");
-
     }
 }
