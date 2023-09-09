@@ -3,6 +3,7 @@ package com.trendyTracker.api.Recruit;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,6 +28,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotNull;
 import jakarta.xml.bind.ValidationException;
 import lombok.Data;
@@ -44,27 +47,36 @@ public class RecruitController {
     @Operation(summary = "채용 공고 등록")
     @PostMapping(value = "/regist")
     public Response<Long> regisitJobPostion(
-        @RequestBody @Validated recruitRequest request) throws NoResultException, IOException {
+        @RequestBody @Validated recruitRequest recruRequest,
+        HttpServletRequest request, HttpServletResponse response) throws NoResultException, IOException {
 
-        long id = recruitService.regisitJobPostion(request.url, request.company, request.occupation);
+        long id = recruitService.regisitJobPostion(recruRequest.url, recruRequest.company, recruRequest.occupation);
+
+        addHeader(request, response);
         return Response.success(200, "공고 목록이 조회되었습니다", id);
     }
 
     @Operation(summary = "채용 공고 조회")
     @GetMapping(value = "/id/{recruit_id}")
     public Response<RecruitDto> getRecruitDetail(
-        @PathVariable(name = "recruit_id") Long recruit_id) {
+        @PathVariable(name = "recruit_id") Long recruit_id,
+        HttpServletRequest request, HttpServletResponse response) {
 
         RecruitDto recruitInfo = recruitService.getRecruitInfo(recruit_id);
+
+        addHeader(request, response);
         return Response.success(200, "공고 목록이 조회되었습니다", recruitInfo);
     }
 
     @Operation(summary = "채용 공고 삭제")
     @DeleteMapping(value = "delete/id/{recruit_id}")
     public Response<Void> deleteRecruitDetail(
-        @PathVariable(name = "recruit_id") Long recruit_id) {
+        @PathVariable(name = "recruit_id") Long recruit_id,
+        HttpServletRequest request, HttpServletResponse response) {
 
         recruitService.deleteRecruit(recruit_id);
+
+        addHeader(request, response);
         return Response.success(200, "공고 목록이 삭제되었습니다.");
     }
 
@@ -72,9 +84,12 @@ public class RecruitController {
     @PutMapping(value = "update/id/{recruit_id}")
     public Response<RecruitDto> updateRecruit(
         @PathVariable(name = "recruit_id") Long recruit_id,
-        @RequestParam(name ="tech",required = true) String[] techs) throws NotAllowedValueException {
+        @RequestParam(name ="tech",required = true) String[] techs,
+        HttpServletRequest request, HttpServletResponse response) throws NotAllowedValueException {
         
         RecruitDto recruitInfo = recruitService.updateRecruitTechs(recruit_id,techs);
+
+        addHeader(request, response);
         return Response.success(200, "공고 스택이 변경되었습니다.",recruitInfo);
     }
 
@@ -86,7 +101,8 @@ public class RecruitController {
         @RequestParam(name ="jobCategory",required = false) String[] jobCategories,
         @RequestParam(name ="tech",required = false) String[] techs,
         @RequestParam(name ="pageNo" ,required = false) Integer pageNo,
-        @RequestParam(name= "pageSize",required = false) Integer pageSize) throws NoResultException, ValidationException {
+        @RequestParam(name= "pageSize",required = false) Integer pageSize,
+        HttpServletRequest request, HttpServletResponse response) throws NoResultException, ValidationException {
 
         List<RecruitDto> recruitList = recruitService.getRecruitList(companies,jobCategories,techs,pageNo,pageSize);
         HashMap<String,Object> result = new HashMap<>();
@@ -95,8 +111,14 @@ public class RecruitController {
         
         result.put("recruitList", recruitList);
         result.put("totalCount", jobTotalCntSingleton.getTotalCnt());
-
+        
+        addHeader(request, response);
         return Response.success(200, "공고 목록이 조회되었습니다", result);
+    }
+
+    private void addHeader(HttpServletRequest request, HttpServletResponse response) {
+        UUID uuid = (UUID) request.getAttribute("uuid");
+        response.addHeader("uuid", uuid.toString());
     }
 
     @Data
