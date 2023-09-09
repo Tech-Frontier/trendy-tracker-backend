@@ -18,7 +18,7 @@ def handle_webhook():
 
     login_command = f"docker login --username={username} --password={password}"
     pull_command = f"docker pull {repository}"
-    run_command = f"docker-compose -f docker-compose.yml restart"
+    run_command = f"docker-compose -f ./docker-compose.yml restart"
 
     # Docker 이미지 정보
     logging.info("********* docker image info **********")
