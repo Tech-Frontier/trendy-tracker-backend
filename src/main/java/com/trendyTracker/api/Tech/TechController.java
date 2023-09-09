@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.trendyTracker.Job.domain.Tech.TechType;
 import com.trendyTracker.Job.service.TechService;
 import com.trendyTracker.common.Exception.ExceptionDetail.AlreadyExistException;
 import com.trendyTracker.common.config.Loggable;
@@ -39,7 +40,7 @@ public class TechController {
     @PostMapping(value = "/stack/create")
     public Response<String> registTechStack(@RequestBody @Validated techRequest techRequest,
     HttpServletRequest request, HttpServletResponse response) throws AlreadyExistException {
-        String registTechStack = techService.registTechStack(techRequest.tech);
+        String registTechStack = techService.registTechStack(techRequest.tech, techRequest.type);
 
         addHeader(request, response);
         return Response.success(200, "개발 스택이 등록되었습니다", registTechStack);
@@ -47,9 +48,9 @@ public class TechController {
 
     @Operation(summary = "기술 스택 제거")
     @DeleteMapping(value = "/stack/delete")
-    public Response<String> deleteTechStack(@RequestBody @Validated techRequest techRequest,
+    public Response<String> deleteTechStack(@RequestBody @Validated String tech,
     HttpServletRequest request, HttpServletResponse response) {
-        String deleteTechStack = techService.deleteTechStack(techRequest.tech);
+        String deleteTechStack = techService.deleteTechStack(tech);
 
         addHeader(request, response);
         return Response.success(200, "개발 스택이 제거되었습니다", deleteTechStack);
@@ -74,6 +75,9 @@ public class TechController {
         @NotNull
         @Schema(description = "기술", example = "C#", type = "String")
         private String tech;
-    }
 
+        @NotNull
+        @Schema(description = "기술", example = "[LANGUAGE, DATABASE, FRAMEWORK, LIBRARIES, TOOLS, IDE, OTHER]", type = "String")
+        private TechType type;
+    }
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
 import com.trendyTracker.Job.domain.Tech;
+import com.trendyTracker.Job.domain.Tech.TechType;
 import com.trendyTracker.Job.repository.TechRepository;
 import com.trendyTracker.common.Exception.ExceptionDetail.AlreadyExistException;
 import com.trendyTracker.util.TechListSingleton;
@@ -18,12 +19,12 @@ import lombok.RequiredArgsConstructor;
 public class TechService {
     private final TechRepository techRepository;
 
-    public String registTechStack(String tech) throws  AlreadyExistException {
+    public String registTechStack(String tech, TechType type) throws  AlreadyExistException {
         Boolean isExist = techRepository.isTechRegist(tech);
         if (isExist)
             throw new AlreadyExistException("해당 기술 스택이 존재합니다");
 
-        techRepository.registTechStack(tech);
+        techRepository.registTechStack(tech, type);
         return "successfully regist";
     }
 

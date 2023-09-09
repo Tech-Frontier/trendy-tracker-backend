@@ -23,9 +23,14 @@ public class ApiExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<?> handleRuntimeException(RuntimeException ex) {
         List<String> errors = new ArrayList<>();
+        ApiError apiError;
         errors.add(ex.getMessage());
 
-        ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "runtime error", errors);
+        if (ex.getMessage().contains("TechType"))
+            apiError = new ApiError(HttpStatus.BAD_REQUEST, "invalid type error", errors);
+        else 
+            apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "runtime error", errors);
+
         return new ResponseEntity<>(apiError, apiError.getStatus());
     }
 
