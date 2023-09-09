@@ -117,7 +117,7 @@ public class JobRepositoryImpl implements JobRepository {
      * recruit_id 로 채용공고 조회
      */
         Recruit recruit = em.find(Recruit.class, recruit_id);
-        if(!recruit.getIs_active()) 
+        if(recruit == null || !recruit.getIs_active()) 
             return Optional.empty();
 
         RecruitDto result = new RecruitDto(recruit_id, recruit.getCompany(), 

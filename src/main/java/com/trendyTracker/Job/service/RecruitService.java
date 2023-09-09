@@ -121,7 +121,7 @@ public class RecruitService {
             int endIndex = Math.min(startIndex + pageSize, recruitList.size());
 
             if(endIndex < startIndex)
-                throw new ValidationException("pageNo is not exist");
+                return new ArrayList<>();
 
             return recruitList.subList(startIndex, endIndex);    
         }
