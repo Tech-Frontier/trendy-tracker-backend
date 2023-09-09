@@ -2,6 +2,8 @@ package com.trendyTracker.Job.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -14,11 +16,26 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Tech {
 
+    public enum TechType {
+        LANGUAGE,
+        DATABASE,
+        FRAMEWORK,
+        LIBRARIES,
+        TOOLS,
+        IDE,
+        OTHER
+    }
+
     @Id
     @Column(name="tech_name", unique = true)
     private String tech_name;
 
-    public Tech(String tech){
+    @Enumerated(EnumType.STRING) 
+    private TechType type;
+
+    // 연관관계 메서드
+    public Tech(String tech, TechType type){
         this.tech_name = tech;
+        this.type = type;
     }
 }

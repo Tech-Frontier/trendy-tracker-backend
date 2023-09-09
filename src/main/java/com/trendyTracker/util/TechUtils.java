@@ -29,12 +29,12 @@ public class TechUtils {
      * techs 를 List<Tech> 로 변환 합니다.
      */
         var instance = TechListSingleton.getInstance();
-        List<String> techNameList = getTechNameList(instance.getTechList());
+        List<Tech> techNameList = instance.getTechList();
 
         return techNameList.stream()
             .filter(techName -> Arrays.stream(techs)
-            .anyMatch(tech -> techName.equalsIgnoreCase(tech)))
-            .map(Tech::new)
+            .anyMatch(tech -> techName.getTech_name().equalsIgnoreCase(tech)))
+            .map(techName -> new Tech(techName.getTech_name(), techName.getType()))
             .collect(Collectors.toList());
     }
     

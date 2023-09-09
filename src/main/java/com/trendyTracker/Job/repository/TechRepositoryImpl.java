@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.trendyTracker.Job.domain.QTech;
 import com.trendyTracker.Job.domain.Tech;
+import com.trendyTracker.Job.domain.Tech.TechType;
 
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
@@ -20,8 +21,8 @@ public class TechRepositoryImpl implements TechRepository {
 
     @Override
     @Transactional
-    public void registTechStack(String tech_name) {
-        Tech tech = new Tech(tech_name);
+    public void registTechStack(String tech_name, TechType type) {
+        Tech tech = new Tech(tech_name,type);
         em.persist(tech);
     }
 
@@ -31,7 +32,7 @@ public class TechRepositoryImpl implements TechRepository {
 
         QTech qTech = QTech.tech;
         Tech fetchFirst = queryFactory.selectFrom(qTech)
-                                .where(qTech.tech_name.eq(tech_name))
+                                .where(qTech.tech_name.toLowerCase().eq(tech_name.toLowerCase()))
                                 .fetchFirst();
 
         if (fetchFirst == null)
