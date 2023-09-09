@@ -66,14 +66,17 @@ public class LogAspect {
         for(int i =0; i< paramNames.size(); i++)
             inputParms += assembleParamInfo(paramNames.get(i),paramValues.get(i));
             
-        requestStartTimes.remove(uuid.toString());
         kafkaProducer.sendMessage("logger",request.getRequestURI(), inputParms, uuid.toString());
         logger.info(String.format("\nAPI path: %s \nparams: %s", request.getRequestURI(), inputParms));
+        deleteUUIDMap(uuid);
     }
 
 
     // Exception 
     @AfterThrowing(pointcut = "loggableClass() && execution(* *(..))", throwing = "ex")
+    /*
+     * Exception 에 대한 정보를 kafka, logger 에 기록합니다. 
+     */
     public void logAPIException(JoinPoint joinPoint, Throwable ex) {
         var logger = LoggerFactory.getLogger(joinPoint.getTarget().getClass());
         var request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
@@ -88,7 +91,6 @@ public class LogAspect {
             inputParms += assembleParamInfo(paramNames.get(i),paramValues.get(i));
         inputParms += String.format("\n%s: %s",ex.getClass().getSimpleName(), ex.getMessage());
 
-        requestStartTimes.remove(uuid.toString());
         kafkaProducer.sendMessage("error",request.getRequestURI(), inputParms, uuid.toString());
         logger.error(String.format("\nAPI path: %s \nparams: %s", request.getRequestURI(), inputParms));
     }
@@ -158,5 +160,10 @@ public class LogAspect {
         
 
         return paramValue;
+    }
+
+    private void deleteUUIDMap(UUID uuid) {
+        if(requestStartTimes.get(uuid.toString()) != null)
+            requestStartTimes.remove(uuid.toString());
     }
 }
