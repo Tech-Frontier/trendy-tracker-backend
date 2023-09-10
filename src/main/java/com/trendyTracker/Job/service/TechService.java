@@ -47,7 +47,7 @@ public class TechService {
         for (Tech tech : techList) {
             JSONObject toBeItem = new JSONObject();
             toBeItem.put(tech.getType().name(), tech.getTech_name());
-            toBeList.add(0, toBeItem);
+            toBeList.add(toBeItem);
         }
 
         return new JSONArray(toBeList);
