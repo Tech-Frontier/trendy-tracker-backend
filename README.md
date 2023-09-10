@@ -106,6 +106,5 @@ https://github.com/Tech-Frontier/trendy-tracker-backend/pull/15
    즉 User, Template, Company 테이블에 subscribe 에 해당하는 fk 칼럼을 따로 구성하지 않도록 한다
 
 > 각 바운디드 컨텍스트 마다 Repository 로 분리해서, 각 Repository 내의 Table 간 조인은 하지만, 바운디트 컨텍스트간(Repository)의 조인은 구조적으로 분리한다.
-
-![image](https://github.com/Tech-Frontier/trendy-tracker-backend/assets/19955904/76825ced-44d6-4834-8078-a8a786a0d9e2)
-
+> 
+![db modeling](https://github.com/Tech-Frontier/trendy-tracker-backend/assets/19955904/3a7bf26f-511b-49e0-811e-f8c97d387ed1)
