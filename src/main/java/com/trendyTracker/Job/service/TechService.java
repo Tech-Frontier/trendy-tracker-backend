@@ -46,7 +46,7 @@ public class TechService {
         List<JSONObject> toBeList = new ArrayList<>();
         for (Tech tech : techList) {
             JSONObject toBeItem = new JSONObject();
-            toBeItem.put("name", tech.getTech_name());
+            toBeItem.put(tech.getType().name(), tech.getTech_name());
             toBeList.add(0, toBeItem);
         }
 
