@@ -28,18 +28,18 @@ Objective 2
   <img src="https://img.shields.io/badge/Elasticsearch-005571?style=flat-square&logo=Elasticsearch&logoColor=white"/></a>&nbsp 
   <br/>
   <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=PostgreSQL&logoColor=white"/></a>&nbsp 
-  <img src="https://img.shields.io/badge/Jpa-003A70?style=flat-square&logo=Jpa&logoColor=white"/></a>&nbsp 
-  <img src="https://img.shields.io/badge/QueryDsl-E95420?style=flat-square&logo=QueryDsl&logoColor=white"/></a>&nbsp 
+  <img src="https://img.shields.io/badge/Jpa-67A4AC?style=flat-square&logo=Jpa&logoColor=white"/></a>&nbsp 
+  <img src="https://img.shields.io/badge/QueryDsl-7D929E?style=flat-square&logo=QueryDsl&logoColor=white"/></a>&nbsp 
   <br/>
    <img src="https://img.shields.io/badge/RaspberryPi-A22846?style=flat-square&logo=RaspBerryPi&logoColor=white"/></a>&nbsp 
   <img src="https://img.shields.io/badge/Linux-E95420?style=flat-square&logo=Linux&logoColor=white"/></a>&nbsp 
 </p>
+<br/>
 
 <h3 align="center">🌈 Follow Me 🌈</h3>
 <p align="center">
-  <a href="https://velog.io/@hyeinisfree"><img src="https://img.shields.io/badge/Tech%20Blog-11B48A?style=flat-square&logo=Vimeo&logoColor=white&link=https://velog.io/@hyeinisfree"/></a>&nbsp
-  <a href="https://www.instagram.com/dev.dobby/"><img src="https://img.shields.io/badge/Instagram-E4405F?style=flat-square&logo=Instagram&logoColor=white&link=https://www.instagram.com/hye_inisfree/"/></a>&nbsp
-  <a href="mailto:kimhyein7110@gmail.com"><img src="https://img.shields.io/badge/Gmail-d14836?style=flat-square&logo=Gmail&logoColor=white&link=kimhyein7110@gmail.com"/></a>
+  <a href="https://www.owl-dev.me"><img src="https://img.shields.io/badge/Tech%20Blog-11B48A?style=flat-square&logo=Vimeo&logoColor=white&link=https://www.owl-dev.me"/></a>&nbsp
+  <a href="https://www.linkedin.com/in/jinsu-jang-0b2269107"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=LinkedIn&logoColor=white"/></a>
 </p>
 
 
