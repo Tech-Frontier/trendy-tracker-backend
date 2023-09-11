@@ -46,6 +46,9 @@ dependencies {
 
 	// json
 	implementation 'org.json:json:20230618'
+	
+	// mail 
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
 
 	// QueryDSL 설정
 	implementation "com.querydsl:querydsl-jpa:5.0.0:jakarta"
