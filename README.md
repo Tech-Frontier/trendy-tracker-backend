@@ -10,7 +10,7 @@ Objective 2
 > 개발자 채용 시장을 한눈에 파악할 수 있는 환경을 만든다.
 <br/>
 
-## 이벤트 스토밍
+## 초기 이벤트 스토밍
 ![trendy-tracker](https://github.com/Tech-Frontier/trendy-tracker-backend/assets/19955904/4774e50b-40e7-42fe-abf3-ac3084241564)
 
 <br/>
