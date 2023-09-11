@@ -10,10 +10,45 @@ Objective 2
 > 개발자 채용 시장을 한눈에 파악할 수 있는 환경을 만든다.
 <br/>
 
+<h2 align="center">📚 Tech Stack 📚</h2>
+<p align="center">
+  <img src="https://img.shields.io/badge/Java-007396?style=flat-square&logo=Java&logoColor=white"/></a>&nbsp
+  <img src="https://img.shields.io/badge/Python-3766AB?style=flat-square&logo=Python&logoColor=white"/></a>&nbsp 
+  
+  <br>
+  <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=flat-square&logo=SpringBoot&logoColor=white"/></a>&nbsp 
+  <img src="https://img.shields.io/badge/Flask-000000?style=flat-square&logo=Flask&logoColor=white"/></a>&nbsp 
+  <br>  
+  <img src="https://img.shields.io/badge/Nginx-009639?style=flat-square&logo=Nginx&logoColor=white"/></a>&nbsp 
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=Docker&logoColor=white"/></a>&nbsp 
+  <img src="https://img.shields.io/badge/Let's Encrypt-003A70?style=flat-square&logo=Let's Encrypt&logoColor=white"/></a>&nbsp
+  <br/>
+  <img src="https://img.shields.io/badge/Apache-kafka-231F20?style=flat-square&logo=Apache-kafka&logoColor=white"/></a>&nbsp 
+  <img src="https://img.shields.io/badge/Logstash-005571?style=flat-square&logo=Logstash&logoColor=white"/></a>&nbsp 
+  <img src="https://img.shields.io/badge/Elasticsearch-005571?style=flat-square&logo=Elasticsearch&logoColor=white"/></a>&nbsp 
+  <br/>
+  <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=PostgreSQL&logoColor=white"/></a>&nbsp 
+  <img src="https://img.shields.io/badge/Jpa-003A70?style=flat-square&logo=Jpa&logoColor=white"/></a>&nbsp 
+  <img src="https://img.shields.io/badge/QueryDsl-E95420?style=flat-square&logo=QueryDsl&logoColor=white"/></a>&nbsp 
+  <br/>
+   <img src="https://img.shields.io/badge/RaspberryPi-A22846?style=flat-square&logo=RaspBerryPi&logoColor=white"/></a>&nbsp 
+  <img src="https://img.shields.io/badge/Linux-E95420?style=flat-square&logo=Linux&logoColor=white"/></a>&nbsp 
+</p>
+
+<h3 align="center">🌈 Follow Me 🌈</h3>
+<p align="center">
+  <a href="https://velog.io/@hyeinisfree"><img src="https://img.shields.io/badge/Tech%20Blog-11B48A?style=flat-square&logo=Vimeo&logoColor=white&link=https://velog.io/@hyeinisfree"/></a>&nbsp
+  <a href="https://www.instagram.com/dev.dobby/"><img src="https://img.shields.io/badge/Instagram-E4405F?style=flat-square&logo=Instagram&logoColor=white&link=https://www.instagram.com/hye_inisfree/"/></a>&nbsp
+  <a href="mailto:kimhyein7110@gmail.com"><img src="https://img.shields.io/badge/Gmail-d14836?style=flat-square&logo=Gmail&logoColor=white&link=kimhyein7110@gmail.com"/></a>
+</p>
+
+
 ## 초기 이벤트 스토밍
 ![trendy-tracker](https://github.com/Tech-Frontier/trendy-tracker-backend/assets/19955904/4774e50b-40e7-42fe-abf3-ac3084241564)
 
 <br/>
+
+
 
 
 ## Setting
