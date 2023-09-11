@@ -33,6 +33,9 @@ Objective 2
   <br/>
    <img src="https://img.shields.io/badge/RaspberryPi-A22846?style=flat-square&logo=RaspBerryPi&logoColor=white"/></a>&nbsp 
   <img src="https://img.shields.io/badge/Linux-E95420?style=flat-square&logo=Linux&logoColor=white"/></a>&nbsp 
+  <br/>
+  <img src="https://img.shields.io/badge/Kibana-005571?style=flat-square&logo=Kibana&logoColor=white"/></a>&nbsp 
+  
 </p>
 <br/>
 
@@ -43,7 +46,7 @@ Objective 2
 </p>
 
 
-## 초기 이벤트 스토밍
+## Event Storming (draft)
 ![trendy-tracker](https://github.com/Tech-Frontier/trendy-tracker-backend/assets/19955904/4774e50b-40e7-42fe-abf3-ac3084241564)
 
 <br/>
@@ -143,4 +146,27 @@ https://github.com/Tech-Frontier/trendy-tracker-backend/pull/15
 > 각 바운디드 컨텍스트 마다 Repository 로 분리해서, 각 Repository 내의 Table 간 조인은 하지만, 바운디트 컨텍스트간(Repository)의 조인은 구조적으로 분리한다.
 
 ![db modeling 2023-09-10](https://github.com/Tech-Frontier/trendy-tracker-backend/assets/19955904/f37cbc10-1b5d-4296-9206-19170897a784)
+
+<br/>
+
+## Logging System
+#### 시각화
+Trendy-Tracker 의 로깅 시스템은 ELK 스택을 활용해서 Elasticsearch DB 에 저장하고, Kibana 를 통해서 지표를 보여주는 역할을 한다. <br/>
+> kafka -> logstash -> elasticsearch -> kibana
+
+![kibana](https://github.com/Tech-Frontier/trendy-tracker-backend/assets/19955904/1516f679-4e78-47c6-be4e-0f0e32d37668)
+
+<br/>
+
+#### 로그 수집 내용
+logging 에서도 kafka 사용하며 logger, error 토픽을 만들어서 아래 정보를 기록해 수집합니다. 
+- api_path       (API 경로)
+- params         (API 파라미터)
+- event_time     (발생 시각)
+- duration_time  (API 소요시간)
+- error_message  (Exception 메시지)
+- header         (UUID * api 응답에도 같이 header에 남겨 디버깅 을 용이하게 합니다)
+<br/>
+
+![image](https://github.com/Tech-Frontier/trendy-tracker-backend/assets/19955904/0ebe71d6-e0eb-4d11-b6d7-0f74cbaa4de2)
 
