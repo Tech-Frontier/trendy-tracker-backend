@@ -151,15 +151,17 @@ https://github.com/Tech-Frontier/trendy-tracker-backend/pull/15
 
 ## Logging System
 #### 시각화
-Trendy-Tracker 의 로깅 시스템은 ELK 스택을 활용해서 Elasticsearch DB 에 저장하고, Kibana 를 통해서 지표를 보여주는 역할을 한다. <br/>
-> kafka -> logstash -> elasticsearch -> kibana
+> Trendy-Tracker 의 로깅 시스템은 ELK 스택을 활용해서 Elasticsearch DB 에 저장하고, Kibana 를 통해서 지표를 보여주는 역할을 한다. <br/>
+
+- kafka -> logstash -> elasticsearch -> kibana
 
 ![kibana](https://github.com/Tech-Frontier/trendy-tracker-backend/assets/19955904/1516f679-4e78-47c6-be4e-0f0e32d37668)
 
 <br/>
 
 #### 로그 수집 내용
-logging 에서도 kafka 사용하며 logger, error 토픽을 만들어서 아래 정보를 기록해 수집합니다. 
+> logging 에서도 kafka를 사용하며 **logger, error** 토픽을 만들어서 아래 정보를 기록해 수집합니다.
+
 - api_path       (API 경로)
 - params         (API 파라미터)
 - event_time     (발생 시각)
