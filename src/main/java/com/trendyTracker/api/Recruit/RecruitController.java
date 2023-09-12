@@ -1,10 +1,10 @@
 package com.trendyTracker.api.Recruit;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.trendyTracker.Job.dto.RecruitDto;
 import com.trendyTracker.Job.service.RecruitService;
 import com.trendyTracker.common.Exception.ExceptionDetail.NoResultException;
 import com.trendyTracker.common.Exception.ExceptionDetail.NotAllowedValueException;
 import com.trendyTracker.common.config.Loggable;
+import com.trendyTracker.common.kafka.KafkaProducer;
 import com.trendyTracker.common.response.Response;
 import com.trendyTracker.util.JobTotalCntSingleton;
 
@@ -41,19 +43,23 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RestController
 public class RecruitController {
-
+    @Autowired
+    private KafkaProducer kafkaProducer;
     private final RecruitService recruitService;
 
     @Operation(summary = "채용 공고 등록")
     @PostMapping(value = "/regist")
-    public Response<Long> regisitJobPostion(
+    public Response<Void> regisitJobPostion(
         @RequestBody @Validated recruitRequest recruRequest,
-        HttpServletRequest request, HttpServletResponse response) throws NoResultException, IOException {
+        HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
+        HashMap<String, String> paramMap = new HashMap<>();
+        paramMap.put("url", recruRequest.url);
+        paramMap.put("company", recruRequest.company);
+        paramMap.put("occupation", recruRequest.occupation);
 
-        long id = recruitService.regisitJobPostion(recruRequest.url, recruRequest.company, recruRequest.occupation);
-
-        addHeader(request, response);
-        return Response.success(200, "공고 목록이 조회되었습니다", id);
+        String uuid = addHeader(request, response);
+        kafkaProducer.sendMessage("RegistJob", paramMap, uuid);    
+        return Response.success(200, "채용 공고 등록이 대기열에 저장 되었습니다");
     }
 
     @Operation(summary = "채용 공고 조회")
@@ -116,9 +122,10 @@ public class RecruitController {
         return Response.success(200, "공고 목록이 조회되었습니다", result);
     }
 
-    private void addHeader(HttpServletRequest request, HttpServletResponse response) {
+    private String addHeader(HttpServletRequest request, HttpServletResponse response) {
         UUID uuid = (UUID) request.getAttribute("uuid");
         response.addHeader("uuid", uuid.toString());
+        return uuid.toString();
     }
 
     @Data
