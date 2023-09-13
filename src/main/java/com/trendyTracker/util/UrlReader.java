@@ -22,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.trendyTracker.Job.domain.Tech;
+import com.trendyTracker.Job.dto.JobInfoDto;
 
 public class UrlReader {
     static Logger logger = LoggerFactory.getLogger(UrlReader.class);
@@ -29,7 +30,7 @@ public class UrlReader {
     // 웹 페이지 로딩을 위한 대기 시간 (초 단위)
     private static final int PAGE_LOAD_TIMEOUT = 10;
 
-    public static Set<Tech> getUrlContent(String url) throws IOException {
+    public static JobInfoDto getUrlContent(String url) throws IOException {
         List<Tech> techList = TechListSingleton.getInstance().getTechList();
         WebDriver driver = setChromeDriver();
         
@@ -40,6 +41,10 @@ public class UrlReader {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(PAGE_LOAD_TIMEOUT));
             wait.until(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
 
+            // title parsing 
+            String title = getTitle(driver);
+            
+            // tech parsing
             WebElement bodyElement = driver.findElement(By.tagName("body"));
             String pageSource = bodyElement.getText();
 
@@ -52,10 +57,12 @@ public class UrlReader {
             while (matcher.find()) 
                 englishWords.add(matcher.group());
 
-            return techList.stream()
+            Set<Tech> techSet = techList.stream()
                 .filter(tech -> englishWords.stream()
                 .anyMatch(word -> tech.getTech_name().equalsIgnoreCase(word)))
                 .collect(Collectors.toSet());
+
+            return new JobInfoDto(title, techSet);
 
         } catch(Exception ex){
             logger.error(ex.getMessage());
@@ -83,7 +90,7 @@ public class UrlReader {
             else if (osName.contains("linux"))
                 serviceBuilder.usingDriverExecutable(new File("/usr/local/bin/chromedriver"));
             
-            ChromeDriverService service = serviceBuilder.usingPort(9515).build();
+            ChromeDriverService service = serviceBuilder.usingPort(9516).build();
             service.start();
             
             ChromeOptions options = new ChromeOptions();
@@ -97,5 +104,19 @@ public class UrlReader {
             logger.error(ex.getMessage());
             return null;
         }
+    }
+
+    private static String getTitle(WebDriver driver) {
+        var findElements = driver.findElements(By.tagName("h1"));
+        var findElements2 = driver.findElements(By.tagName("h2"));
+
+        if (findElements.size() != 0) 
+            return  driver.findElement(By.tagName("h1")).getText();
+        
+        else if (findElements2.size() != 0) {
+            return driver.findElement(By.tagName("h2")).getText();
+        }
+
+        return "";
     }
 }

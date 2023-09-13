@@ -54,13 +54,13 @@ public class JobRepositoryImpl implements JobRepository {
 
     @Override
     @Transactional
-    public long registJobPosition(String url, Company company, String jobPosition, List<Tech> techList) {
+    public long registJobPosition(String url, String title, Company company, String jobPosition, List<Tech> techList) {
     /*
      * 'Recruit',  'RecruitTech'  저장
      */
         List<RecruitTech> recruitTechList = new ArrayList<>();
         Recruit recruit = new Recruit();
-        recruit.addRecruit(url, company, jobPosition);
+        recruit.addRecruit(url, title, company, jobPosition);
 
         for (Tech newTech : techList) {
             RecruitTech recruitTech = new RecruitTech();
@@ -103,7 +103,7 @@ public class JobRepositoryImpl implements JobRepository {
         em.persist(recruit);
         
         RecruitDto result = new RecruitDto(recruit_id, recruit.getCompany(), 
-                                    recruit.getJobCategory(),recruit.getUrl(), 
+                                    recruit.getJobCategory(),recruit.getUrl(), recruit.getTitle(),
                                     recruit.getCreate_time(),recruit.getTechList());
                                     
         return Optional.of(result);
@@ -121,7 +121,7 @@ public class JobRepositoryImpl implements JobRepository {
             return Optional.empty();
 
         RecruitDto result = new RecruitDto(recruit_id, recruit.getCompany(), 
-                                    recruit.getJobCategory(),recruit.getUrl(), 
+                                    recruit.getJobCategory(),recruit.getUrl(), recruit.getTitle(),
                                     recruit.getCreate_time(),recruit.getTechList());
         return Optional.of(result);    
     }
@@ -162,12 +162,12 @@ public class JobRepositoryImpl implements JobRepository {
                 if(urlTechs.stream().anyMatch(t -> techList.stream()
                                     .anyMatch(tech -> tech.equalsIgnoreCase(t.getTech().getTech_name()))))
                     recruitDtoList.add(new RecruitDto(recruit.getId(), recruit.getCompany(), 
-                                    recruit.getJobCategory(), recruit.getUrl(),
+                                    recruit.getJobCategory(), recruit.getUrl(), recruit.getTitle(),
                                     recruit.getCreate_time(), recruit.getTechList()));
             }
             else 
                 recruitDtoList.add(new RecruitDto(recruit.getId(), recruit.getCompany(), 
-                                    recruit.getJobCategory(), recruit.getUrl(),
+                                    recruit.getJobCategory(), recruit.getUrl(), recruit.getTitle(),
                                     recruit.getCreate_time(), recruit.getTechList()));
             
         }

@@ -10,7 +10,7 @@ import com.trendyTracker.Job.dto.RecruitDto;
 public interface JobRepository {
     Company registeCompany(String company);
 
-    long registJobPosition(String url, Company company, String jobPosition, List<Tech> techList);
+    long registJobPosition(String url, String title, Company company, String jobPosition, List<Tech> techList);
 
     void deleteJobPosition(long recruit_id);
     
