@@ -64,7 +64,7 @@ def handle_webhook():
     )
     down_output, down_error = down_process.communicate()
 
-    if run_process.returncode != 0:
+    if down_process.returncode != 0:
         error_message = f"Docker 컨테이너 종료 중 오류 발생: {down_error.decode()}"
         logging.error(error_message)
         return error_message, 500
