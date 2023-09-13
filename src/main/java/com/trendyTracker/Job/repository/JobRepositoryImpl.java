@@ -103,7 +103,7 @@ public class JobRepositoryImpl implements JobRepository {
         em.persist(recruit);
         
         RecruitDto result = new RecruitDto(recruit_id, recruit.getCompany(), 
-                                    recruit.getJobCategory(),recruit.getUrl(), 
+                                    recruit.getJobCategory(),recruit.getUrl(), recruit.getTitle(),
                                     recruit.getCreate_time(),recruit.getTechList());
                                     
         return Optional.of(result);
@@ -121,7 +121,7 @@ public class JobRepositoryImpl implements JobRepository {
             return Optional.empty();
 
         RecruitDto result = new RecruitDto(recruit_id, recruit.getCompany(), 
-                                    recruit.getJobCategory(),recruit.getUrl(), 
+                                    recruit.getJobCategory(),recruit.getUrl(), recruit.getTitle(),
                                     recruit.getCreate_time(),recruit.getTechList());
         return Optional.of(result);    
     }
@@ -162,12 +162,12 @@ public class JobRepositoryImpl implements JobRepository {
                 if(urlTechs.stream().anyMatch(t -> techList.stream()
                                     .anyMatch(tech -> tech.equalsIgnoreCase(t.getTech().getTech_name()))))
                     recruitDtoList.add(new RecruitDto(recruit.getId(), recruit.getCompany(), 
-                                    recruit.getJobCategory(), recruit.getUrl(),
+                                    recruit.getJobCategory(), recruit.getUrl(), recruit.getTitle(),
                                     recruit.getCreate_time(), recruit.getTechList()));
             }
             else 
                 recruitDtoList.add(new RecruitDto(recruit.getId(), recruit.getCompany(), 
-                                    recruit.getJobCategory(), recruit.getUrl(),
+                                    recruit.getJobCategory(), recruit.getUrl(), recruit.getTitle(),
                                     recruit.getCreate_time(), recruit.getTechList()));
             
         }
