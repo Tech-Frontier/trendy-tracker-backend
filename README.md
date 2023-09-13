@@ -20,8 +20,8 @@ Objective 2
   <img src="https://img.shields.io/badge/Flask-000000?style=flat-square&logo=Flask&logoColor=white"/></a>&nbsp 
   <br>  
   <img src="https://img.shields.io/badge/Nginx-009639?style=flat-square&logo=Nginx&logoColor=white"/></a>&nbsp 
-  <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=Docker&logoColor=white"/></a>&nbsp 
   <img src="https://img.shields.io/badge/Let's Encrypt-003A70?style=flat-square&logo=Let's Encrypt&logoColor=white"/></a>&nbsp
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=Docker&logoColor=white"/></a>&nbsp 
   <br/>
   <img src="https://img.shields.io/badge/Apache-kafka-231F20?style=flat-square&logo=Apache-kafka&logoColor=white"/></a>&nbsp 
   <img src="https://img.shields.io/badge/Logstash-005571?style=flat-square&logo=Logstash&logoColor=white"/></a>&nbsp 
@@ -35,7 +35,7 @@ Objective 2
   <img src="https://img.shields.io/badge/Linux-E95420?style=flat-square&logo=Linux&logoColor=white"/></a>&nbsp 
   <br/>
   <img src="https://img.shields.io/badge/Kibana-005571?style=flat-square&logo=Kibana&logoColor=white"/></a>&nbsp 
-  
+  <img src="https://img.shields.io/badge/Selenium-43B02A?style=flat-square&logo=Selenium&logoColor=white"/></a>&nbsp 
 </p>
 <br/>
 
@@ -138,14 +138,15 @@ docker-compose -f docker-compose.yml up -d
 <br/>
 
 ## DB modeling
-db 모델링 히스토리
-https://github.com/Tech-Frontier/trendy-tracker-backend/pull/15
+db 모델링 히스토리 PR (Pull Request) <br/>
+[<a href="https://github.com/Tech-Frontier/trendy-tracker-backend/pull/15">https://github.com/Tech-Frontier/trendy-tracker-backend/pull/15 </a>](https://github.com/Tech-Frontier/trendy-tracker-backend/pull/15)
 > @OneToMany , @manytoone 처럼 관습적으로 매핑하는 구조를 없애고 필요한 엔티티에만 @OnetoOne 으로 연관관계 매핑함
    즉 User, Template, Company 테이블에 subscribe 에 해당하는 fk 칼럼을 따로 구성하지 않도록 한다
 
 > 각 바운디드 컨텍스트 마다 Repository 로 분리해서, 각 Repository 내의 Table 간 조인은 하지만, 바운디트 컨텍스트간(Repository)의 조인은 구조적으로 분리한다.
 
-![db modeling 2023-09-10](https://github.com/Tech-Frontier/trendy-tracker-backend/assets/19955904/f37cbc10-1b5d-4296-9206-19170897a784)
+<img width="100%" alt="DB Modeling" src="https://github.com/Tech-Frontier/trendy-tracker-backend/assets/19955904/62f98c96-a497-4815-bbdb-4e4560546a7d">
+
 
 <br/>
 
