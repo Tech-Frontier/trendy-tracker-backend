@@ -18,7 +18,8 @@ def handle_webhook():
 
     login_command = f"docker login --username={username} --password={password}"
     pull_command = f"docker pull {repository}"
-    run_command = f"docker-compose -f ./docker-compose.yml restart"
+    down_command = f"docker-compose down"
+    run_command = f"docker-compose -f ./docker-compose.yml up -d"
 
     # Docker 이미지 정보
     logging.info("********* docker image info **********")
@@ -51,6 +52,20 @@ def handle_webhook():
 
     if pull_process.returncode != 0:
         error_message = f"Docker 이미지 Pull 중 오류 발생: {pull_error.decode()}"
+        logging.error(error_message)
+        return error_message, 500
+
+    # Docker 이미지 다운 및 실행
+    logging.info("**************************")
+    logging.info(down_command)
+    logging.info("**************************")
+    down_process = subprocess.Popen(
+        down_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+    )
+    down_output, down_error = down_process.communicate()
+
+    if run_process.returncode != 0:
+        error_message = f"Docker 컨테이너 종료 중 오류 발생: {down_error.decode()}"
         logging.error(error_message)
         return error_message, 500
 

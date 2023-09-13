@@ -56,4 +56,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: jinsujj/trendy-tracker-backend:${{ github.sha }}
+          tags: jinsujj/trendy-tracker-backend:latest
