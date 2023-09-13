@@ -54,13 +54,13 @@ public class JobRepositoryImpl implements JobRepository {
 
     @Override
     @Transactional
-    public long registJobPosition(String url, Company company, String jobPosition, List<Tech> techList) {
+    public long registJobPosition(String url, String title, Company company, String jobPosition, List<Tech> techList) {
     /*
      * 'Recruit',  'RecruitTech'  저장
      */
         List<RecruitTech> recruitTechList = new ArrayList<>();
         Recruit recruit = new Recruit();
-        recruit.addRecruit(url, company, jobPosition);
+        recruit.addRecruit(url, title, company, jobPosition);
 
         for (Tech newTech : techList) {
             RecruitTech recruitTech = new RecruitTech();

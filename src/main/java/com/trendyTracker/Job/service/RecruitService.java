@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
 import com.trendyTracker.Job.domain.Company;
 import com.trendyTracker.Job.domain.Tech;
+import com.trendyTracker.Job.dto.JobInfoDto;
 import com.trendyTracker.Job.dto.RecruitDto;
 import com.trendyTracker.Job.repository.JobRepository;
 import com.trendyTracker.common.Exception.ExceptionDetail.NoResultException;
@@ -33,15 +33,14 @@ public class RecruitService {
     /*
      * url, company, jobCategory 를 활용해 채용공고 등록합니다
      */
-        Set<Tech> techList = UrlReader.getUrlContent(url);
-        if (techList.size() == 0)
+        JobInfoDto jobInfo = UrlReader.getUrlContent(url);
+        if (jobInfo.techSet().size() == 0)
             throw new NoResultException("해당 url 에서 tech 가 발견되지 않았습니다");
 
         Company newCompany = jobRepository.registeCompany(companyName.toLowerCase());
         // Singleton 데이터 변경
         jobTotalCntSingleton.increaseCnt();
-
-        return jobRepository.registJobPosition(url, newCompany, jobCategory.toLowerCase(), new ArrayList<>(techList));
+        return jobRepository.registJobPosition(url, jobInfo.title(), newCompany, jobCategory.toLowerCase(), new ArrayList<>(jobInfo.techSet()));
     }
 
     public RecruitDto getRecruitInfo(long recruit_id) {

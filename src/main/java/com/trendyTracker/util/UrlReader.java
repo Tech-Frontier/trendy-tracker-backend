@@ -22,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.trendyTracker.Job.domain.Tech;
+import com.trendyTracker.Job.dto.JobInfoDto;
 
 public class UrlReader {
     static Logger logger = LoggerFactory.getLogger(UrlReader.class);
@@ -29,7 +30,7 @@ public class UrlReader {
     // 웹 페이지 로딩을 위한 대기 시간 (초 단위)
     private static final int PAGE_LOAD_TIMEOUT = 10;
 
-    public static Set<Tech> getUrlContent(String url) throws IOException {
+    public static JobInfoDto getUrlContent(String url) throws IOException {
         List<Tech> techList = TechListSingleton.getInstance().getTechList();
         WebDriver driver = setChromeDriver();
         
@@ -40,6 +41,12 @@ public class UrlReader {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(PAGE_LOAD_TIMEOUT));
             wait.until(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
 
+            // title parsing 
+            String title = driver.findElement(By.tagName("h1")).getText();
+            if(title.isEmpty())
+                title = driver.findElement(By.tagName("h2")).getText();
+            
+            // tech parsing
             WebElement bodyElement = driver.findElement(By.tagName("body"));
             String pageSource = bodyElement.getText();
 
@@ -52,10 +59,12 @@ public class UrlReader {
             while (matcher.find()) 
                 englishWords.add(matcher.group());
 
-            return techList.stream()
+            Set<Tech> techSet = techList.stream()
                 .filter(tech -> englishWords.stream()
                 .anyMatch(word -> tech.getTech_name().equalsIgnoreCase(word)))
                 .collect(Collectors.toSet());
+
+            return new JobInfoDto(title, techSet);
 
         } catch(Exception ex){
             logger.error(ex.getMessage());

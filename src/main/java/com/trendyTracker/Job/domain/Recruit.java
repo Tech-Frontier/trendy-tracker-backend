@@ -44,6 +44,8 @@ public class Recruit {
     @Column(length = 300)
     private String url;
 
+    private String title;
+
     private LocalDateTime create_time;
 
     private LocalDateTime updated_time;
@@ -51,8 +53,9 @@ public class Recruit {
     private Boolean is_active;
 
     // 연관관계 메서드
-    public void addRecruit(String url, Company company, String jobCategory){
+    public void addRecruit(String url, String title, Company company, String jobCategory){
         this.url = url;
+        this.title = title;
         this.company = company;
         this.jobCategory = jobCategory;
         this.create_time = LocalDateTime.now();
