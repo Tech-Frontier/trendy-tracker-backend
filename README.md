@@ -1,4 +1,12 @@
 # trendy-tracker-backend
+> public <br/>
+https://www.trendy-tracker.kr
+
+>admin <br/>
+https://admin.trendy-tracker.kr
+
+> backend  <br/>
+https://api.trendy-tracker.kr
 
 ## Vision
 > 모든 개발자의 정보 불균등을 없앤다.
