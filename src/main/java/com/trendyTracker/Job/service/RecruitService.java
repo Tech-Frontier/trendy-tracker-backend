@@ -64,7 +64,7 @@ public class RecruitService {
         // Singleton 데이터 변경
         jobTotalCntSingleton.decreaseCnt();
 
-        jobRepository.deleteJobPosition(recruitInfo.id());
+        jobRepository.deleteJobPosition(recruitInfo);
     }
 
     public RecruitDto updateRecruitTechs(long recruit_id, String[] techs) throws NotAllowedValueException{

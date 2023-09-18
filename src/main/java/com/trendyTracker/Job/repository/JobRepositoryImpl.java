@@ -77,13 +77,11 @@ public class JobRepositoryImpl implements JobRepository {
     //#region [UPDATE]
     @Override
     @Transactional
-    public void deleteJobPosition(long recruit_id) {
+    public void deleteJobPosition(Recruit recruit) {
     /*
      * 'Recruit' 비활성화
      */
-        Recruit recruit = em.find(Recruit.class, recruit_id);
-        recruit.setIs_active(false);
-
+        recruit.deleteRecruit();
         em.persist(recruit);
     }
 

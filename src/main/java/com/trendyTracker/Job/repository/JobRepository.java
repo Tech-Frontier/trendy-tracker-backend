@@ -13,7 +13,7 @@ public interface JobRepository {
 
     Recruit registJobPosition(String url, String title, Company company, String jobPosition, List<Tech> techList);
 
-    void deleteJobPosition(long recruit_id);
+    void deleteJobPosition(Recruit recruit_id);
     
     Optional<RecruitDto> updateRecruitTech(long id,  List<Tech> techList);
 
