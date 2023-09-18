@@ -87,7 +87,7 @@ public class JobRepositoryImpl implements JobRepository {
 
     @Override
     @Transactional
-    public Optional<RecruitDto> updateRecruitTech(long recruit_id, List<Tech> techList) {
+    public Optional<Recruit> updateRecruitTech(long recruit_id, List<Tech> techList) {
     /*
      * 'RecruitTech' 변경
      */
@@ -100,11 +100,7 @@ public class JobRepositoryImpl implements JobRepository {
         recruit.updateUrlTechs(techList);
         em.persist(recruit);
         
-        RecruitDto result = new RecruitDto(recruit_id, recruit.getCompany(), 
-                                    recruit.getJobCategory(),recruit.getUrl(), recruit.getTitle(),
-                                    recruit.getCreate_time(),recruit.getTechList());
-                                    
-        return Optional.of(result);
+        return Optional.of(recruit);
     }
     //#endregion
 

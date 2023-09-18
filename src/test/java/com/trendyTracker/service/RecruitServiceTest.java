@@ -13,7 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.trendyTracker.TrendyTrackerApplication;
 import com.trendyTracker.Job.domain.Recruit;
-import com.trendyTracker.Job.dto.RecruitDto;
 import com.trendyTracker.Job.service.RecruitService;
 import com.trendyTracker.common.Exception.ExceptionDetail.NoResultException;
 import com.trendyTracker.common.Exception.ExceptionDetail.NotAllowedValueException;
@@ -142,11 +141,11 @@ public class RecruitServiceTest {
         String[] newTechs = {"C#","Python"};
 
         // when 
-        RecruitDto recruitDto = recruitService.updateRecruitTechs(recruit_id,newTechs);
+        Recruit recruit = recruitService.updateRecruitTechs(recruit_id,newTechs);
 
         // when, then
-        Assertions.assertThat(recruitDto.techList().contains("C#"));
-        Assertions.assertThat(recruitDto.techList().contains("Python"));
+        Assertions.assertThat(recruit.getTechList().contains("C#"));
+        Assertions.assertThat(recruit.getTechList().contains("Python"));
     }
 
     @Test

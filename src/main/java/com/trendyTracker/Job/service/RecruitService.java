@@ -67,7 +67,7 @@ public class RecruitService {
         jobRepository.deleteJobPosition(recruitInfo);
     }
 
-    public RecruitDto updateRecruitTechs(long recruit_id, String[] techs) throws NotAllowedValueException{
+    public Recruit updateRecruitTechs(long recruit_id, String[] techs) throws NotAllowedValueException{
     /*
      * 채용 공고의 기술 스택을 변경합니다.
      */
@@ -76,7 +76,7 @@ public class RecruitService {
             throw new NotAllowedValueException("존재하지 않는 기술이 존재합니다");
 
         List<Tech> techList = TechUtils.makeTechs(techs);
-        Optional<RecruitDto> result = jobRepository.updateRecruitTech(recruitInfo.getId(),techList);
+        Optional<Recruit> result = jobRepository.updateRecruitTech(recruitInfo.getId(),techList);
         return result.get();
     }
 

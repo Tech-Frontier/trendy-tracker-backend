@@ -102,10 +102,17 @@ public class RecruitController {
         @RequestParam(name ="tech",required = true) String[] techs,
         HttpServletRequest request, HttpServletResponse response) throws NotAllowedValueException {
         
-        RecruitDto recruitInfo = recruitService.updateRecruitTechs(recruit_id,techs);
+        Recruit recruit = recruitService.updateRecruitTechs(recruit_id,techs);
+        RecruitDto recruitDto = new RecruitDto(
+        recruit.getId(),
+        recruit.getCompany(), 
+        recruit.getJobCategory(),
+        recruit.getUrl(),
+        recruit.getTitle(),
+        recruit.getCreate_time());
 
         addHeader(request, response);
-        return Response.success(200, "공고 스택이 변경되었습니다.",recruitInfo);
+        return Response.success(200, "공고 스택이 변경되었습니다.",recruitDto);
     }
 
 

@@ -6,7 +6,6 @@ import java.util.Optional;
 import com.trendyTracker.Job.domain.Company;
 import com.trendyTracker.Job.domain.Recruit;
 import com.trendyTracker.Job.domain.Tech;
-import com.trendyTracker.Job.dto.RecruitDto;
 
 public interface JobRepository {
     Company registeCompany(String company);
@@ -15,7 +14,7 @@ public interface JobRepository {
 
     void deleteJobPosition(Recruit recruit_id);
     
-    Optional<RecruitDto> updateRecruitTech(long id,  List<Tech> techList);
+    Optional<Recruit> updateRecruitTech(long id,  List<Tech> techList);
 
     Optional<Recruit> getRecruit(long id);
 
