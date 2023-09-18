@@ -1,4 +1,4 @@
-package com.trendyTracker.api.Email;
+package com.trendyTracker.api.Email2;
 
 import java.util.UUID;
 
