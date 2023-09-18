@@ -6,6 +6,7 @@ import java.util.List;
 import com.trendyTracker.Job.domain.Tech;
 
 public class TechListSingleton {
+    // TODO 분산 시스템을 고려하면 Redis 로 변환 필요
     private static TechListSingleton instance;
     private List<Tech> techList;
 

@@ -1,4 +1,4 @@
-package com.trendyTracker.api.EMail;
+package com.trendyTracker.api.Email;
 
 import java.util.UUID;
 
@@ -43,6 +43,20 @@ public class EmailController {
         return Response.success(200, "이메일 인증 번호가 전송 되었습니다.");
     }
 
+    @Operation(summary = "이메일 인증번호 검증")
+    @PostMapping(value = "/signup/verify")
+    public Response<Void> verifyValidationCode(@RequestBody emailValidationRequest validationRequest,
+    HttpServletRequest request, HttpServletResponse response){
+        Boolean verifyCode = emailService.verifyCode(validationRequest.email, validationRequest.code);
+
+        addHeader(request, response);
+
+        if(verifyCode)
+            return Response.success(200, "이메일 인증 번호가 일치합니다.");
+
+        return Response.fail(400, "이메일 인증 번호가 일치하지 않습니다."); 
+    }
+
     private void addHeader(HttpServletRequest request, HttpServletResponse response) {
         UUID uuid = (UUID) request.getAttribute("uuid");
         response.addHeader("uuid", uuid.toString());
@@ -55,5 +69,17 @@ public class EmailController {
         @Email
         @Schema(description = "email", example = "wlstncjs1234@naver.com", type = "String")
         private String email;
+    }
+
+    @Data
+    static class emailValidationRequest {
+        @NotNull
+        @Email
+        @Schema(description = "email", example = "wlstncjs1234@naver.com", type = "String")
+        private String email;
+
+        @NotNull
+         @Schema(description = "code", example = "123456", type = "String")
+        private String code;
     }
 }

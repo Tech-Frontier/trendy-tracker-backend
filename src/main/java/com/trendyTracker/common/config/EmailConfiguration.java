@@ -28,9 +28,7 @@ public class EmailConfiguration {
         mailSender.setHost(host);
         mailSender.setPort(port);
         mailSender.setUsername(username);
-        
-        password = password.replaceAll("'", "");
-        mailSender.setPassword("@@trendy-tracker@@nknk");
+        mailSender.setPassword(password);
 
         mailSender.setJavaMailProperties(getMailProperties()); // 메일 인증서버 정보 가져오기
         return mailSender;

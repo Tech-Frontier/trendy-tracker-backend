@@ -1,5 +1,9 @@
 package com.trendyTracker.Appservice.service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,12 +11,17 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import com.trendyTracker.Appservice.domain.Model.EmailValidation;
+
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 
 @Service
 public class EmailService {
     private final JavaMailSender javaMailSender;
+
+    // TODO 분산 시스템을 고려하면 Redis 로 변환 필요
+    private List<EmailValidation> tempEmailList = new ArrayList<>();
 
     @Autowired
     public EmailService(JavaMailSender javaMailSender) {
@@ -74,15 +83,36 @@ public class EmailService {
                 " </div>\n" +
                 " </div>\n";
 
-        helper.setFrom("admin@trendy-tracker.kr");
+        helper.setFrom("noreply@trendy-tracker.kr");
         helper.setTo(to);
         helper.setSubject("Trendy-Tracker이메일 인증");
         helper.setText(htmlMsg, true);
+
         javaMailSender.send(message);
+
+        addEmailValidation(to, verificationCode);
 
         return verificationCode;
     }
 
+    public Boolean verifyCode(String email, String code){
+    /*
+     * email 과 code 가 일치하면서 3분 이내일 경우 true
+     */
+        Optional<EmailValidation> validate = tempEmailList.stream()
+                    .filter(x -> x.email().equals(email) && x.validateCode().equals(code))
+                    .findFirst();
+        
+        if(validate.isEmpty())
+            return false;
+
+        var emailValidation = validate.get();
+        if(LocalDateTime.now().isAfter(emailValidation.createTime().plusMinutes(3)))
+            return false;
+        
+        tempEmailList.remove(emailValidation);
+        return true;
+    }
 
     private String generateVerificationCode(){
         String numbers ="";
@@ -94,5 +124,19 @@ public class EmailService {
             numbers += randomNumber;
         }
         return numbers;
+    }
+
+    private void addEmailValidation(String email, String verificationCode) {
+    /*
+     * 이메일 인증 코드 발행
+     */
+        Optional<EmailValidation> validate = tempEmailList.stream()
+                    .filter(x -> x.email().equals(email))
+                    .findFirst();
+        
+        if (validate.isPresent())
+            tempEmailList.remove(validate.get());
+
+        tempEmailList.add(new EmailValidation(email, verificationCode));
     }
 }

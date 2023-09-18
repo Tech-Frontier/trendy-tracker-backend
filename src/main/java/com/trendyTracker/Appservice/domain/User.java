@@ -2,6 +2,7 @@ package com.trendyTracker.Appservice.domain;
 
 import java.time.LocalDateTime;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,13 +24,14 @@ public class User {
 
     private String email;
 
+    private String password;
+
     private LocalDateTime create_time;
 
     // 연관관계 메서드
-    public void addUser(String email){
+    public void addUser(String email, String password){
         this.email = email;
+        this.password = password;
         this.create_time = LocalDateTime.now();
     }
-
-   
 }
