@@ -44,6 +44,12 @@ services:
       SPRING_JPA_HIBERNATE_FORMAT_SQL: "off"
       SPRING_KAFKA_BOOTSTRAP_SERVERS: localhost:9092,localhost:9093,localhost:9094
       LOGGING_LEVEL_ORG_APACHE_KAFKA: "off"
+      MAIL_HOST: smtp.daum.net
+      MAIL_PORT: 465
+      MAIL_USERNAME: 
+      MAIL_PASSWORD: 
+      MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: true
+      MAIL_PROPERTIES_MAIL_SMTP_AUTH: true
 
 
   zookeeper-1:

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
 import com.trendyTracker.Appservice.domain.AppInfo;
-import com.trendyTracker.Appservice.repository.AppInfoRepositoryImpl;
+import com.trendyTracker.Appservice.repository.AppInfoRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -15,12 +15,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AppInfoService {
 
-    private final AppInfoRepositoryImpl appInfoRepository;
+    private final AppInfoRepository appInfoRepository;
 
     public AppInfo getAppInfo() {
         Optional<AppInfo> appInfos = appInfoRepository.getAppInfo();
         try{
-            appInfos.orElseThrow(() -> new NotFoundException("dwqdqwd"));
+            appInfos.orElseThrow(() -> new NotFoundException("not exist"));
 
             if (!appInfos.isPresent())
                 return null;
