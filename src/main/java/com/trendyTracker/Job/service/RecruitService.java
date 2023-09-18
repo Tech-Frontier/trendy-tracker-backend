@@ -46,11 +46,11 @@ public class RecruitService {
         return recruit.getId();
     }
 
-    public RecruitDto getRecruitInfo(long recruit_id) {
+    public Recruit getRecruitInfo(long recruit_id) {
     /*
      * 채용공고 조회합니다.
      */
-        Optional<RecruitDto> result = jobRepository.getRecruit(recruit_id);
+        Optional<Recruit> result = jobRepository.getRecruit(recruit_id);
         result.orElseThrow(() -> new NotFoundException("공고 목록이 없습니다"));
 
         return result.get();
@@ -71,17 +71,17 @@ public class RecruitService {
     /*
      * 채용 공고의 기술 스택을 변경합니다.
      */
-        var recruitInfo = getRecruitInfo(recruit_id);
+        Recruit recruitInfo = getRecruitInfo(recruit_id);
         if(TechUtils.isTechNotExist(techs))
             throw new NotAllowedValueException("존재하지 않는 기술이 존재합니다");
 
         List<Tech> techList = TechUtils.makeTechs(techs);
-        Optional<RecruitDto> result = jobRepository.updateRecruitTech(recruitInfo.id(),techList);
+        Optional<RecruitDto> result = jobRepository.updateRecruitTech(recruitInfo.getId(),techList);
         return result.get();
     }
 
 
-    public List<RecruitDto> getRecruitList(String[] companies, String[] jobCategories, String[] techs,
+    public List<Recruit> getRecruitList(String[] companies, String[] jobCategories, String[] techs,
                                             Integer pageNo, Integer pageSize) throws NoResultException, ValidationException{
     /*
      * 채용 공고를 필터별로 조회합니다
@@ -97,7 +97,7 @@ public class RecruitService {
         jobCategories = changeToLowerCase(jobCategories);
         techs = changeToLowerCase(techs);
 
-        List<RecruitDto> recruitList = jobRepository.getRecruitList(companies, jobCategories, techs);
+        List<Recruit> recruitList = jobRepository.getRecruitList(companies, jobCategories, techs);
         if (recruitList.size() ==0)
             throw new NoResultException("채용 공고가 없습니다");
         
@@ -114,7 +114,7 @@ public class RecruitService {
         return paramStrings;
     }
 
-    private List<RecruitDto> pagingProcess(Integer pageNo, Integer pageSize, List<RecruitDto> recruitList) {
+    private List<Recruit> pagingProcess(Integer pageNo, Integer pageSize, List<Recruit> recruitList) {
     /*
     *  pageNo, pageSize 를 통해서 페이징 처리를 합니다.
     */

@@ -17,9 +17,9 @@ public interface JobRepository {
     
     Optional<RecruitDto> updateRecruitTech(long id,  List<Tech> techList);
 
-    Optional<RecruitDto> getRecruit(long id);
+    Optional<Recruit> getRecruit(long id);
 
-    List<RecruitDto> getRecruitList(String[] companies, String[] jobCategories, String[] techs);
+    List<Recruit> getRecruitList(String[] companies, String[] jobCategories, String[] techs);
 
     long getTotalJobCnt();
 

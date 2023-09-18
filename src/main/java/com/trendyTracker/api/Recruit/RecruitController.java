@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.trendyTracker.Job.domain.Recruit;
 import com.trendyTracker.Job.dto.RecruitDto;
 import com.trendyTracker.Job.service.RecruitService;
 import com.trendyTracker.common.Exception.ExceptionDetail.NoResultException;
@@ -68,10 +69,18 @@ public class RecruitController {
         @PathVariable(name = "recruit_id") Long recruit_id,
         HttpServletRequest request, HttpServletResponse response) {
 
-        RecruitDto recruitInfo = recruitService.getRecruitInfo(recruit_id);
+        Recruit recruit = recruitService.getRecruitInfo(recruit_id);
+        RecruitDto recruitDto = new RecruitDto(
+            recruit.getId(),
+            recruit.getCompany(), 
+            recruit.getJobCategory(),
+            recruit.getUrl(),
+            recruit.getTitle(),
+            recruit.getCreate_time());
+
 
         addHeader(request, response);
-        return Response.success(200, "공고 목록이 조회되었습니다", recruitInfo);
+        return Response.success(200, "공고 목록이 조회되었습니다", recruitDto);
     }
 
     @Operation(summary = "채용 공고 삭제")
@@ -110,7 +119,7 @@ public class RecruitController {
         @RequestParam(name= "pageSize",required = false) Integer pageSize,
         HttpServletRequest request, HttpServletResponse response) throws NoResultException, ValidationException {
 
-        List<RecruitDto> recruitList = recruitService.getRecruitList(companies,jobCategories,techs,pageNo,pageSize);
+        List<Recruit> recruitList = recruitService.getRecruitList(companies,jobCategories,techs,pageNo,pageSize);
         HashMap<String,Object> result = new HashMap<>();
         // Singleton 데이터 조회
         JobTotalCntSingleton jobTotalCntSingleton = JobTotalCntSingleton.getInstance();

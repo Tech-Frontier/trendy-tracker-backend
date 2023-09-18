@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.trendyTracker.TrendyTrackerApplication;
+import com.trendyTracker.Job.domain.Recruit;
 import com.trendyTracker.Job.dto.RecruitDto;
 import com.trendyTracker.Job.service.RecruitService;
 import com.trendyTracker.common.Exception.ExceptionDetail.NoResultException;
@@ -62,7 +63,7 @@ public class RecruitServiceTest {
         String[] companies = {"*"};
 
         //when
-        List<RecruitDto> recruitList = recruitService.getRecruitList(
+        List<Recruit> recruitList = recruitService.getRecruitList(
             companies, null, null, null, null);
 
         // then
@@ -76,12 +77,12 @@ public class RecruitServiceTest {
         String[] companies = {"toss","naver"};
 
         //when
-        List<RecruitDto> recruitList = recruitService.getRecruitList(
+        List<Recruit> recruitList = recruitService.getRecruitList(
             companies, null, null, null, null);
 
         // then
         Assertions.assertThat(recruitList.size()).isGreaterThan(0);
-        Assertions.assertThat(recruitList).extracting(x -> x.company()).contains("toss");
+        Assertions.assertThat(recruitList).extracting(x -> x.getCompany().getCompany_name()).contains("toss");
     }
 
     @Test
@@ -92,12 +93,12 @@ public class RecruitServiceTest {
         String[] jobCategories = {"backend", "Embeded"};
 
         //when
-        List<RecruitDto> recruitList = recruitService.getRecruitList(
+        List<Recruit> recruitList = recruitService.getRecruitList(
             companies, jobCategories, null, null, null);
 
         // then
         Assertions.assertThat(recruitList.size()).isGreaterThan(0);
-        Assertions.assertThat(recruitList).extracting(x -> x.company()).contains("toss");
+        Assertions.assertThat(recruitList).extracting(x -> x.getCompany().getCompany_name()).contains("toss");
     }
 
     @Test
@@ -109,12 +110,12 @@ public class RecruitServiceTest {
         String[] techs ={"java"};
 
         // when
-        List<RecruitDto> recruitList = recruitService.getRecruitList(
+        List<Recruit> recruitList = recruitService.getRecruitList(
             companies, jobCategories, techs, null, null);
 
         // then
         Assertions.assertThat(recruitList.size()).isGreaterThan(0);
-        Assertions.assertThat(recruitList).extracting(x -> x.company()).contains("toss");
+        Assertions.assertThat(recruitList).extracting(x -> x.getCompany().getCompany_name()).contains("toss");
     }
 
     @Test
@@ -126,7 +127,7 @@ public class RecruitServiceTest {
         int pageSize=3;
 
         // when
-        List<RecruitDto> recruitList = recruitService.getRecruitList(
+        List<Recruit> recruitList = recruitService.getRecruitList(
             companies, null, null, pageNo, pageSize);
 
         // then
