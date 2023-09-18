@@ -4,13 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import com.trendyTracker.Job.domain.Company;
+import com.trendyTracker.Job.domain.Recruit;
 import com.trendyTracker.Job.domain.Tech;
 import com.trendyTracker.Job.dto.RecruitDto;
 
 public interface JobRepository {
     Company registeCompany(String company);
 
-    long registJobPosition(String url, String title, Company company, String jobPosition, List<Tech> techList);
+    Recruit registJobPosition(String url, String title, Company company, String jobPosition, List<Tech> techList);
 
     void deleteJobPosition(long recruit_id);
     

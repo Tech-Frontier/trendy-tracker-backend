@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
 import com.trendyTracker.Job.domain.Company;
+import com.trendyTracker.Job.domain.Recruit;
 import com.trendyTracker.Job.domain.Tech;
 import com.trendyTracker.Job.dto.JobInfoDto;
 import com.trendyTracker.Job.dto.RecruitDto;
@@ -40,7 +41,9 @@ public class RecruitService {
         Company newCompany = jobRepository.registeCompany(companyName.toLowerCase());
         // Singleton 데이터 변경
         jobTotalCntSingleton.increaseCnt();
-        return jobRepository.registJobPosition(url, jobInfo.title(), newCompany, jobCategory.toLowerCase(), new ArrayList<>(jobInfo.techSet()));
+        Recruit recruit = jobRepository.registJobPosition(url, jobInfo.title(), newCompany, jobCategory.toLowerCase(), new ArrayList<>(jobInfo.techSet()));
+
+        return recruit.getId();
     }
 
     public RecruitDto getRecruitInfo(long recruit_id) {

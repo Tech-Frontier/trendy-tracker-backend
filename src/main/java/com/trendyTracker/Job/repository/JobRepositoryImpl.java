@@ -54,7 +54,7 @@ public class JobRepositoryImpl implements JobRepository {
 
     @Override
     @Transactional
-    public long registJobPosition(String url, String title, Company company, String jobPosition, List<Tech> techList) {
+    public Recruit registJobPosition(String url, String title, Company company, String jobPosition, List<Tech> techList) {
     /*
      * 'Recruit',  'RecruitTech'  저장
      */
@@ -70,7 +70,7 @@ public class JobRepositoryImpl implements JobRepository {
         
         recruit.setUrlTechs(recruitTechList);
         em.persist(recruit);
-        return recruit.getId();
+        return recruit;
     }
     //#endregion
 
