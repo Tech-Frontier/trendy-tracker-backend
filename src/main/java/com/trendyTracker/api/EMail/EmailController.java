@@ -33,7 +33,7 @@ import lombok.Data;
 public class EmailController {
     private final EmailService emailService;
 
-    @Operation(summary = "이메일 인증 번호 발송")
+    @Operation(summary = "이메일 인증 번호 발송") 
     @PostMapping(value = "/signup/send")
     public Response<Void> sendVerificationEmail(@RequestBody @Validated emailRequest emailRequest,
     HttpServletRequest request, HttpServletResponse response) throws MessagingException{
