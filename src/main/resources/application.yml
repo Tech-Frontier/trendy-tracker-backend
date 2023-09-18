@@ -1,5 +1,5 @@
 server:
-  port: 
+  port: 8080
 
 spring:
   datasource:
@@ -13,6 +13,18 @@ spring:
     show-sql: false
     properties:
       hibernate.format_sql: false
+
+mail:
+  host:
+  port: 
+  username: 
+  password: 
+  properties:
+    mail:
+      smtp:
+        starttls:
+          enable: true
+        auth: true
 
 token:
   value: 
