@@ -54,7 +54,7 @@ public class JobRepositoryImpl implements JobRepository {
 
     @Override
     @Transactional
-    public long registJobPosition(String url, String title, Company company, String jobPosition, List<Tech> techList) {
+    public Recruit registJobPosition(String url, String title, Company company, String jobPosition, List<Tech> techList) {
     /*
      * 'Recruit',  'RecruitTech'  저장
      */
@@ -70,26 +70,24 @@ public class JobRepositoryImpl implements JobRepository {
         
         recruit.setUrlTechs(recruitTechList);
         em.persist(recruit);
-        return recruit.getId();
+        return recruit;
     }
     //#endregion
 
     //#region [UPDATE]
     @Override
     @Transactional
-    public void deleteJobPosition(long recruit_id) {
+    public void deleteJobPosition(Recruit recruit) {
     /*
      * 'Recruit' 비활성화
      */
-        Recruit recruit = em.find(Recruit.class, recruit_id);
-        recruit.setIs_active(false);
-
+        recruit.deleteRecruit();
         em.persist(recruit);
     }
 
     @Override
     @Transactional
-    public Optional<RecruitDto> updateRecruitTech(long recruit_id, List<Tech> techList) {
+    public Optional<Recruit> updateRecruitTech(long recruit_id, List<Tech> techList) {
     /*
      * 'RecruitTech' 변경
      */
@@ -102,17 +100,13 @@ public class JobRepositoryImpl implements JobRepository {
         recruit.updateUrlTechs(techList);
         em.persist(recruit);
         
-        RecruitDto result = new RecruitDto(recruit_id, recruit.getCompany(), 
-                                    recruit.getJobCategory(),recruit.getUrl(), recruit.getTitle(),
-                                    recruit.getCreate_time(),recruit.getTechList());
-                                    
-        return Optional.of(result);
+        return Optional.of(recruit);
     }
     //#endregion
 
     //#region [READ]
     @Override
-    public Optional<RecruitDto> getRecruit(long recruit_id) {
+    public Optional<Recruit> getRecruit(long recruit_id) {
     /*
      * recruit_id 로 채용공고 조회
      */
@@ -120,14 +114,11 @@ public class JobRepositoryImpl implements JobRepository {
         if(recruit == null || !recruit.getIs_active()) 
             return Optional.empty();
 
-        RecruitDto result = new RecruitDto(recruit_id, recruit.getCompany(), 
-                                    recruit.getJobCategory(),recruit.getUrl(), recruit.getTitle(),
-                                    recruit.getCreate_time(),recruit.getTechList());
-        return Optional.of(result);    
+        return Optional.of(recruit);    
     }
 
     @Override
-    public List<RecruitDto> getRecruitList(String[] companies, String[] jobCategories, String[] techs) {
+    public List<Recruit> getRecruitList(String[] companies, String[] jobCategories, String[] techs) {
     /*
      * 'companies', 'jobCategories', 'techs' 별 채용공고 필터링
      */
@@ -143,35 +134,30 @@ public class JobRepositoryImpl implements JobRepository {
         if (jobCategories != null && jobCategories.length >0)
             query.where(qRecruit.jobCategory.in(jobCategories));
         
-        List<RecruitDto> recruitDtoList = filteringTechs(techs, query.fetch());
-        return recruitDtoList;
+        return filteringTechs(techs, query.fetch());
     }
 
-    private List<RecruitDto> filteringTechs(String[] techs, List<Long> recruitIdList) {
+    private List<Recruit> filteringTechs(String[] techs, List<Long> recruitIdList) {
     /**
      * 사용자가 지정한 tech 필터링
      */
-        List<RecruitDto> recruitDtoList = new ArrayList<RecruitDto>();
+        List<Recruit> recruitList = new ArrayList<Recruit>();
         List<String> techList = techs != null ? Arrays.asList(techs) : new ArrayList<>();
 
         for(int i=0; i< recruitIdList.size(); i++){
             Recruit recruit = em.find(Recruit.class, recruitIdList.get(i));
             List<RecruitTech> urlTechs = recruit.getUrlTechs();
-
-            if(techList.size() > 0){
-                if(urlTechs.stream().anyMatch(t -> techList.stream()
-                                    .anyMatch(tech -> tech.equalsIgnoreCase(t.getTech().getTech_name()))))
-                    recruitDtoList.add(new RecruitDto(recruit.getId(), recruit.getCompany(), 
-                                    recruit.getJobCategory(), recruit.getUrl(), recruit.getTitle(),
-                                    recruit.getCreate_time(), recruit.getTechList()));
-            }
-            else 
-                recruitDtoList.add(new RecruitDto(recruit.getId(), recruit.getCompany(), 
-                                    recruit.getJobCategory(), recruit.getUrl(), recruit.getTitle(),
-                                    recruit.getCreate_time(), recruit.getTechList()));
             
+            if (techList.size() ==0)
+                recruitList.add(recruit);
+            
+            else 
+                if(urlTechs.stream()
+                    .anyMatch(t -> techList.stream()
+                    .anyMatch(tech -> tech.equalsIgnoreCase(t.getTech().getTech_name()))))
+                    recruitList.add(recruit);
         }
-        return recruitDtoList;
+        return recruitList;
     }
 
     @Override
