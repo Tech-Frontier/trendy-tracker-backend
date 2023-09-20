@@ -9,11 +9,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import com.trendyTracker.TrendyTrackerApplication;
 
 import jakarta.mail.MessagingException;
 
-@SpringBootTest(classes = TrendyTrackerApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 public class EmailServiceTest {
     @MockBean
     private EmailService emailService;
