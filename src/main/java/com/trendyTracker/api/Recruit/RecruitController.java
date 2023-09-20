@@ -1,5 +1,6 @@
 package com.trendyTracker.api.Recruit;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -126,12 +127,22 @@ public class RecruitController {
         @RequestParam(name= "pageSize",required = false) Integer pageSize,
         HttpServletRequest request, HttpServletResponse response) throws NoResultException, ValidationException {
 
-        List<Recruit> recruitList = recruitService.getRecruitList(companies,jobCategories,techs,pageNo,pageSize);
         HashMap<String,Object> result = new HashMap<>();
+        List<Recruit> recruitList = recruitService.getRecruitList(companies,jobCategories,techs,pageNo,pageSize);
+        List<RecruitDto> recruitDtoList = new ArrayList<>();
+        for (Recruit recruit : recruitList) {
+            recruitDtoList.add( new RecruitDto(
+                recruit.getId(),
+                recruit.getCompany(), 
+                recruit.getJobCategory(),
+                recruit.getUrl(),
+                recruit.getTitle(),
+                recruit.getCreate_time()));
+        }
         // Singleton 데이터 조회
         JobTotalCntSingleton jobTotalCntSingleton = JobTotalCntSingleton.getInstance();
         
-        result.put("recruitList", recruitList);
+        result.put("recruitList", recruitDtoList);
         result.put("totalCount", jobTotalCntSingleton.getTotalCnt());
         
         addHeader(request, response);
