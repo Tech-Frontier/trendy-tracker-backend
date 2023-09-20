@@ -5,9 +5,6 @@ services:
     container_name: logstash
     volumes:
       - ./src/main/java/com/trendyTracker/common/logstash:/usr/share/logstash/config
-    networks:
-      - elk-network
-
 
   kibana:
     image: docker.elastic.co/kibana/kibana:8.1.2-arm64
@@ -16,9 +13,6 @@ services:
       - ./src/main/java/com/trendyTracker/common/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
     ports:
       - "5601:5601"
-    networks:
-      - elk-network
-
 
   trendy_tracker:
     image: jinsujj/trendy-tracker-backend:latest
@@ -51,17 +45,13 @@ services:
       MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: "true"
       MAIL_PROPERTIES_MAIL_SMTP_AUTH:  "true"
 
-
   zookeeper-1:
     image: confluentinc/cp-zookeeper:7.2.2.arm64
     ports:
       - '32181:32181'
-    networks:
-      - elk-network
     environment:
       ZOOKEEPER_CLIENT_PORT: 32181
       ZOOKEEPER_TICK_TIME: 2000
-
 
   kafka-1:
     image: confluentinc/cp-kafka:7.2.2.arm64
@@ -69,9 +59,6 @@ services:
       - '9092:9092'
     depends_on:
       - zookeeper-1
-    networks:
-      - elk-network
-    container_name: kafka-1
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper-1:32181
@@ -81,16 +68,12 @@ services:
       KAFKA_DEFAULT_REPLICATION_FACTOR: 3
       KAFKA_NUM_PARTITIONS: 3
 
-
   kafka-2:
     image: confluentinc/cp-kafka:7.2.2.arm64
     ports:
       - '9093:9093'
     depends_on:
       - zookeeper-1
-    networks:
-      - elk-network
-    container_name: kafka-2
     environment:
       KAFKA_BROKER_ID: 2
       KAFKA_ZOOKEEPER_CONNECT: zookeeper-1:32181
@@ -106,9 +89,6 @@ services:
       - '9094:9094'
     depends_on:
       - zookeeper-1
-    networks:
-      - elk-network
-    container_name: kafka-3
     environment:
       KAFKA_BROKER_ID: 3
       KAFKA_ZOOKEEPER_CONNECT: zookeeper-1:32181
@@ -129,13 +109,7 @@ services:
       - kafka-1
       - kafka-2
       - kafka-3
-    networks:
-      - elk-network
     environment:
       - KAFKA_CLUSTERS_0_NAME=local
       - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka-1:29092 ,kafka-2:29093,kafka-3:29094
       - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper-1:22181
-
-networks:
-  elk-network:
-    driver: bridge
