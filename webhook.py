@@ -18,7 +18,7 @@ def handle_webhook():
 
     login_command = f"docker login --username={username} --password={password}"
     pull_command = f"docker pull {repository}"
-    down_command = f"docker-compose down"
+    down_command = f"docker-compose down -v "
     run_command = f"docker-compose -f ./docker-compose.yml up -d"
 
     # Docker 이미지 정보
