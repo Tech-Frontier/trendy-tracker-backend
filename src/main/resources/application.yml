@@ -3,22 +3,22 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://110.8.21.243:5432/trendy_tracker
-    username: trendy_tracker
-    password: Init1234
-    driver-class-name: org.postgresql.Driver
+    url: 
+    username: 
+    password: 
+    driver-class-name: 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto:
     show-sql: false
     properties:
       hibernate.format_sql: false
 
 mail:
-  host: smtp.daum.net
-  port: 465
-  username: creaticoding@daum.net
-  password: "@@trendy-tracker@@nknk"
+  host:
+  port: 
+  username: 
+  password: 
   properties:
     mail:
       smtp:
@@ -27,11 +27,11 @@ mail:
         auth: true
 
 token:
-  value: RAs7uvb92vbgf7xAvJQmXM697H*WMf44a9tTi*
+  value: 
 
 logging:
   level:
     org.apache.kafka: off
 
 kafka:
-  bootstrap-servers: localhost:9092, localhost:9093, localhost:9094
+  bootstrap-servers: 

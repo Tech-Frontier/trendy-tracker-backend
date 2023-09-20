@@ -1,108 +1,35 @@
 package com.trendyTracker.service;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
-
 import org.webjars.NotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
-import com.trendyTracker.Job.domain.Company;
+import com.trendyTracker.TrendyTrackerApplication;
 import com.trendyTracker.Job.domain.Recruit;
 import com.trendyTracker.Job.service.RecruitService;
 import com.trendyTracker.common.Exception.ExceptionDetail.NoResultException;
 import com.trendyTracker.common.Exception.ExceptionDetail.NotAllowedValueException;
-import com.trendyTracker.util.TechUtils;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.ValidationException;
 
-@SpringBootTest
+@SpringBootTest(classes = TrendyTrackerApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
 public class RecruitServiceTest {
-    @MockBean
+    @Autowired
     private RecruitService recruitService;
 
     // Test 채용공고 
     private final String url = "https://www.owl-dev.me/blog/26";
     private final String company = "owl";
     private final String jobCategory ="fullstack";
-
-    @BeforeEach
-    void MockRecruitService() throws NoResultException, IOException, NotAllowedValueException{
-        Company tempCompany1 = new Company();
-        Company tempCompany2 = new Company();
-        Recruit tempRecruit1 = new Recruit();
-        Recruit tempRecruit2 = new Recruit();
-
-        tempCompany1.addCompany("toss");
-        tempCompany2.addCompany("naver");
-        tempRecruit1.addRecruit(url, "title", tempCompany1, jobCategory);
-        tempRecruit2.addRecruit(url, "title", tempCompany2, jobCategory);
-
-        String[] companies;
-        String[] jobCategories;
-        String[] techs;
-        String[] newTechs;
-
-        // regisitJobPostion 
-        when(recruitService.regisitJobPostion(url, company, jobCategory))
-        .thenReturn((long)1);
-
-        // getRecruitList
-        companies = new String[] {"*"};
-        when(recruitService.getRecruitList(companies, null, null, null, null))
-        .thenReturn(new ArrayList<Recruit>() {{add(tempRecruit1); add(tempRecruit2);}});
-
-        // getRecruitList
-        companies = new String[] {"toss","naver"};
-        when(recruitService.getRecruitList(companies, null, null, null, null))
-        .thenReturn(new ArrayList<Recruit>() {{add(tempRecruit1); add(tempRecruit2);}});
-
-        // getRecruitList
-        companies = new String[]{"toss","naver"};
-        jobCategories = new String[]{"backend", "robotics"};
-        when(recruitService.getRecruitList(companies, jobCategories, null, null, null))
-        .thenReturn(new ArrayList<Recruit>() {{add(tempRecruit1); add(tempRecruit2);}});
-
-        // getRecruitList
-        companies = new String[]{"toss","naver"};
-        jobCategories = new String[]{"backend", "robotics"};
-        techs = new String[]{"java"};
-        when(recruitService.getRecruitList(companies, jobCategories, techs, null, null))
-        .thenReturn(new ArrayList<Recruit>() {{add(tempRecruit1); add(tempRecruit2);}});
-        
-        // getRecruitList
-        companies = new String[] {"*"};
-        int pageNo =1;
-        int pageSize=3;
-        when(recruitService.getRecruitList(companies, null, null, pageNo, pageSize))
-        .thenReturn(new ArrayList<Recruit>() {{add(tempRecruit1); add(tempRecruit2);}});
-
-        // NotFoundException
-        doThrow(new NotFoundException("not found"))
-        .when(recruitService).getRecruitInfo(999);
-
-        // updateRecruitTechs
-        newTechs = new String[]{"C#","Python"};  
-        tempRecruit1.updateUrlTechs(TechUtils.makeTechs(newTechs));
-        when(recruitService.updateRecruitTechs(1,newTechs))
-        .thenReturn(tempRecruit1);
-
-        // NotAllowedValueException
-        newTechs = new String[]{"C#","Joker"};
-        doThrow(new NotAllowedValueException("not allowed"))
-        .when(recruitService).updateRecruitTechs(1,newTechs);
-    }
 
    
     @Test
@@ -119,7 +46,7 @@ public class RecruitServiceTest {
     @DisplayName("채용 공고 삭제")
     public void deleteJobPostion() throws NoResultException, IOException{
         // given 
-        long recruit_id = 999;
+        long recruit_id = recruitService.regisitJobPostion(url, company, jobCategory);
 
         // when 
         recruitService.deleteRecruit(recruit_id);
@@ -162,7 +89,7 @@ public class RecruitServiceTest {
     public void getRecruitsByCompanies_jobCategory() throws ValidationException, NoResultException {
         // given 
         String[] companies = {"toss","naver"};
-        String[] jobCategories = {"backend", "robotics"};
+        String[] jobCategories = {"backend", "Embeded"};
 
         //when
         List<Recruit> recruitList = recruitService.getRecruitList(
@@ -209,8 +136,8 @@ public class RecruitServiceTest {
     @Test
     @DisplayName("채용 공고 변경")
     public void changeRecruitTech() throws NoResultException, IOException, NotAllowedValueException{
-        // given
-        long recruit_id = 1;
+         // given
+        long recruit_id = recruitService.regisitJobPostion(url, company, jobCategory);
         String[] newTechs = {"C#","Python"};
 
         // when 
@@ -225,10 +152,10 @@ public class RecruitServiceTest {
     @DisplayName("채용 공고 변경 + 등록되지 않은 기술")
     public void changeRecruitTechsWithWrongTechs() throws ValidationException, NoResultException, IOException, NotAllowedValueException {
          // given
-        long recruit_id = 1;
+        long recruit_id = recruitService.regisitJobPostion(url, company, jobCategory);
         String[] newTechs = {"C#","Joker"};
 
         // when, then
-        assertThrows(NotAllowedValueException.class, () -> recruitService.updateRecruitTechs(recruit_id, newTechs));
+        assertThrows(NotAllowedValueException.class, () -> recruitService.updateRecruitTechs(recruit_id,newTechs));
     }
 }

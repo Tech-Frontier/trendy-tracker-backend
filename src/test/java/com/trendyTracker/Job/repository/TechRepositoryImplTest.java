@@ -6,10 +6,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.trendyTracker.TrendyTrackerApplication;
 
 import jakarta.transaction.Transactional;
 
-@SpringBootTest
+@SpringBootTest(classes = TrendyTrackerApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
 public class TechRepositoryImplTest {
     @Autowired
