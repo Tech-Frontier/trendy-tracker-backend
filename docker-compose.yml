@@ -4,13 +4,13 @@ services:
     image: docker.elastic.co/logstash/logstash:8.1.2-arm64
     container_name: logstash
     volumes:
-      - ./src/main/java/com/trendyTracker/common/logstash:/usr/share/logstash/config
+      - ./src/main/java/com/trendyTracker/infrastructure/logstash:/usr/share/logstash/config
 
   kibana:
     image: docker.elastic.co/kibana/kibana:8.1.2-arm64
     container_name: kibana
     volumes:
-      - ./src/main/java/com/trendyTracker/common/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
+      - ./src/main/java/com/trendyTracker/infrastructure/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
     ports:
       - "5601:5601"
 
