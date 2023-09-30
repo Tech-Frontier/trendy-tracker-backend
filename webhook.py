@@ -2,6 +2,7 @@ import os
 import logging
 from flask import Flask, request
 import subprocess
+import time
 
 app = Flask(__name__)
 
@@ -19,6 +20,7 @@ def handle_webhook():
     login_command = f"docker login --username={username} --password={password}"
     pull_command = f"docker pull {repository}"
     down_command = f"docker-compose down -v "
+    network_down_command = f"docker network prune -f"
     run_command = f"docker-compose -f ./docker-compose.yml up -d"
 
     # Docker 이미지 정보
@@ -64,8 +66,20 @@ def handle_webhook():
     )
     down_output, down_error = down_process.communicate()
 
-    if down_process.returncode != 0:
-        error_message = f"Docker 컨테이너 종료 중 오류 발생: {down_error.decode()}"
+    wait_time = 20
+    time.sleep(wait_time)
+
+    # Docker 네트워크 종료
+    logging.info("**************************")
+    logging.info(network_down_command)
+    logging.info("**************************")
+    network_down_process = subprocess.Popen(
+        network_down_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+    )
+    network_down_output, down_error = network_down_process.communicate()
+
+    if network_down_process.returncode != 0:
+        error_message = f"Docker 네트워크 종료 중 오류 발생: {down_error.decode()}"
         logging.error(error_message)
         return error_message, 500
 
