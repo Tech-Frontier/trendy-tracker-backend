@@ -1,4 +1,4 @@
-package com.trendyTracker.common.config;
+package com.trendyTracker.common.config.interceptor;
 
 import java.util.UUID;
 

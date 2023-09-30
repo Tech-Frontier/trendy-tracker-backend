@@ -1,4 +1,4 @@
-package com.trendyTracker.common.kafka;
+package com.trendyTracker.infrastructure.kafka;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;

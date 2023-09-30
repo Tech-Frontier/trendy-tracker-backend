@@ -1,4 +1,4 @@
-package com.trendyTracker.common.config;
+package com.trendyTracker.common.config.logging;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Retention;
