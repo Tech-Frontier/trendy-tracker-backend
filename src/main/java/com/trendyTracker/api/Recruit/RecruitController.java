@@ -23,9 +23,9 @@ import com.trendyTracker.Job.dto.RecruitDto;
 import com.trendyTracker.Job.service.RecruitService;
 import com.trendyTracker.common.Exception.ExceptionDetail.NoResultException;
 import com.trendyTracker.common.Exception.ExceptionDetail.NotAllowedValueException;
-import com.trendyTracker.common.config.Loggable;
-import com.trendyTracker.common.kafka.KafkaProducer;
+import com.trendyTracker.common.config.logging.Loggable;
 import com.trendyTracker.common.response.Response;
+import com.trendyTracker.infrastructure.kafka.KafkaProducer;
 import com.trendyTracker.util.JobTotalCntSingleton;
 
 import io.swagger.v3.oas.annotations.Operation;

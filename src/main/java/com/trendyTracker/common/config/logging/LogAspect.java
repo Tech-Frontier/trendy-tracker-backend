@@ -1,4 +1,4 @@
-package com.trendyTracker.common.config;
+package com.trendyTracker.common.config.logging;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -22,9 +22,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.trendyTracker.common.kafka.KafkaProducer;
+import com.trendyTracker.infrastructure.kafka.KafkaProducer;
+
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Aspect
 @Component

@@ -1,4 +1,4 @@
-package com.trendyTracker.common.config;
+package com.trendyTracker.common.config.interceptor;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;

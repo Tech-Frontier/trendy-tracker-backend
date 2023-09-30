@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.trendyTracker.Appservice.service.AppInfoService;
-import com.trendyTracker.common.config.Loggable;
+import com.trendyTracker.common.config.logging.Loggable;
 import com.trendyTracker.common.response.Response;
 
 import io.swagger.v3.oas.annotations.Operation;

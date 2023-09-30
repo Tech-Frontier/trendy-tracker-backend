@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.trendyTracker.Job.domain.Tech.TechType;
 import com.trendyTracker.Job.service.TechService;
 import com.trendyTracker.common.Exception.ExceptionDetail.AlreadyExistException;
-import com.trendyTracker.common.config.Loggable;
+import com.trendyTracker.common.config.logging.Loggable;
 import com.trendyTracker.common.response.Response;
 
 import io.swagger.v3.oas.annotations.Operation;
