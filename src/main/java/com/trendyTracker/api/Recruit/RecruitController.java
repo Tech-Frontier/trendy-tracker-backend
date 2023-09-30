@@ -77,7 +77,8 @@ public class RecruitController {
             recruit.getJobCategory(),
             recruit.getUrl(),
             recruit.getTitle(),
-            recruit.getCreate_time());
+            recruit.getCreate_time(),
+            recruit.getTechList());
 
 
         addHeader(request, response);
@@ -110,7 +111,9 @@ public class RecruitController {
         recruit.getJobCategory(),
         recruit.getUrl(),
         recruit.getTitle(),
-        recruit.getCreate_time());
+        recruit.getCreate_time(),
+        recruit.getTechList()
+        );
 
         addHeader(request, response);
         return Response.success(200, "공고 스택이 변경되었습니다.",recruitDto);
@@ -137,7 +140,8 @@ public class RecruitController {
                 recruit.getJobCategory(),
                 recruit.getUrl(),
                 recruit.getTitle(),
-                recruit.getCreate_time()));
+                recruit.getCreate_time(),
+                recruit.getTechList()));
         }
         // Singleton 데이터 조회
         JobTotalCntSingleton jobTotalCntSingleton = JobTotalCntSingleton.getInstance();
