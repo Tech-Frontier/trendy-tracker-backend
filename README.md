@@ -72,7 +72,7 @@ Objective 2
 2. Project 의 아래 경로는 각 logstash, kibana, elasticsearch 에 대한 환경설정 폴더를 만들고 <br/>
    docker volume 으로 지정해 docker-compose.yml 을 실행 시 같이 반영되어 실행된다.
 ```
-src/main/java/com/trendyTracker/common/
+src/main/java/com/trendyTracker/infrastructure/
 ```
 
 
@@ -97,7 +97,7 @@ bin/elasticsearch-service-tokens create elastic/kibana jinsu
 ```
 git clone https://github.com/Tech-Frontier/trendy-tracker-backend.git
 
-src/main/java/com/trendyTracker/common/kibana/kibana.yml
+src/main/java/com/trendyTracker/infrastructure/kibana/kibana.yml
 elasticsearch.serviceAccountToken: "여기에 기입"
 ```
 
@@ -120,11 +120,11 @@ elasticsearch.serviceAccountToken: "여기에 기입"
 5. logstash 설정파일에서, DB 서버의 **elasticsearch** 의 주소를 바라보도록 변경해준다.
 ```
 [logstash.conf]
-path: src/main/java/com/trendyTracker/common/logstash/logstash.conf
+path: src/main/java/com/trendyTracker/infrastructure/logstash/logstash.conf
 update: hosts => ["http://owl-dev.me:9200"]
 
 [logstash.yml]
-path: src/main/java/com/trendyTracker/common/logstash/logstash.yml
+path: src/main/java/com/trendyTracker/infrastructure/logstash/logstash.yml
 update: xpack.monitoring.elasticsearch.hosts: ["http://owl-dev.me:9200"]
 ```
 
