@@ -44,6 +44,8 @@ services:
       MAIL_PASSWORD: 
       MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: "true"
       MAIL_PROPERTIES_MAIL_SMTP_AUTH:  "true"
+      JWT_SECRET_KEY: 
+
 
   zookeeper-1:
     image: confluentinc/cp-zookeeper:7.2.2.arm64
