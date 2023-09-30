@@ -24,14 +24,11 @@ public class User {
 
     private String email;
 
-    private String password;
-
     private LocalDateTime create_time;
 
     // 연관관계 메서드
-    public void addUser(String email, String password){
+    public void addUser(String email){
         this.email = email;
-        this.password = password;
         this.create_time = LocalDateTime.now();
     }
 }

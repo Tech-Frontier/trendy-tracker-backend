@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.trendyTracker.Appservice.domain.User;
 import com.trendyTracker.Appservice.service.EmailService;
-import com.trendyTracker.common.config.Loggable;
+import com.trendyTracker.common.config.JwtProvider;
+import com.trendyTracker.common.config.logging.Loggable;
 import com.trendyTracker.common.response.Response;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,6 +34,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class EmailController {
     private final EmailService emailService;
+    private JwtProvider jwtProvider;
 
     @Operation(summary = "이메일 인증 번호 발송") 
     @PostMapping(value = "/signup/send")
@@ -45,15 +48,18 @@ public class EmailController {
 
     @Operation(summary = "이메일 인증번호 검증")
     @PostMapping(value = "/signup/verify")
-    public Response<Void> verifyValidationCode(@RequestBody emailValidationRequest validationRequest,
+    public Response<String> verifyValidationCode(@RequestBody emailValidationRequest validationRequest,
     HttpServletRequest request, HttpServletResponse response){
         Boolean verifyCode = emailService.verifyCode(validationRequest.email, validationRequest.code);
 
         addHeader(request, response);
 
-        if(verifyCode)
-            return Response.success(200, "이메일 인증 번호가 일치합니다.");
-
+        if(verifyCode){
+            User user = new User();
+            user.addUser("test@naver.com");
+            String jwt = jwtProvider.createToken(user);
+            return Response.success(200, "이메일 인증 번호가 일치합니다.",jwt);
+        }
         return Response.fail(400, "이메일 인증 번호가 일치하지 않습니다."); 
     }
 

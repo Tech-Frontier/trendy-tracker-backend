@@ -26,6 +26,9 @@ mail:
           enable: true
         auth: true
 
+jwt:
+  secret_key: 
+
 token:
   value: 
 
