@@ -11,7 +11,6 @@ import com.trendyTracker.Job.domain.QRecruit;
 import com.trendyTracker.Job.domain.Recruit;
 import com.trendyTracker.Job.domain.RecruitTech;
 import com.trendyTracker.Job.domain.Tech;
-import com.trendyTracker.Job.dto.RecruitDto;
 
 import org.springframework.stereotype.Repository;
 
