@@ -48,9 +48,6 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
 
-      - name: Clear Docker build cache
-        run: docker builder prune -a -f
-
       - name: Build and push with unique tag
         uses: docker/build-push-action@v4
         with:
