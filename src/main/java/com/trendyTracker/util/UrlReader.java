@@ -90,7 +90,7 @@ public class UrlReader {
             else if (osName.contains("linux"))
                 serviceBuilder.usingDriverExecutable(new File("/usr/local/bin/chromedriver"));
             
-            ChromeDriverService service = serviceBuilder.usingPort(9516).build();
+            ChromeDriverService service = serviceBuilder.build();
             service.start();
             
             ChromeOptions options = new ChromeOptions();
