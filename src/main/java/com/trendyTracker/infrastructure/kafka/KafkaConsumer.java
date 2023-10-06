@@ -21,21 +21,27 @@ public class KafkaConsumer {
     private RecruitService recruitService;
     static Logger logger = LoggerFactory.getLogger(KafkaConsumer.class);
 
-    @KafkaListener(topics = "RegistJob", groupId = "my-group")
+    @KafkaListener(topics = "RegistJob", groupId = "my-group", concurrency = "3")
     public void listenToRegistJob(ConsumerRecord<String, String> record, @Header(name = "uuid") String uuid) throws NoResultException, IOException {
     /*
      * 채용공고 등록
      */
-        String value = record.value();
+        try{
+            String value = record.value();
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode jsonNode = objectMapper.readTree(value);
-        String url = jsonNode.get("url").asText();
-        String company = jsonNode.get("company").asText();
-        String occupation = jsonNode.get("occupation").asText();
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(value);
+            String url = jsonNode.get("url").asText();
+            String company = jsonNode.get("company").asText();
+            String occupation = jsonNode.get("occupation").asText();
 
 
-        long id = recruitService.regisitJobPostion(url, company, occupation);
-        logger.info("Consumed RegistJob Topic: id:" + id + " header: " + uuid);
+            long id = recruitService.regisitJobPostion(url, company, occupation);
+            logger.info("Consumed RegistJob Topic: id:" + id + " header: " + uuid);
+        
+        }catch (Exception ex){
+            logger.error(uuid, ex.getMessage());
+        }
+
     }
 }
