@@ -51,6 +51,7 @@ services:
     image: confluentinc/cp-zookeeper:7.2.2.arm64
     ports:
       - '32181:32181'
+    container_name: zookeeper
     environment:
       ZOOKEEPER_CLIENT_PORT: 32181
       ZOOKEEPER_TICK_TIME: 2000
