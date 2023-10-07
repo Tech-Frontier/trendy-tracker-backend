@@ -24,6 +24,7 @@ public class JwtInterceptor implements HandlerInterceptor {
             if (jwtToken.equals(adminToken)) 
                 return true;
 
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return false;
         }
         else {

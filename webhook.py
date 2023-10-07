@@ -28,7 +28,7 @@ def handle_webhook():
 
         login_command = f"docker login --username={username} --password={password}"
         pull_command = f"docker pull {repository}"
-        down_command = f"docker-compose down -v "
+        down_command = f"docker-compose stop trendy_tracker "
         network_down_command = f"docker network prune -f"
         run_command = f"docker-compose -f ./docker-compose.yml up -d"
 
