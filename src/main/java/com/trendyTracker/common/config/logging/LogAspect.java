@@ -66,7 +66,8 @@ public class LogAspect {
         String inputParms ="";
         for(int i =0; i< paramNames.size(); i++)
             inputParms += assembleParamInfo(paramNames.get(i),paramValues.get(i));
-            
+        inputParms +=String.format("\n%s: %s","uuid", uuid);
+
         kafkaProducer.sendMessage("logger",request.getRequestURI(), inputParms, uuid.toString());
         logger.info(String.format("\nAPI path: %s \nparams: %s", request.getRequestURI(), inputParms));
         deleteUUIDMap(uuid);
