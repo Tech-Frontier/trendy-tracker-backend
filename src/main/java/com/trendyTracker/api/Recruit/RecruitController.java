@@ -66,6 +66,22 @@ public class RecruitController {
         return Response.success(200, "채용 공고 등록이 대기열에 저장 되었습니다");
     }
 
+    @Operation(summary = "채용 공고 수정")
+    @PutMapping(value = "update")
+    public Response<RecruitDto> updateRecruit(
+        @RequestParam(name ="url",required = true) String url,
+        HttpServletRequest request, HttpServletResponse response) throws NotAllowedValueException, JsonProcessingException {
+        
+        HashMap<String, String> paramMap = new HashMap<>();
+        paramMap.put("url", url);
+        
+        String uuid = addHeader(request, response);
+        kafkaProducer.sendMessage("UpdateJob", paramMap, uuid);    
+
+        addHeader(request, response);
+        return Response.success(200, "채용 공고 수정이 대기열에 저장 되었습니다");
+    }
+
     @Operation(summary = "채용 공고 조회")
     @GetMapping(value = "/id/{recruit_id}")
     public Response<RecruitDto> getRecruitDetail(

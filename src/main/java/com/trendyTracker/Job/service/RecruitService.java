@@ -13,7 +13,6 @@ import com.trendyTracker.Job.domain.Company;
 import com.trendyTracker.Job.domain.Recruit;
 import com.trendyTracker.Job.domain.Tech;
 import com.trendyTracker.Job.dto.JobInfoDto;
-import com.trendyTracker.Job.dto.RecruitDto;
 import com.trendyTracker.Job.repository.JobRepository;
 import com.trendyTracker.common.Exception.ExceptionDetail.NoResultException;
 import com.trendyTracker.common.Exception.ExceptionDetail.NotAllowedValueException;
@@ -31,9 +30,9 @@ public class RecruitService {
     JobTotalCntSingleton jobTotalCntSingleton = JobTotalCntSingleton.getInstance();
 
      public long regisitJobPostion(String url, String companyName, String jobCategory) throws NoResultException, IOException {
-    /*
-     * url, company, jobCategory 를 활용해 채용공고 등록합니다
-     */
+     /*
+      * url, company, jobCategory 를 활용해 채용공고 등록합니다
+      */
         JobInfoDto jobInfo = UrlReader.getUrlContent(url);
         if (jobInfo.techSet().size() == 0)
             throw new NoResultException("해당 url 에서 tech 가 발견되지 않았습니다");
@@ -41,19 +40,39 @@ public class RecruitService {
         Company newCompany = jobRepository.registeCompany(companyName.toLowerCase());
         // Singleton 데이터 변경
         jobTotalCntSingleton.increaseCnt();
-        Recruit recruit = jobRepository.registJobPosition(url, jobInfo.title(), newCompany, jobCategory.toLowerCase(), new ArrayList<>(jobInfo.techSet()));
+        Recruit recruit = jobRepository.registJobPosition(url, jobInfo.title()
+                                                        , newCompany, jobCategory.toLowerCase()
+                                                        , new ArrayList<>(jobInfo.techSet()));
 
         return recruit.getId();
     }
 
     public Recruit getRecruitInfo(long recruit_id) {
-    /*
-     * 채용공고 조회합니다.
-     */
         Optional<Recruit> result = jobRepository.getRecruit(recruit_id);
         result.orElseThrow(() -> new NotFoundException("공고 목록이 없습니다"));
 
         return result.get();
+    }
+
+    public Recruit getRecruitInfo(String url){
+        Optional<Recruit> result = jobRepository.getRecruitByUrl(url);
+        result.orElseThrow(() -> new NotFoundException("공고 목록이 없습니다"));
+
+        return result.get();
+    }
+
+    public long updateJobPosition(String url) throws IOException, NoResultException{
+    /*
+     * 기존 채용공고를 새로 Scrapping 합니다
+     */   
+        var recruitInfo = getRecruitInfo(url);
+        JobInfoDto jobInfo = UrlReader.getUrlContent(recruitInfo.getUrl());
+        
+        if (jobInfo.techSet().size() == 0)
+            throw new NoResultException("해당 url 에서 tech 가 발견되지 않았습니다");
+        
+        Recruit result = jobRepository.updateJobPosition(recruitInfo.getId(), new ArrayList<>(jobInfo.techSet()));
+        return result.getId();
     }
 
     public void deleteRecruit(long recruit_id){

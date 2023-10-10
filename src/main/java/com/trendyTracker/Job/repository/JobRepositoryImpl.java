@@ -76,6 +76,18 @@ public class JobRepositoryImpl implements JobRepository {
     //#region [UPDATE]
     @Override
     @Transactional
+    public Recruit updateJobPosition(long id, List<Tech> techList) {
+    /*
+     * 채용공고 재분석
+     */
+        Recruit recruit = em.find(Recruit.class,id);
+        recruit.updateUrlTechs(techList);
+        em.persist(recruit);
+        return recruit;
+    }
+
+    @Override
+    @Transactional
     public void deleteJobPosition(Recruit recruit) {
     /*
      * 'Recruit' 비활성화
@@ -114,6 +126,24 @@ public class JobRepositoryImpl implements JobRepository {
             return Optional.empty();
 
         return Optional.of(recruit);    
+    }
+
+    public Optional<Recruit> getRecruitByUrl(String url){
+    /*
+     * 채용공고 Url 로 채용공고 조회
+     */
+        queryFactory = new JPAQueryFactory(em);
+        QRecruit qRecruit = QRecruit.recruit;
+
+        Recruit recruit = queryFactory.select(qRecruit)
+                                        .from(qRecruit)
+                                        .where(qRecruit.url.eq(url))
+                                        .fetchOne();
+
+        if(recruit == null || !recruit.getIs_active())
+            return Optional.empty();
+        
+        return Optional.of(recruit);
     }
 
     @Override
@@ -170,6 +200,5 @@ public class JobRepositoryImpl implements JobRepository {
                                     .fetchOne();
         return result;
     }
-
     //#endregion
 }
