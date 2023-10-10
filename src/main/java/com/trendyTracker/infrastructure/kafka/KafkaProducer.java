@@ -21,7 +21,7 @@ public class KafkaProducer {
 
     public void sendMessage(String topic, String key, String value, String header) {
     /*
-     * Logging   
+     * Logging 
      */
         ProducerRecord<String, String> record = new ProducerRecord<>(topic, null, key, value);
 
@@ -33,7 +33,7 @@ public class KafkaProducer {
 
     public void sendMessage(String topic, Map<String,String> messageMap, String header) throws JsonProcessingException{
     /*
-     * 채용공고 등록
+     * Recruit Scrapping
      */
         ObjectMapper objectMapper = new ObjectMapper();
         String message = objectMapper.writeValueAsString(messageMap);
