@@ -138,7 +138,7 @@ public class JobRepositoryImpl implements JobRepository {
         Recruit recruit = queryFactory.select(qRecruit)
                                         .from(qRecruit)
                                         .where(qRecruit.url.eq(url))
-                                        .fetchOne();
+                                        .fetchFirst();
 
         if(recruit == null || !recruit.getIs_active())
             return Optional.empty();
