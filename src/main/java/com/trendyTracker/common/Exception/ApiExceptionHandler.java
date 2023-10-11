@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.trendyTracker.common.Exception.ExceptionDetail.AlreadyExistException;
+import com.trendyTracker.common.Exception.ExceptionDetail.NoResultException;
 import com.trendyTracker.common.Exception.ExceptionDetail.NotAllowedValueException;
 
 import jakarta.validation.ValidationException;
@@ -31,6 +32,16 @@ public class ApiExceptionHandler {
             apiError = new ApiError(HttpStatus.NOT_FOUND, "no result were found", errors);
         else 
             apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "runtime error", errors);
+
+        return new ResponseEntity<>(apiError, apiError.getStatus());
+    }
+
+    @ExceptionHandler(NoResultException.class)
+    public ResponseEntity<?> handleNoResult(NoResultException ex) {
+        List<String> errors = new ArrayList<>();
+        errors.add(ex.getMessage());
+
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, "no result were found", errors);
 
         return new ResponseEntity<>(apiError, apiError.getStatus());
     }

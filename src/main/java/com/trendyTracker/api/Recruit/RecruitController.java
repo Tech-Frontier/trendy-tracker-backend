@@ -3,6 +3,7 @@ package com.trendyTracker.api.Recruit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +17,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.webjars.NotFoundException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.trendyTracker.Job.domain.Recruit;
 import com.trendyTracker.Job.dto.RecruitDto;
 import com.trendyTracker.Job.service.RecruitService;
+import com.trendyTracker.common.Exception.ExceptionDetail.AlreadyExistException;
 import com.trendyTracker.common.Exception.ExceptionDetail.NoResultException;
 import com.trendyTracker.common.Exception.ExceptionDetail.NotAllowedValueException;
 import com.trendyTracker.common.config.logging.Loggable;
@@ -54,7 +55,11 @@ public class RecruitController {
     @PostMapping(value = "/regist")
     public Response<Void> regisitJobPostion(
         @RequestBody @Validated recruitRegistRequest recruitRequest,
-        HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
+        HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException, AlreadyExistException {
+        Optional<Recruit> recruitExist = recruitService.isRecruitExist(recruitRequest.url);
+        if(recruitExist.isPresent())
+            throw new AlreadyExistException("해당 공고가 존재합니다");
+
         HashMap<String, String> paramMap = new HashMap<>();
         paramMap.put("url", recruitRequest.url);
         paramMap.put("company", recruitRequest.company);
@@ -71,20 +76,17 @@ public class RecruitController {
     public Response<RecruitDto> updateRecruit(
         @RequestBody @Validated recruitUpdateRequest recruitRequest,
         HttpServletRequest request, HttpServletResponse response) throws NotAllowedValueException, JsonProcessingException {
-        try{
-            recruitService.getRecruitInfo(recruitRequest.url);
+        
+        recruitService.getRecruitInfo(recruitRequest.url);
 
-            HashMap<String, String> paramMap = new HashMap<>();
-            paramMap.put("url", recruitRequest.url);
-            
-            String uuid = addHeader(request, response);
-            kafkaProducer.sendMessage("UpdateJob", paramMap, uuid);    
-            
-            return Response.success(200, "채용 공고 수정이 대기열에 저장 되었습니다");
-        }
-        catch (NotFoundException ex){
-            throw new NotFoundException(ex.getMessage());
-        }
+        HashMap<String, String> paramMap = new HashMap<>();
+        paramMap.put("url", recruitRequest.url);
+        
+        String uuid = addHeader(request, response);
+        kafkaProducer.sendMessage("UpdateJob", paramMap, uuid);    
+        
+        return Response.success(200, "채용 공고 수정이 대기열에 저장 되었습니다");
+        
     }
 
     @Operation(summary = "채용 공고 조회")
