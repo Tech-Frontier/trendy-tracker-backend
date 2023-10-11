@@ -79,6 +79,7 @@ public class RecruitController {
             
             String uuid = addHeader(request, response);
             kafkaProducer.sendMessage("UpdateJob", paramMap, uuid);    
+            
             return Response.success(200, "채용 공고 수정이 대기열에 저장 되었습니다");
         }
         catch (NotFoundException ex){

@@ -42,7 +42,6 @@ public class KafkaConsumerImpl implements MessageConsumer<ConsumerRecord<String,
         try{
             long id = recruitService.regisitJobPostion(url, company, occupation);
             logger.info("Consumed RegistJob Topic: id:" + id + " header: " + uuid);
-        
         }
         catch (Exception ex){
             Map<String,String> params = new HashMap<>();
