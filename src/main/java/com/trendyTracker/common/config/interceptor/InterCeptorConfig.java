@@ -22,6 +22,7 @@ public class InterCeptorConfig implements WebMvcConfigurer{
             .addPathPatterns("/api/tech/stack/delete")
             // Recruit
             .addPathPatterns("/api/recruit/regist")
+            .addPathPatterns("/api/recruit/update")
             .addPathPatterns("/api/recruit/delete/id/*")
             .addPathPatterns("/api/recruit/update/id/*");
     }

@@ -76,10 +76,10 @@ public class LogAspect {
 
     // Exception 
     @AfterThrowing(pointcut = "loggableClass() && execution(* *(..))", throwing = "ex")
+    public void logAPIException(JoinPoint joinPoint, Throwable ex) {
     /*
      * Exception 에 대한 정보를 kafka, logger 에 기록합니다. 
      */
-    public void logAPIException(JoinPoint joinPoint, Throwable ex) {
         var logger = LoggerFactory.getLogger(joinPoint.getTarget().getClass());
         var request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         UUID uuid = (UUID) request.getAttribute("uuid");

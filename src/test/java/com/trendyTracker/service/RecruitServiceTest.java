@@ -98,6 +98,11 @@ public class RecruitServiceTest {
         when(recruitService.updateRecruitTechs(1,newTechs))
         .thenReturn(tempRecruit1);
 
+        // updateJobPosition
+        newTechs = new String[]{"C#","Python"};  
+        when(recruitService.updateJobPosition(url))
+        .thenReturn((long)1);
+
         // NotAllowedValueException
         newTechs = new String[]{"C#","Joker"};
         doThrow(new NotAllowedValueException("not allowed"))
@@ -230,5 +235,18 @@ public class RecruitServiceTest {
 
         // when, then
         assertThrows(NotAllowedValueException.class, () -> recruitService.updateRecruitTechs(recruit_id, newTechs));
+    }
+
+    @Test
+    @DisplayName("채용공고 재등록")
+    public void updateJobPosition() throws IOException, NoResultException{
+        // given
+        long recruit_id = recruitService.regisitJobPostion(url, company, jobCategory);
+        // when
+        long result_id = recruitService.updateJobPosition(url);
+        
+        // then
+        Assertions.assertThat(result_id == recruit_id);
+        
     }
 }
