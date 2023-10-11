@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.webjars.NotFoundException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.trendyTracker.Job.domain.Recruit;
@@ -52,34 +53,37 @@ public class RecruitController {
     @Operation(summary = "채용 공고 등록")
     @PostMapping(value = "/regist")
     public Response<Void> regisitJobPostion(
-        @RequestBody @Validated recruitRequest recruRequest,
+        @RequestBody @Validated recruitRegistRequest recruitRequest,
         HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
         HashMap<String, String> paramMap = new HashMap<>();
-        paramMap.put("url", recruRequest.url);
-        paramMap.put("company", recruRequest.company);
-        paramMap.put("occupation", recruRequest.occupation);
+        paramMap.put("url", recruitRequest.url);
+        paramMap.put("company", recruitRequest.company);
+        paramMap.put("occupation", recruitRequest.occupation);
 
         String uuid = addHeader(request, response);
         kafkaProducer.sendMessage("RegistJob", paramMap, uuid);    
 
-        addHeader(request, response);
         return Response.success(200, "채용 공고 등록이 대기열에 저장 되었습니다");
     }
 
     @Operation(summary = "채용 공고 수정")
     @PutMapping(value = "update")
     public Response<RecruitDto> updateRecruit(
-        @RequestParam(name ="url",required = true) String url,
+        @RequestBody @Validated recruitUpdateRequest recruitRequest,
         HttpServletRequest request, HttpServletResponse response) throws NotAllowedValueException, JsonProcessingException {
-        
-        HashMap<String, String> paramMap = new HashMap<>();
-        paramMap.put("url", url);
-        
-        String uuid = addHeader(request, response);
-        kafkaProducer.sendMessage("UpdateJob", paramMap, uuid);    
+        try{
+            recruitService.getRecruitInfo(recruitRequest.url);
 
-        addHeader(request, response);
-        return Response.success(200, "채용 공고 수정이 대기열에 저장 되었습니다");
+            HashMap<String, String> paramMap = new HashMap<>();
+            paramMap.put("url", recruitRequest.url);
+            
+            String uuid = addHeader(request, response);
+            kafkaProducer.sendMessage("UpdateJob", paramMap, uuid);    
+            return Response.success(200, "채용 공고 수정이 대기열에 저장 되었습니다");
+        }
+        catch (NotFoundException ex){
+            throw new NotFoundException(ex.getMessage());
+        }
     }
 
     @Operation(summary = "채용 공고 조회")
@@ -178,7 +182,7 @@ public class RecruitController {
     }
 
     @Data
-    static class recruitRequest {
+    static class recruitRegistRequest {
         @NotNull
         @Schema(description = "Url", example = "https://toss.im/career/job-detail?job_id=4071141003&company=%ED%86%A0%EC%8A%A4%EB%B1%85%ED%81%AC&gh_src=a6133a833us&utm_source=offline_conference&utm_medium=banner&utm_campaign=2307_tossbank_recruit", type = "String")
         private String url;
@@ -188,5 +192,12 @@ public class RecruitController {
 
         @Schema(description = "직군", example = "Backend", type = "String")
         private String occupation;
+    }
+
+    @Data
+    static class recruitUpdateRequest {
+        @NotNull
+        @Schema(description = "Url", example = "https://toss.im/career/job-detail?job_id=4071141003&company=%ED%86%A0%EC%8A%A4%EB%B1%85%ED%81%AC&gh_src=a6133a833us&utm_source=offline_conference&utm_medium=banner&utm_campaign=2307_tossbank_recruit", type = "String")
+        private String url;
     }
 }
