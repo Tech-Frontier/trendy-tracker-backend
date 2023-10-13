@@ -25,7 +25,8 @@ import lombok.Setter;
 @Getter @Setter
 @Entity
 @Table(name = "recruit", schema = "public", indexes = {
-    @Index(name = "idx_company_jobCategory", columnList = "company_id, jobCategory")
+    @Index(name = "idx_company_jobCategory", columnList = "company_id, jobCategory"),
+    @Index(name = "idx_url", columnList = "url", unique = true) 
 })
 @NoArgsConstructor
 public class Recruit {
