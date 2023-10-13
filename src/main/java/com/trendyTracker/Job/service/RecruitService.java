@@ -61,6 +61,10 @@ public class RecruitService {
         return result.get();
     }
 
+    public Optional<Recruit> isRecruitExist(String url){
+        return jobRepository.getRecruitByUrl(url);
+    }
+
     public long updateJobPosition(String url) throws IOException, NoResultException{
     /*
      * 기존 채용공고를 새로 Scrapping 합니다

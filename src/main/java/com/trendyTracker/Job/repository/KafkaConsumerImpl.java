@@ -36,18 +36,18 @@ public class KafkaConsumerImpl implements MessageConsumer<ConsumerRecord<String,
         JsonNode jsonNode = new ObjectMapper().readTree(mesage.value());
         String url = jsonNode.get("url").asText();
         String company = jsonNode.get("company").asText();
-        String occupation = jsonNode.get("occupation").asText();
+        String jobCategory = jsonNode.get("jobCategory").asText();
         String uuid = header.get();
         
         try{
-            long id = recruitService.regisitJobPostion(url, company, occupation);
+            long id = recruitService.regisitJobPostion(url, company, jobCategory);
             logger.info("Consumed RegistJob Topic: id:" + id + " header: " + uuid);
         }
         catch (Exception ex){
             Map<String,String> params = new HashMap<>();
             params.put("url", url);
             params.put("company", company);
-            params.put("occupation", occupation);
+            params.put("jobCategory", jobCategory);
             params.put("uuid", uuid);
             kafkaProducer.sendMessage("error", params, uuid);
 
