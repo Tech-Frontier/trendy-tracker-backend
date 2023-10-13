@@ -63,7 +63,7 @@ public class RecruitController {
         HashMap<String, String> paramMap = new HashMap<>();
         paramMap.put("url", recruitRequest.url);
         paramMap.put("company", recruitRequest.company);
-        paramMap.put("occupation", recruitRequest.occupation);
+        paramMap.put("jobCategory", recruitRequest.jobCategory);
 
         String uuid = addHeader(request, response);
         kafkaProducer.sendMessage("RegistJob", paramMap, uuid);    
@@ -194,7 +194,7 @@ public class RecruitController {
         private String company;
 
         @Schema(description = "직군", example = "Backend", type = "String")
-        private String occupation;
+        private String jobCategory;
     }
 
     @Data
