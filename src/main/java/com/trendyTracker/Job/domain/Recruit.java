@@ -13,6 +13,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -23,7 +24,9 @@ import lombok.Setter;
 
 @Getter @Setter
 @Entity
-@Table(name ="recruit", schema = "public")
+@Table(name = "recruit", schema = "public", indexes = {
+    @Index(name = "idx_company_jobCategory", columnList = "company_id, jobCategory")
+})
 @NoArgsConstructor
 public class Recruit {
     @Id
