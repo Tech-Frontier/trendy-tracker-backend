@@ -122,7 +122,7 @@ public class RecruitService {
 
         List<Recruit> recruitList = jobRepository.getRecruitList(companies, jobCategories, techs);
         if (recruitList.size() ==0)
-            throw new NoResultException("채용 공고가 없습니다");
+            return new ArrayList<>();
         
         return pagingProcess(pageNo, pageSize, recruitList);
     }

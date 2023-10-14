@@ -173,6 +173,7 @@ public class RecruitController {
         
         result.put("recruitList", recruitDtoList);
         result.put("totalCount", jobTotalCntSingleton.getTotalCnt());
+        result.put("filterCount", recruitDtoList.size());
         
         addHeader(request, response);
         return Response.success(200, "공고 목록이 조회되었습니다", result);
