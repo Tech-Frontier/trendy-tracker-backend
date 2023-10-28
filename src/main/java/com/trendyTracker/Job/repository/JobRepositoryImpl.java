@@ -6,12 +6,10 @@ import java.util.List;
 import java.util.Optional;
 
 import com.trendyTracker.Job.domain.Company;
-import com.trendyTracker.Job.domain.QCompany;
 import com.trendyTracker.Job.domain.QRecruit;
 import com.trendyTracker.Job.domain.Recruit;
 import com.trendyTracker.Job.domain.RecruitTech;
 import com.trendyTracker.Job.domain.Tech;
-import com.trendyTracker.Job.domain.Model.CompanyInfo;
 
 import org.springframework.stereotype.Repository;
 
@@ -29,29 +27,6 @@ public class JobRepositoryImpl implements JobRepository {
     private JPAQueryFactory queryFactory;
 
     //#region [CREATE]
-    @Override
-    @Transactional
-    public Company registeCompany(CompanyInfo companyInfo) {
-    /*
-     * 'Company' 저장
-     */
-        queryFactory = new JPAQueryFactory(em);
-        QCompany qCompany = QCompany.company;
-        Company newCompany = new Company();
-        
-        var findCompany = queryFactory.select(qCompany)
-                .from(qCompany)
-                .where(qCompany.company_name.eq(companyInfo.companyName()))
-                .fetchOne();
-
-        if (findCompany != null)
-            return findCompany;
-
-        newCompany.addCompany(companyInfo);
-        em.persist(newCompany);
-        return newCompany;
-    }
-
     @Override
     @Transactional
     public Recruit registJobPosition(String url, String title, Company company, String jobPosition, List<Tech> techList) {

@@ -12,8 +12,8 @@ import org.webjars.NotFoundException;
 import com.trendyTracker.Job.domain.Company;
 import com.trendyTracker.Job.domain.Recruit;
 import com.trendyTracker.Job.domain.Tech;
-import com.trendyTracker.Job.domain.Model.CompanyInfo;
 import com.trendyTracker.Job.dto.JobInfoDto;
+import com.trendyTracker.Job.repository.CompanyRepository;
 import com.trendyTracker.Job.repository.JobRepository;
 import com.trendyTracker.common.Exception.ExceptionDetail.NoResultException;
 import com.trendyTracker.common.Exception.ExceptionDetail.NotAllowedValueException;
@@ -28,9 +28,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RecruitService {
     private final JobRepository jobRepository;
+    private final CompanyRepository companyRepository;
+
     JobTotalCntSingleton jobTotalCntSingleton = JobTotalCntSingleton.getInstance();
 
-    public long regisitJobPostion(String url, CompanyInfo companyInfo, String jobCategory) throws NoResultException, IOException {
+    public long regisitJobPostion(String url, String company, String jobCategory) throws NoResultException, IOException {
      /*
       * url, company, jobCategory 를 활용해 채용공고 등록합니다
       */
@@ -38,12 +40,14 @@ public class RecruitService {
         if (jobInfo.techSet().size() == 0)
             throw new NoResultException("해당 url 에서 tech 가 발견되지 않았습니다");
         
-        Company newCompany = jobRepository.registeCompany(companyInfo);
+        Optional<Company> newCompany = companyRepository.findCompanyByName(company);
+        newCompany.orElseThrow(() -> new NotFoundException("해당 회사명이 존재하지 않습니다"));  
+              
         // Singleton 데이터 변경
         jobTotalCntSingleton.increaseCnt();
 
         Recruit recruit = jobRepository.registJobPosition(url, jobInfo.title()
-                , newCompany, jobCategory.toLowerCase(), 
+                , newCompany.get(), jobCategory.toLowerCase(), 
                 new ArrayList<>(jobInfo.techSet()));
 
         return recruit.getId();

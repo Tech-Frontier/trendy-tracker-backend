@@ -50,7 +50,7 @@ import lombok.RequiredArgsConstructor;
 public class RecruitController {
     @Autowired
     private KafkaProducer kafkaProducer;
-    private final RecruitService recruitService;
+    private final RecruitService recruitService; 
 
     @Operation(summary = "채용 공고 등록")
     @PostMapping(value = "/regist")
@@ -58,15 +58,13 @@ public class RecruitController {
         @RequestBody @Validated recruitRegistRequest recruitRequest,
         HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException, AlreadyExistException {
         Optional<Recruit> recruitExist = recruitService.isRecruitExist(recruitRequest.url);
+        
         if(recruitExist.isPresent())
             throw new AlreadyExistException("해당 공고가 존재합니다");
 
         HashMap<String, String> paramMap = new HashMap<>();
         paramMap.put("url", recruitRequest.url);
         paramMap.put("jobCategory", recruitRequest.jobCategory);
-
-        paramMap.put("companyGroup", recruitRequest.companyGroup);
-        paramMap.put("companyCategory", recruitRequest.companyCategory.name());
         paramMap.put("company", recruitRequest.company);
 
         String uuid = addHeader(request, response);
@@ -77,7 +75,7 @@ public class RecruitController {
 
     @Operation(summary = "채용 공고 수정")
     @PutMapping(value = "update")
-    public Response<RecruitDto> updateRecruit(
+    public Response<Void> updateRecruit(
         @RequestBody @Validated recruitUpdateRequest recruitRequest,
         HttpServletRequest request, HttpServletResponse response) throws NotAllowedValueException, JsonProcessingException {
         

@@ -33,10 +33,10 @@ public class Company {
     @Column(name ="company_id")
     private long id;
 
-    private String companyGroup;
+    private String company_group;
 
     @Enumerated(EnumType.STRING) 
-    private CompanyCategory companyCategory;
+    private CompanyCategory company_category;
 
     @Column(name="company_name", unique = true)
     private String company_name;
@@ -45,19 +45,19 @@ public class Company {
 
     // 연관관계 메서드
     public void addCompany(CompanyInfo companyInfo){
-        this.companyGroup = companyInfo.companyGroup();
-        this.companyCategory = companyInfo.companyCategory();
+        this.company_group = companyInfo.companyGroup();
+        this.company_category = companyInfo.companyCategory();
         this.company_name = companyInfo.companyName();
         this.updated_time = LocalDateTime.now();
     }
 
     public void updateCategory(CompanyCategory category){
-        this.companyCategory = category;
+        this.company_category = category;
         this.updated_time = LocalDateTime.now();
     }
 
     public void updateGroup(String group){
-        this.companyGroup = group;
+        this.company_group = group;
         this.updated_time = LocalDateTime.now();
     }
 }

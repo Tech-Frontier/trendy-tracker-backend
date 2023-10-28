@@ -4,8 +4,8 @@ import com.trendyTracker.Job.domain.Company.CompanyCategory;
 
 public class CompanyUtils {
 
-    public static CompanyCategory makeCompanyCategory(String category){
-        switch (category) {
+    public static CompanyCategory makeCompanyCategory(String companyCategory){
+        switch (companyCategory) {
             case "Series_PreA":
                 return CompanyCategory.Series_PreA;
             case "Series_A":
@@ -19,7 +19,7 @@ public class CompanyUtils {
             case "Listed":
                 return CompanyCategory.Listed;
             default:
-                throw new IllegalArgumentException("올바르지 않은 CompanyCategory 값: " + category);
+                throw new IllegalArgumentException("올바르지 않은 CompanyCategory 값: " + companyCategory);
         }
     }
 }   
