@@ -153,7 +153,7 @@ db 모델링 히스토리 PR (Pull Request) <br/>
 
 > 각 바운디드 컨텍스트 마다 Repository 로 분리해서, 각 Repository 내의 Table 간 조인은 하지만, 바운디트 컨텍스트간(Repository)의 조인은 구조적으로 분리한다.
 
-<img width="100%" alt="DB Modeling" src="https://github.com/Tech-Frontier/trendy-tracker-backend/assets/19955904/ce4624fc-09c0-450e-8bbf-1cb00fe81866">
+![스크린샷 2023-10-28 오후 3 13 17](https://github.com/Tech-Frontier/trendy-tracker-backend/assets/19955904/9b7863ec-1759-4807-8115-e2b67bb8abf0)
 
 
 <br/>
