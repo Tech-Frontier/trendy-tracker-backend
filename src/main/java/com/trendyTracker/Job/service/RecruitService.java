@@ -12,6 +12,7 @@ import org.webjars.NotFoundException;
 import com.trendyTracker.Job.domain.Company;
 import com.trendyTracker.Job.domain.Recruit;
 import com.trendyTracker.Job.domain.Tech;
+import com.trendyTracker.Job.domain.Model.CompanyInfo;
 import com.trendyTracker.Job.dto.JobInfoDto;
 import com.trendyTracker.Job.repository.JobRepository;
 import com.trendyTracker.common.Exception.ExceptionDetail.NoResultException;
@@ -29,20 +30,21 @@ public class RecruitService {
     private final JobRepository jobRepository;
     JobTotalCntSingleton jobTotalCntSingleton = JobTotalCntSingleton.getInstance();
 
-     public long regisitJobPostion(String url, String companyName, String jobCategory) throws NoResultException, IOException {
+    public long regisitJobPostion(String url, CompanyInfo companyInfo, String jobCategory) throws NoResultException, IOException {
      /*
       * url, company, jobCategory 를 활용해 채용공고 등록합니다
       */
         JobInfoDto jobInfo = UrlReader.getUrlContent(url);
         if (jobInfo.techSet().size() == 0)
             throw new NoResultException("해당 url 에서 tech 가 발견되지 않았습니다");
-
-        Company newCompany = jobRepository.registeCompany(companyName.toLowerCase());
+        
+        Company newCompany = jobRepository.registeCompany(companyInfo);
         // Singleton 데이터 변경
         jobTotalCntSingleton.increaseCnt();
+
         Recruit recruit = jobRepository.registJobPosition(url, jobInfo.title()
-                                                        , newCompany, jobCategory.toLowerCase()
-                                                        , new ArrayList<>(jobInfo.techSet()));
+                , newCompany, jobCategory.toLowerCase(), 
+                new ArrayList<>(jobInfo.techSet()));
 
         return recruit.getId();
     }

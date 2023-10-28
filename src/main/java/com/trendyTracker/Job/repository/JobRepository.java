@@ -6,9 +6,10 @@ import java.util.Optional;
 import com.trendyTracker.Job.domain.Company;
 import com.trendyTracker.Job.domain.Recruit;
 import com.trendyTracker.Job.domain.Tech;
+import com.trendyTracker.Job.domain.Model.CompanyInfo;
 
 public interface JobRepository {
-    Company registeCompany(String company);
+    Company registeCompany(CompanyInfo companyInfo);
 
     Recruit registJobPosition(String url, String title, Company company, String jobPosition, List<Tech> techList);
 

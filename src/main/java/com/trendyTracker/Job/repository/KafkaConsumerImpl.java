@@ -14,8 +14,10 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.trendyTracker.Job.domain.Model.CompanyInfo;
 import com.trendyTracker.Job.service.RecruitService;
 import com.trendyTracker.infrastructure.kafka.KafkaProducer;
+import com.trendyTracker.util.CompanyUtils;
 
 
 @Service
@@ -35,12 +37,17 @@ public class KafkaConsumerImpl implements MessageConsumer<ConsumerRecord<String,
          */
         JsonNode jsonNode = new ObjectMapper().readTree(mesage.value());
         String url = jsonNode.get("url").asText();
+        
+        String companyGroup = jsonNode.get("companyGroup").asText();
+        String companyCategory = jsonNode.get("companyCategory").asText();
         String company = jsonNode.get("company").asText();
+
         String jobCategory = jsonNode.get("jobCategory").asText();
         String uuid = header.get();
         
         try{
-            long id = recruitService.regisitJobPostion(url, company, jobCategory);
+            var companyInfo = new CompanyInfo(companyGroup,CompanyUtils.makeCompanyCategory(companyCategory),company);
+            long id = recruitService.regisitJobPostion(url, companyInfo, jobCategory);
             logger.info("Consumed RegistJob Topic: id:" + id + " header: " + uuid);
         }
         catch (Exception ex){

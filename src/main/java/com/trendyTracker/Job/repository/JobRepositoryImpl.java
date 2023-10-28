@@ -11,6 +11,7 @@ import com.trendyTracker.Job.domain.QRecruit;
 import com.trendyTracker.Job.domain.Recruit;
 import com.trendyTracker.Job.domain.RecruitTech;
 import com.trendyTracker.Job.domain.Tech;
+import com.trendyTracker.Job.domain.Model.CompanyInfo;
 
 import org.springframework.stereotype.Repository;
 
@@ -30,7 +31,7 @@ public class JobRepositoryImpl implements JobRepository {
     //#region [CREATE]
     @Override
     @Transactional
-    public Company registeCompany(String company) {
+    public Company registeCompany(CompanyInfo companyInfo) {
     /*
      * 'Company' 저장
      */
@@ -40,13 +41,13 @@ public class JobRepositoryImpl implements JobRepository {
         
         var findCompany = queryFactory.select(qCompany)
                 .from(qCompany)
-                .where(qCompany.company_name.eq(company))
+                .where(qCompany.company_name.eq(companyInfo.companyName()))
                 .fetchOne();
 
         if (findCompany != null)
             return findCompany;
 
-        newCompany.addCompany(company);
+        newCompany.addCompany(companyInfo);
         em.persist(newCompany);
         return newCompany;
     }
@@ -200,5 +201,6 @@ public class JobRepositoryImpl implements JobRepository {
                                     .fetchOne();
         return result;
     }
+
     //#endregion
 }
