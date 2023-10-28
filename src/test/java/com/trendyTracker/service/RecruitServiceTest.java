@@ -18,6 +18,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.trendyTracker.Job.domain.Company;
 import com.trendyTracker.Job.domain.Recruit;
+import com.trendyTracker.Job.domain.Company.CompanyCategory;
+import com.trendyTracker.Job.domain.Model.CompanyInfo;
 import com.trendyTracker.Job.service.RecruitService;
 import com.trendyTracker.common.Exception.ExceptionDetail.NoResultException;
 import com.trendyTracker.common.Exception.ExceptionDetail.NotAllowedValueException;
@@ -44,8 +46,10 @@ public class RecruitServiceTest {
         Recruit tempRecruit1 = new Recruit();
         Recruit tempRecruit2 = new Recruit();
 
-        tempCompany1.addCompany("toss");
-        tempCompany2.addCompany("naver");
+        CompanyInfo companyInfo = new CompanyInfo(company, CompanyCategory.Series_D, "toss");
+        CompanyInfo companyInfo2 = new CompanyInfo(company, CompanyCategory.Series_A, "naver");
+        tempCompany1.addCompany(companyInfo);
+        tempCompany2.addCompany(companyInfo2);
         tempRecruit1.addRecruit(url, "title", tempCompany1, jobCategory);
         tempRecruit2.addRecruit(url, "title", tempCompany2, jobCategory);
 
@@ -55,7 +59,7 @@ public class RecruitServiceTest {
         String[] newTechs;
 
         // regisitJobPostion 
-        when(recruitService.regisitJobPostion(url, company, jobCategory))
+        when(recruitService.regisitJobPostion(url, companyInfo, jobCategory))
         .thenReturn((long)1);
 
         // getRecruitList
@@ -113,8 +117,11 @@ public class RecruitServiceTest {
     @Test
     @DisplayName("채용 공고 등록")
     public void regisitJobPostion() throws NoResultException, IOException{
-        // given, when 
-        long recruit_id = recruitService.regisitJobPostion(url, company, jobCategory);
+        // given
+        CompanyInfo companyInfo = new CompanyInfo(company, CompanyCategory.Series_D, "toss");        
+        
+        //when 
+        long recruit_id = recruitService.regisitJobPostion(url, companyInfo, jobCategory);
 
         // then 
         Assertions.assertThat(recruit_id).isGreaterThan(0);
@@ -241,7 +248,8 @@ public class RecruitServiceTest {
     @DisplayName("채용공고 재등록")
     public void updateJobPosition() throws IOException, NoResultException{
         // given
-        long recruit_id = recruitService.regisitJobPostion(url, company, jobCategory);
+        CompanyInfo companyInfo = new CompanyInfo(company, CompanyCategory.Series_D, "toss");    
+        long recruit_id = recruitService.regisitJobPostion(url, companyInfo, jobCategory);
         // when
         long result_id = recruitService.updateJobPosition(url);
         
