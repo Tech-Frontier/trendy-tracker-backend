@@ -193,12 +193,6 @@ public class RecruitController {
         @Schema(description = "Url", example = "https://toss.im/career/job-detail?job_id=4071141003&company=%ED%86%A0%EC%8A%A4%EB%B1%85%ED%81%AC&gh_src=a6133a833us&utm_source=offline_conference&utm_medium=banner&utm_campaign=2307_tossbank_recruit", type = "String")
         private String url;
 
-        @Schema(description = "회사그룹", example = "toss", type = "String")
-        private String companyGroup;
-
-        @Schema(description = "회사규모", example = "Series_D", type = "CompanyCategory")
-        private CompanyCategory companyCategory;
-        
         @Schema(description = "회사명", example = "toss bank", type = "String")
         private String company;
 

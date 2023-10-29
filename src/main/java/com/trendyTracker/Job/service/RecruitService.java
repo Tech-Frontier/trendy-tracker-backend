@@ -12,6 +12,7 @@ import org.webjars.NotFoundException;
 import com.trendyTracker.Job.domain.Company;
 import com.trendyTracker.Job.domain.Recruit;
 import com.trendyTracker.Job.domain.Tech;
+import com.trendyTracker.Job.domain.Model.CompanyInfo;
 import com.trendyTracker.Job.dto.JobInfoDto;
 import com.trendyTracker.Job.repository.CompanyRepository;
 import com.trendyTracker.Job.repository.JobRepository;
@@ -39,15 +40,15 @@ public class RecruitService {
         JobInfoDto jobInfo = UrlReader.getUrlContent(url);
         if (jobInfo.techSet().size() == 0)
             throw new NoResultException("해당 url 에서 tech 가 발견되지 않았습니다");
-        
-        Optional<Company> newCompany = companyRepository.findCompanyByName(company);
-        newCompany.orElseThrow(() -> new NotFoundException("해당 회사명이 존재하지 않습니다"));  
+
+        CompanyInfo companyInfo = new CompanyInfo(null, null, company);
+        Company newCompany = companyRepository.registCompany(companyInfo);
               
         // Singleton 데이터 변경
         jobTotalCntSingleton.increaseCnt();
 
         Recruit recruit = jobRepository.registJobPosition(url, jobInfo.title()
-                , newCompany.get(), jobCategory.toLowerCase(), 
+                , newCompany, jobCategory.toLowerCase(), 
                 new ArrayList<>(jobInfo.techSet()));
 
         return recruit.getId();
