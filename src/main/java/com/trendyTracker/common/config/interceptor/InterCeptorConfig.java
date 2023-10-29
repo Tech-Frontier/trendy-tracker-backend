@@ -27,7 +27,7 @@ public class InterCeptorConfig implements WebMvcConfigurer{
             .addPathPatterns("/api/recruit/update/id/*")
             // Company
             .addPathPatterns("/api/company/regist")
-            .addPathPatterns("/api/update/category")
-            .addPathPatterns("/api/update/group");
+            .addPathPatterns("/api/company/update/category")
+            .addPathPatterns("/api/company/update/group");
     }
 }
