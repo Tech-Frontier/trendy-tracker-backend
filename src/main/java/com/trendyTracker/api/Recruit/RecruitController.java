@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.trendyTracker.Job.domain.Recruit;
-import com.trendyTracker.Job.domain.Company.CompanyCategory;
 import com.trendyTracker.Job.dto.RecruitDto;
 import com.trendyTracker.Job.service.RecruitService;
 import com.trendyTracker.common.Exception.ExceptionDetail.AlreadyExistException;
