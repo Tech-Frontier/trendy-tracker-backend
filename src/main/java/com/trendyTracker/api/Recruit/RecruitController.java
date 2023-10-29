@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.trendyTracker.Job.domain.Recruit;
-import com.trendyTracker.Job.domain.Company.CompanyCategory;
 import com.trendyTracker.Job.dto.RecruitDto;
 import com.trendyTracker.Job.service.RecruitService;
 import com.trendyTracker.common.Exception.ExceptionDetail.AlreadyExistException;
@@ -50,7 +49,7 @@ import lombok.RequiredArgsConstructor;
 public class RecruitController {
     @Autowired
     private KafkaProducer kafkaProducer;
-    private final RecruitService recruitService;
+    private final RecruitService recruitService; 
 
     @Operation(summary = "채용 공고 등록")
     @PostMapping(value = "/regist")
@@ -58,15 +57,13 @@ public class RecruitController {
         @RequestBody @Validated recruitRegistRequest recruitRequest,
         HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException, AlreadyExistException {
         Optional<Recruit> recruitExist = recruitService.isRecruitExist(recruitRequest.url);
+        
         if(recruitExist.isPresent())
             throw new AlreadyExistException("해당 공고가 존재합니다");
 
         HashMap<String, String> paramMap = new HashMap<>();
         paramMap.put("url", recruitRequest.url);
         paramMap.put("jobCategory", recruitRequest.jobCategory);
-
-        paramMap.put("companyGroup", recruitRequest.companyGroup);
-        paramMap.put("companyCategory", recruitRequest.companyCategory.name());
         paramMap.put("company", recruitRequest.company);
 
         String uuid = addHeader(request, response);
@@ -77,7 +74,7 @@ public class RecruitController {
 
     @Operation(summary = "채용 공고 수정")
     @PutMapping(value = "update")
-    public Response<RecruitDto> updateRecruit(
+    public Response<Void> updateRecruit(
         @RequestBody @Validated recruitUpdateRequest recruitRequest,
         HttpServletRequest request, HttpServletResponse response) throws NotAllowedValueException, JsonProcessingException {
         
@@ -195,12 +192,6 @@ public class RecruitController {
         @Schema(description = "Url", example = "https://toss.im/career/job-detail?job_id=4071141003&company=%ED%86%A0%EC%8A%A4%EB%B1%85%ED%81%AC&gh_src=a6133a833us&utm_source=offline_conference&utm_medium=banner&utm_campaign=2307_tossbank_recruit", type = "String")
         private String url;
 
-        @Schema(description = "회사그룹", example = "toss", type = "String")
-        private String companyGroup;
-
-        @Schema(description = "회사규모", example = "Series_D", type = "CompanyCategory")
-        private CompanyCategory companyCategory;
-        
         @Schema(description = "회사명", example = "toss bank", type = "String")
         private String company;
 

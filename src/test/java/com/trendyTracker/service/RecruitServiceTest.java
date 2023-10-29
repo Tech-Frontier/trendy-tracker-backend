@@ -59,7 +59,7 @@ public class RecruitServiceTest {
         String[] newTechs;
 
         // regisitJobPostion 
-        when(recruitService.regisitJobPostion(url, companyInfo, jobCategory))
+        when(recruitService.regisitJobPostion(url, "toss", jobCategory))
         .thenReturn((long)1);
 
         // getRecruitList
@@ -118,10 +118,10 @@ public class RecruitServiceTest {
     @DisplayName("채용 공고 등록")
     public void regisitJobPostion() throws NoResultException, IOException{
         // given
-        CompanyInfo companyInfo = new CompanyInfo(company, CompanyCategory.Series_D, "toss");        
+        String company = "toss";     
         
         //when 
-        long recruit_id = recruitService.regisitJobPostion(url, companyInfo, jobCategory);
+        long recruit_id = recruitService.regisitJobPostion(url, company, jobCategory);
 
         // then 
         Assertions.assertThat(recruit_id).isGreaterThan(0);
@@ -248,8 +248,8 @@ public class RecruitServiceTest {
     @DisplayName("채용공고 재등록")
     public void updateJobPosition() throws IOException, NoResultException{
         // given
-        CompanyInfo companyInfo = new CompanyInfo(company, CompanyCategory.Series_D, "toss");    
-        long recruit_id = recruitService.regisitJobPostion(url, companyInfo, jobCategory);
+        String company = "toss";
+        long recruit_id = recruitService.regisitJobPostion(url, company, jobCategory);
         // when
         long result_id = recruitService.updateJobPosition(url);
         
