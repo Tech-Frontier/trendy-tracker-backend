@@ -181,3 +181,9 @@ db 모델링 히스토리 PR (Pull Request) <br/>
 
 ![image](https://github.com/Tech-Frontier/trendy-tracker-backend/assets/19955904/0ebe71d6-e0eb-4d11-b6d7-0f74cbaa4de2)
 
+
+<br/>
+
+### Issue 
+- Docker + RaspberryPi 환경에서 Selenium 구동기 \
+https://www.owl-dev.me/blog/72
