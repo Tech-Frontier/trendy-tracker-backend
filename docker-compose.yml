@@ -39,7 +39,7 @@ services:
     ports:
       - '8080:8081'
     restart: always
-    container_name: trendy_tracker
+    container_name: trendy_tracker2
     depends_on:
       - zookeeper-1
       - kafka-1
