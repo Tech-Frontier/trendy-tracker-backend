@@ -1,0 +1,94 @@
+version: '3.3'
+services:
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.1.2-arm64
+    container_name: logstash
+    volumes:
+      - ./src/main/java/com/trendyTracker/infrastructure/logstash:/usr/share/logstash/config
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.1.2-arm64
+    container_name: kibana
+    volumes:
+      - ./src/main/java/com/trendyTracker/infrastructure/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
+    ports:
+      - "5601:5601"
+
+  zookeeper-1:
+    image: confluentinc/cp-zookeeper:7.2.2.arm64
+    ports:
+      - '32181:32181'
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 32181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka-1:
+    image: confluentinc/cp-kafka:7.2.2.arm64
+    ports:
+      - '9092:9092'
+    depends_on:
+      - zookeeper-1
+    container_name: kafka-1
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper-1:32181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-1:29092,EXTERNAL://localhost:9092
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+      KAFKA_NUM_PARTITIONS: 3
+    volumes:
+      - ./kafka-1-data:/var/lib/kafka/data
+
+  kafka-2:
+    image: confluentinc/cp-kafka:7.2.2.arm64
+    ports:
+      - '9093:9093'
+    depends_on:
+      - zookeeper-1
+    container_name: kafka-2
+    environment:
+      KAFKA_BROKER_ID: 2
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper-1:32181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-2:29093,EXTERNAL://localhost:9093
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+      KAFKA_NUM_PARTITIONS: 3
+    volumes:
+      - ./kafka-2-data:/var/lib/kafka/data
+    
+  kafka-3:
+    image: confluentinc/cp-kafka:7.2.2.arm64
+    ports:
+      - '9094:9094'
+    depends_on:
+      - zookeeper-1
+    container_name: kafka-3
+    environment:
+      KAFKA_BROKER_ID: 3
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper-1:32181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-3:29094,EXTERNAL://localhost:9094
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+      KAFKA_NUM_PARTITIONS: 3
+    volumes:
+      - ./kafka-3-data:/var/lib/kafka/data
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui
+    container_name: kafka-ui
+    ports:
+      - "8989:8080"
+    restart: always
+    depends_on:
+      - zookeeper-1
+      - kafka-1
+      - kafka-2
+      - kafka-3
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=local
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka-1:29092 ,kafka-2:29093,kafka-3:29094
+      - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper-1:22181
