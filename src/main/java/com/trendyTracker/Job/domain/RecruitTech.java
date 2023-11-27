@@ -1,8 +1,5 @@
 package com.trendyTracker.Job.domain;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -11,31 +8,36 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
-@Getter @Setter
+@Getter
+@Setter
 @Entity
-@Table(name ="recruit_tech", schema = "public")
+@Table(name = "recruit_tech", schema = "public")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RecruitTech {
 
-    @Id
-    @GeneratedValue
-    @Column(name ="recruit_tech_id")
-    private long id;
+  @Id
+  @GeneratedValue
+  @Column(name = "recruit_tech_id")
+  private long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name ="recruit_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Recruit recruit;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "recruit_id")
+  @OnDelete(action = OnDeleteAction.CASCADE)
+  private Recruit recruit;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name ="tech_name")
-    private Tech tech;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "tech_name")
+  private Tech tech;
 
-    // 연관관계 메서드
-    public void addRecruitTech(Recruit recruit, Tech tech){
-        this.recruit = recruit;
-        this.tech = tech;
-    }
+  public RecruitTech(Recruit recruit, Tech tech) {
+    this.recruit = recruit;
+    this.tech = tech;
+  }
 }
