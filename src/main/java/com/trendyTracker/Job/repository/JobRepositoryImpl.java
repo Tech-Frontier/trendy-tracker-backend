@@ -1,181 +1,202 @@
 package com.trendyTracker.Job.repository;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
+import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.trendyTracker.Job.domain.Company;
 import com.trendyTracker.Job.domain.QRecruit;
 import com.trendyTracker.Job.domain.Recruit;
 import com.trendyTracker.Job.domain.RecruitTech;
 import com.trendyTracker.Job.domain.Tech;
-
-import org.springframework.stereotype.Repository;
-
-import com.querydsl.jpa.impl.JPAQuery;
-import com.querydsl.jpa.impl.JPAQueryFactory;
-
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
 public class JobRepositoryImpl implements JobRepository {
-    private final EntityManager em;
-    private JPAQueryFactory queryFactory;
 
-    //#region [CREATE]
-    @Override
-    @Transactional
-    public Recruit registJobPosition(String url, String title, Company company, String jobPosition, List<Tech> techList) {
+  private final EntityManager em;
+  private JPAQueryFactory queryFactory;
+
+  //#region [CREATE]
+  @Override
+  @Transactional
+  public Recruit registJobPosition(
+    String url,
+    String title,
+    Company company,
+    String jobPosition,
+    List<Tech> techList
+  ) {
     /*
      * 'Recruit',  'RecruitTech'  저장
      */
-        List<RecruitTech> recruitTechList = new ArrayList<>();
-        Recruit recruit = new Recruit();
-        recruit.addRecruit(url, title, company, jobPosition);
+    List<RecruitTech> recruitTechList = new ArrayList<>();
+    Recruit recruit = new Recruit(url, title, company, jobPosition);
 
-        for (Tech newTech : techList) {
-            RecruitTech recruitTech = new RecruitTech();
-            recruitTech.addRecruitTech(recruit, newTech);
-            recruitTechList.add(recruitTech);
-        }
-        
-        recruit.setUrlTechs(recruitTechList);
-        em.persist(recruit);
-        return recruit;
+    for (Tech newTech : techList) {
+      RecruitTech recruitTech = new RecruitTech(recruit, newTech);
+      recruitTechList.add(recruitTech);
     }
-    //#endregion
 
-    //#region [UPDATE]
-    @Override
-    @Transactional
-    public Recruit updateJobPosition(long id, List<Tech> techList) {
+    recruit.setUrlTechs(recruitTechList);
+    em.persist(recruit);
+    return recruit;
+  }
+
+  //#endregion
+
+  //#region [UPDATE]
+  @Override
+  @Transactional
+  public Recruit updateJobPosition(long id, List<Tech> techList) {
     /*
      * 채용공고 재분석
      */
-        Recruit recruit = em.find(Recruit.class,id);
-        recruit.updateUrlTechs(techList);
-        em.persist(recruit);
-        return recruit;
-    }
+    Recruit recruit = em.find(Recruit.class, id);
+    recruit.updateUrlTechs(techList);
+    em.persist(recruit);
+    return recruit;
+  }
 
-    @Override
-    @Transactional
-    public void deleteJobPosition(Recruit recruit) {
+  @Override
+  @Transactional
+  public void deleteJobPosition(Recruit recruit) {
     /*
      * 'Recruit' 비활성화
      */
-        recruit.deleteRecruit();
-        em.persist(recruit);
-    }
+    recruit.deleteRecruit();
+    em.persist(recruit);
+  }
 
-    @Override
-    @Transactional
-    public Optional<Recruit> updateRecruitTech(long recruit_id, List<Tech> techList) {
+  @Override
+  @Transactional
+  public Optional<Recruit> updateRecruitTech(
+    long recruit_id,
+    List<Tech> techList
+  ) {
     /*
      * 'RecruitTech' 변경
      */
-        Recruit recruit = em.find(Recruit.class, recruit_id);
-        List<RecruitTech> urlTechs = recruit.getUrlTechs();
-        for (RecruitTech recruitTech : urlTechs) {
-            em.remove(recruitTech);
-        }
-
-        recruit.updateUrlTechs(techList);
-        em.persist(recruit);
-        
-        return Optional.of(recruit);
+    Recruit recruit = em.find(Recruit.class, recruit_id);
+    List<RecruitTech> urlTechs = recruit.getUrlTechs();
+    for (RecruitTech recruitTech : urlTechs) {
+      em.remove(recruitTech);
     }
-    //#endregion
 
-    //#region [READ]
-    @Override
-    public Optional<Recruit> getRecruit(long recruit_id) {
+    recruit.updateUrlTechs(techList);
+    em.persist(recruit);
+
+    return Optional.of(recruit);
+  }
+
+  //#endregion
+
+  //#region [READ]
+  @Override
+  public Optional<Recruit> getRecruit(long recruit_id) {
     /*
      * recruit_id 로 채용공고 조회
      */
-        Recruit recruit = em.find(Recruit.class, recruit_id);
-        if(recruit == null || !recruit.getIs_active()) 
-            return Optional.empty();
+    Recruit recruit = em.find(Recruit.class, recruit_id);
+    if (recruit == null || !recruit.getIs_active()) return Optional.empty();
 
-        return Optional.of(recruit);    
-    }
+    return Optional.of(recruit);
+  }
 
-    public Optional<Recruit> getRecruitByUrl(String url){
+  public Optional<Recruit> getRecruitByUrl(String url) {
     /*
      * 채용공고 Url 로 채용공고 조회
      */
-        queryFactory = new JPAQueryFactory(em);
-        QRecruit qRecruit = QRecruit.recruit;
+    queryFactory = new JPAQueryFactory(em);
+    QRecruit qRecruit = QRecruit.recruit;
 
-        Recruit recruit = queryFactory.select(qRecruit)
-                                        .from(qRecruit)
-                                        .where(qRecruit.url.eq(url))
-                                        .fetchFirst();
+    Recruit recruit = queryFactory
+      .select(qRecruit)
+      .from(qRecruit)
+      .where(qRecruit.url.eq(url))
+      .fetchFirst();
 
-        if(recruit == null || !recruit.getIs_active())
-            return Optional.empty();
-        
-        return Optional.of(recruit);
-    }
+    if (recruit == null || !recruit.getIs_active()) return Optional.empty();
 
-    @Override
-    public List<Recruit> getRecruitList(String[] companies, String[] jobCategories, String[] techs) {
+    return Optional.of(recruit);
+  }
+
+  @Override
+  public List<Recruit> getRecruitList(
+    String[] companies,
+    String[] jobCategories,
+    String[] techs
+  ) {
     /*
      * 'companies', 'jobCategories', 'techs' 별 채용공고 필터링
      */
-        queryFactory = new JPAQueryFactory(em);
-        QRecruit qRecruit = QRecruit.recruit;
+    queryFactory = new JPAQueryFactory(em);
+    QRecruit qRecruit = QRecruit.recruit;
 
-        JPAQuery<Long> query = queryFactory.select(qRecruit.id)
-                        .from(qRecruit).where(qRecruit.is_active.eq(true));
-        
-        if (companies != null && companies.length >0)
-            query.where(qRecruit.company.company_name.in(companies));
-        
-        if (jobCategories != null && jobCategories.length >0)
-            query.where(qRecruit.jobCategory.in(jobCategories));
-        
-        return filteringTechs(techs, query.fetch());
-    }
+    JPAQuery<Long> query = queryFactory
+      .select(qRecruit.id)
+      .from(qRecruit)
+      .where(qRecruit.is_active.eq(true));
 
-    private List<Recruit> filteringTechs(String[] techs, List<Long> recruitIdList) {
+    if (companies != null && companies.length > 0) query.where(
+      qRecruit.company.company_name.in(companies)
+    );
+
+    if (jobCategories != null && jobCategories.length > 0) query.where(
+      qRecruit.jobCategory.in(jobCategories)
+    );
+
+    return filteringTechs(techs, query.fetch());
+  }
+
+  private List<Recruit> filteringTechs(
+    String[] techs,
+    List<Long> recruitIdList
+  ) {
     /**
      * 사용자가 지정한 tech 필터링
      */
-        List<Recruit> recruitList = new ArrayList<Recruit>();
-        List<String> techList = techs != null ? Arrays.asList(techs) : new ArrayList<>();
+    List<Recruit> recruitList = new ArrayList<Recruit>();
+    List<String> techList = techs != null
+      ? Arrays.asList(techs)
+      : new ArrayList<>();
 
-        for(int i=0; i< recruitIdList.size(); i++){
-            Recruit recruit = em.find(Recruit.class, recruitIdList.get(i));
-            List<RecruitTech> urlTechs = recruit.getUrlTechs();
-            
-            if (techList.size() ==0)
-                recruitList.add(recruit);
-            
-            else 
-                if(urlTechs.stream()
-                    .anyMatch(t -> techList.stream()
-                    .anyMatch(tech -> tech.equalsIgnoreCase(t.getTech().getTech_name()))))
-                    recruitList.add(recruit);
-        }
-        return recruitList;
+    for (int i = 0; i < recruitIdList.size(); i++) {
+      Recruit recruit = em.find(Recruit.class, recruitIdList.get(i));
+      List<RecruitTech> urlTechs = recruit.getUrlTechs();
+
+      if (techList.size() == 0) recruitList.add(recruit); else if (
+        urlTechs
+          .stream()
+          .anyMatch(t ->
+            techList
+              .stream()
+              .anyMatch(tech ->
+                tech.equalsIgnoreCase(t.getTech().getTech_name())
+              )
+          )
+      ) recruitList.add(recruit);
     }
+    return recruitList;
+  }
 
-    @Override
-    public long getTotalJobCnt() {
-        queryFactory = new JPAQueryFactory(em);
-        QRecruit qRecruit = QRecruit.recruit;
+  @Override
+  public long getTotalJobCnt() {
+    queryFactory = new JPAQueryFactory(em);
+    QRecruit qRecruit = QRecruit.recruit;
 
-        var result = queryFactory.select(qRecruit.count())
-                                    .from(qRecruit)
-                                    .where(qRecruit.is_active.eq(true))
-                                    .fetchOne();
-        return result;
-    }
-
-    //#endregion
+    var result = queryFactory
+      .select(qRecruit.count())
+      .from(qRecruit)
+      .where(qRecruit.is_active.eq(true))
+      .fetchOne();
+    return result;
+  }
+  //#endregion
 }

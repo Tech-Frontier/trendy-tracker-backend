@@ -6,36 +6,38 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 @Entity
-@Table(name ="tech", schema = "public")
-@NoArgsConstructor
+@Table(name = "tech", schema = "public")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Tech {
 
-    public enum TechType {
-        LANGUAGE,
-        DATABASE,
-        FRAMEWORK,
-        LIBRARIES,
-        TOOLS,
-        IDE,
-        OTHER
-    }
+  public enum TechType {
+    LANGUAGE,
+    DATABASE,
+    FRAMEWORK,
+    LIBRARIES,
+    TOOLS,
+    IDE,
+    OTHER,
+  }
 
-    @Id
-    @Column(name="tech_name", unique = true)
-    private String tech_name;
+  @Id
+  @Column(name = "tech_name", unique = true)
+  private String tech_name;
 
-    @Enumerated(EnumType.STRING) 
-    private TechType type;
+  @Enumerated(EnumType.STRING)
+  private TechType type;
 
-    // 연관관계 메서드
-    public Tech(String tech, TechType type){
-        this.tech_name = tech;
-        this.type = type;
-    }
+  // 연관관계 메서드
+  public Tech(String tech, TechType type) {
+    this.tech_name = tech;
+    this.type = type;
+  }
 }
