@@ -1,4 +1,4 @@
-package com.trendyTracker.service;
+package com.trendyTracker.Job.service;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doThrow;
@@ -8,7 +8,6 @@ import com.trendyTracker.Job.domain.Company;
 import com.trendyTracker.Job.domain.Company.CompanyCategory;
 import com.trendyTracker.Job.domain.Model.CompanyInfo;
 import com.trendyTracker.Job.domain.Recruit;
-import com.trendyTracker.Job.service.RecruitService;
 import com.trendyTracker.common.Exception.ExceptionDetail.NoResultException;
 import com.trendyTracker.common.Exception.ExceptionDetail.NotAllowedValueException;
 import com.trendyTracker.util.TechUtils;
