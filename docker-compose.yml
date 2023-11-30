@@ -7,16 +7,10 @@ services:
       - '8080:8080'
     restart: always
     container_name: trendy_tracker
-    depends_on:
-      - zookeeper-1
-      - kafka-1
-      - kafka-2
-      - kibana
-    network_mode: host
     environment:
       SERVER_PORT: 8080
       SPRING_DATASOURCE_URL: jdbc:postgresql://000.0.00.000:0000/
-      SPRING_DATASOURCE_USERNAME: 
+      SPRING_DATASOURCE_USERNAME:  
       SPRING_DATASOURCE_PASSWORD: 
       SPRING_DATASOURCE_DRIVER_CLASS_NAME:  org.postgresql.Driver
       TOKEN_VALUE: 
@@ -37,20 +31,14 @@ services:
   trendy_tracker2:
     image: jinsujj/trendy-tracker-backend:latest
     ports:
-      - '8080:8081'
+      - '8081:8081'
     restart: always
     container_name: trendy_tracker2
-    depends_on:
-      - zookeeper-1
-      - kafka-1
-      - kafka-2
-      - kibana
-    network_mode: host
     environment:
       SERVER_PORT: 8081
       SPRING_DATASOURCE_URL: jdbc:postgresql://000.0.00.000:0000/
       SPRING_DATASOURCE_USERNAME: 
-      SPRING_DATASOURCE_PASSWORD: 
+      SPRING_DATASOURCE_PASSWORD:  
       SPRING_DATASOURCE_DRIVER_CLASS_NAME:  org.postgresql.Driver
       TOKEN_VALUE: 
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
@@ -64,4 +52,4 @@ services:
       MAIL_PASSWORD: 
       MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: "true"
       MAIL_PROPERTIES_MAIL_SMTP_AUTH:  "true"
-      JWT_SECRET_KEY:     
+      JWT_SECRET_KEY: 
