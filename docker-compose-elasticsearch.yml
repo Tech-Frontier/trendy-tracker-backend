@@ -5,7 +5,8 @@ services:
     restart: always
     container_name: elasticsearch
     volumes:
-      - ./src/main/java/com/trendyTracker/common/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ./src/main/java/com/trendyTracker/infrastructure/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+
     environment:
       - discovery.type=single-node
       - ELASTIC_PASSWORD=tech_frontier_by_software_engine
