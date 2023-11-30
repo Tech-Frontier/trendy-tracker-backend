@@ -1,8 +1,14 @@
 version: '3.3'
+
+networks: 
+  my_network: 
+    driver: bridge
+
 services:
-  
   trendy_tracker:
     image: jinsujj/trendy-tracker-backend:latest
+    networks:
+      - my_network
     ports:
       - '8080:8080'
     restart: always
@@ -30,6 +36,8 @@ services:
 
   trendy_tracker2:
     image: jinsujj/trendy-tracker-backend:latest
+    networks:
+      - my_network
     ports:
       - '8081:8081'
     restart: always
