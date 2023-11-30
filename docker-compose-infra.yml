@@ -1,14 +1,23 @@
 version: '3.3'
+
+networks: 
+  my_network: 
+    driver: bridge
+
 services:
   logstash:
     image: docker.elastic.co/logstash/logstash:8.1.2-arm64
-    container_name: logstash
+    networks:
+      - my_network
+    container_name: logstash   
     volumes:
       - ./src/main/java/com/trendyTracker/infrastructure/logstash:/usr/share/logstash/config
 
   kibana:
     image: docker.elastic.co/kibana/kibana:8.1.2-arm64
     container_name: kibana
+    networks:
+      - my_network
     volumes:
       - ./src/main/java/com/trendyTracker/infrastructure/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
     ports:
@@ -16,15 +25,19 @@ services:
 
   zookeeper-1:
     image: confluentinc/cp-zookeeper:7.2.2.arm64
+    networks:
+      - my_network
     ports:
       - '32181:32181'
-    container_name: zookeeper
+    container_name: zookeeper-1
     environment:
       ZOOKEEPER_CLIENT_PORT: 32181
       ZOOKEEPER_TICK_TIME: 2000
 
   kafka-1:
     image: confluentinc/cp-kafka:7.2.2.arm64
+    networks:
+      - my_network
     ports:
       - '9092:9092'
     depends_on:
@@ -43,6 +56,8 @@ services:
 
   kafka-2:
     image: confluentinc/cp-kafka:7.2.2.arm64
+    networks:
+      - my_network
     ports:
       - '9093:9093'
     depends_on:
@@ -61,6 +76,8 @@ services:
     
   kafka-3:
     image: confluentinc/cp-kafka:7.2.2.arm64
+    networks:
+      - my_network
     ports:
       - '9094:9094'
     depends_on:
@@ -79,6 +96,8 @@ services:
 
   kafka-ui:
     image: provectuslabs/kafka-ui
+    networks:
+      - my_network
     container_name: kafka-ui
     ports:
       - "8989:8080"
