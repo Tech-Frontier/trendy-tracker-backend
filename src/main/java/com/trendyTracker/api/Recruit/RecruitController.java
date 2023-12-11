@@ -1,10 +1,10 @@
 package com.trendyTracker.api.Recruit;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -144,7 +144,16 @@ public class RecruitController {
         addHeader(request, response);
         return Response.success(200, "공고 스택이 변경되었습니다.",recruitDto);
     }
-
+// for (Recruit recruit : recruitList) {
+        //     recruitDtoList.add( new RecruitDto(
+        //         recruit.getId(),
+        //         recruit.getCompany(), 
+        //         recruit.getJobCategory(),
+        //         recruit.getUrl(),
+        //         recruit.getTitle(),
+        //         recruit.getCreate_time(),
+        //         recruit.getTechList()));
+        // }
 
     @Operation(summary = "전체 채용 공고 조회")
     @GetMapping(value = "/list")
@@ -155,28 +164,30 @@ public class RecruitController {
         @RequestParam(name ="pageNo" ,required = false) Integer pageNo,
         @RequestParam(name= "pageSize",required = false) Integer pageSize,
         HttpServletRequest request, HttpServletResponse response) throws NoResultException, ValidationException {
-
+        
         HashMap<String,Object> result = new HashMap<>();
-        List<Recruit> recruitList = recruitService.getRecruitList(companies,jobCategories,techs,pageNo,pageSize);
-        List<RecruitDto> recruitDtoList = new ArrayList<>();
-        for (Recruit recruit : recruitList) {
-            recruitDtoList.add( new RecruitDto(
-                recruit.getId(),
-                recruit.getCompany(), 
-                recruit.getJobCategory(),
-                recruit.getUrl(),
-                recruit.getTitle(),
-                recruit.getCreate_time(),
-                recruit.getTechList()));
-        }
+        List<Recruit> recruitList = recruitService.getRecruitList(companies,jobCategories,techs,pageNo,pageSize);    
+                        
+        List<RecruitDto> recruitDtoList = recruitList.stream().map(recruit -> {      
+        return new RecruitDto(
+            recruit.getId(),
+            recruit.getCompany(),
+            recruit.getJobCategory(),
+            recruit.getUrl(),
+            recruit.getTitle(),
+            recruit.getCreate_time(),
+            recruit.getTechList()
+        );
+        }).collect(Collectors.toList());
+        
         // Singleton 데이터 조회
         JobTotalCntSingleton jobTotalCntSingleton = JobTotalCntSingleton.getInstance();
-        
         result.put("recruitList", recruitDtoList);
         result.put("totalCount", jobTotalCntSingleton.getTotalCnt());
         result.put("filterCount", recruitDtoList.size());
         
         addHeader(request, response);
+
         return Response.success(200, "공고 목록이 조회되었습니다", result);
     }
 

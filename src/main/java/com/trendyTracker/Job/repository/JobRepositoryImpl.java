@@ -1,18 +1,27 @@
 package com.trendyTracker.Job.repository;
 
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.trendyTracker.Job.domain.Company;
 import com.trendyTracker.Job.domain.QRecruit;
+import com.trendyTracker.Job.domain.QRecruitTech;
+import com.trendyTracker.Job.domain.QTech;
 import com.trendyTracker.Job.domain.Recruit;
 import com.trendyTracker.Job.domain.RecruitTech;
 import com.trendyTracker.Job.domain.Tech;
+import com.trendyTracker.Job.dto.RecruitDto;
+
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -129,61 +138,39 @@ public class JobRepositoryImpl implements JobRepository {
 
   @Override
   public List<Recruit> getRecruitList(
-    String[] companies,
-    String[] jobCategories,
-    String[] techs
+    String[] companies, String[] jobCategories,String[] techNames,
+    Integer pageNo, Integer pageSize
   ) {
     /*
      * 'companies', 'jobCategories', 'techs' 별 채용공고 필터링
      */
+
     queryFactory = new JPAQueryFactory(em);
     QRecruit qRecruit = QRecruit.recruit;
+    QRecruitTech qRecruitTech = QRecruitTech.recruitTech;
 
-    JPAQuery<Long> query = queryFactory
-      .select(qRecruit.id)
-      .from(qRecruit)
-      .where(qRecruit.is_active.eq(true));
 
-    if (companies != null && companies.length > 0) query.where(
-      qRecruit.company.company_name.in(companies)
-    );
+    JPAQuery<Recruit> query = queryFactory
+        .select(qRecruit)
+        .from(qRecruit)
+        .where(qRecruit.is_active.isTrue());
 
-    if (jobCategories != null && jobCategories.length > 0) query.where(
-      qRecruit.jobCategory.in(jobCategories)
-    );
+    if (techNames != null && techNames.length > 0) {
+      query.join(qRecruitTech).on(qRecruit.id.eq(qRecruitTech.recruit.id))
+          .where(qRecruitTech.tech.tech_name.lower().in(techNames));
+    }    
+    if (companies != null && companies.length > 0) 
+      query.where(qRecruit.company.company_name.in(companies));
 
-    return filteringTechs(techs, query.fetch());
-  }
+    if (jobCategories != null && jobCategories.length > 0) 
+      query.where(qRecruit.jobCategory.in(jobCategories));
 
-  private List<Recruit> filteringTechs(
-    String[] techs,
-    List<Long> recruitIdList
-  ) {
-    /**
-     * 사용자가 지정한 tech 필터링
-     */
-    List<Recruit> recruitList = new ArrayList<Recruit>();
-    List<String> techList = techs != null
-      ? Arrays.asList(techs)
-      : new ArrayList<>();
+    if (pageNo != null && pageSize != null)
+      query.offset((long) pageNo * pageSize).limit(pageSize);
 
-    for (int i = 0; i < recruitIdList.size(); i++) {
-      Recruit recruit = em.find(Recruit.class, recruitIdList.get(i));
-      List<RecruitTech> urlTechs = recruit.getUrlTechs();
+    List<Recruit> result = query.fetch();
 
-      if (techList.size() == 0) recruitList.add(recruit); else if (
-        urlTechs
-          .stream()
-          .anyMatch(t ->
-            techList
-              .stream()
-              .anyMatch(tech ->
-                tech.equalsIgnoreCase(t.getTech().getTech_name())
-              )
-          )
-      ) recruitList.add(recruit);
-    }
-    return recruitList;
+    return result;
   }
 
   @Override
