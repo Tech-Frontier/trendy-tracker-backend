@@ -1,26 +1,19 @@
 package com.trendyTracker.Job.repository;
 
-import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.trendyTracker.Job.domain.Company;
 import com.trendyTracker.Job.domain.QRecruit;
 import com.trendyTracker.Job.domain.QRecruitTech;
-import com.trendyTracker.Job.domain.QTech;
 import com.trendyTracker.Job.domain.Recruit;
 import com.trendyTracker.Job.domain.RecruitTech;
 import com.trendyTracker.Job.domain.Tech;
-import com.trendyTracker.Job.dto.RecruitDto;
 
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -168,9 +161,7 @@ public class JobRepositoryImpl implements JobRepository {
     if (pageNo != null && pageSize != null)
       query.offset((long) pageNo * pageSize).limit(pageSize);
 
-    List<Recruit> result = query.fetch();
-
-    return result;
+    return query.fetch();
   }
 
   @Override

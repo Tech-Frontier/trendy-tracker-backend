@@ -144,16 +144,7 @@ public class RecruitController {
         addHeader(request, response);
         return Response.success(200, "공고 스택이 변경되었습니다.",recruitDto);
     }
-// for (Recruit recruit : recruitList) {
-        //     recruitDtoList.add( new RecruitDto(
-        //         recruit.getId(),
-        //         recruit.getCompany(), 
-        //         recruit.getJobCategory(),
-        //         recruit.getUrl(),
-        //         recruit.getTitle(),
-        //         recruit.getCreate_time(),
-        //         recruit.getTechList()));
-        // }
+
 
     @Operation(summary = "전체 채용 공고 조회")
     @GetMapping(value = "/list")
