@@ -20,7 +20,7 @@ public interface JobRepository {
 
     Optional<Recruit> getRecruitByUrl(String url);
 
-    List<Recruit> getRecruitList(String[] companies, String[] jobCategories, String[] techs);
+    List<Recruit> getRecruitList(String[] companies, String[] jobCategories, String[] techs, Integer pageNo, Integer pageSize);
 
     long getTotalJobCnt();
 

@@ -137,12 +137,12 @@ public class RecruitService {
      * 채용 공고를 필터별로 조회합니다
      */
     // 페이징 파리미터 처리
-    if (
-      (pageNo == null && pageSize != null) ||
-      (pageNo != null && pageSize == null)
-    ) throw new ValidationException("pageNo, pageSize Error");
+    if ((pageNo == null && pageSize != null) || (pageNo != null && pageSize == null))     
+      throw new ValidationException("pageNo, pageSize Error");
+
     // 필수 파라미터 처리
     if (companies[0].equals("*")) companies = null;
+
     // techs 소문자 처리
     companies = changeToLowerCase(companies);
     jobCategories = changeToLowerCase(jobCategories);
@@ -151,11 +151,11 @@ public class RecruitService {
     List<Recruit> recruitList = jobRepository.getRecruitList(
       companies,
       jobCategories,
-      techs
+      techs,pageNo, pageSize
     );
     if (recruitList.size() == 0) return new ArrayList<>();
 
-    return pagingProcess(pageNo, pageSize, recruitList);
+    return recruitList;
   }
 
   private String[] changeToLowerCase(String[] paramStrings) {
@@ -170,24 +170,6 @@ public class RecruitService {
     return paramStrings;
   }
 
-  private List<Recruit> pagingProcess(
-    Integer pageNo,
-    Integer pageSize,
-    List<Recruit> recruitList
-  ) {
-    /*
-     *  pageNo, pageSize 를 통해서 페이징 처리를 합니다.
-     */
-    if (pageNo != null) {
-      int startIndex = (pageNo - 1) * pageSize;
-      int endIndex = Math.min(startIndex + pageSize, recruitList.size());
-
-      if (endIndex < startIndex) return new ArrayList<>();
-
-      return recruitList.subList(startIndex, endIndex);
-    }
-    return recruitList;
-  }
 
   public long getTotalJobCnt() {
     long totalJobCnt = jobRepository.getTotalJobCnt();
