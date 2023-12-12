@@ -187,3 +187,6 @@ db 모델링 히스토리 PR (Pull Request) <br/>
 ### Issue 
 - Docker + RaspberryPi 환경에서 Selenium 구동기 \
 https://www.owl-dev.me/blog/72
+
+- 채용공고 API 성능개선 \
+https://www.notion.so/API-2200569dcfba4bf0a8ad95674a59c9f6
