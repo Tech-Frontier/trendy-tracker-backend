@@ -18,24 +18,18 @@ def handle_webhook():
         username = os.getenv("USERNAME")
         password = os.getenv("PASSWORD")
 
-        # Docker 이미지 정보
         logging.info(f"********* docker image **********\n{repository}\n{'*' * 40}")
 
-        # Docker hub 로그인
         login_command = f"docker login --username='{username}' --password='{password}'"
         run_subprocess(login_command)
 
-        # 새로운 이미지 Pull
         pull_command = f"docker pull {repository}"
         run_subprocess(pull_command)
 
-        # 첫번째 Spring 프로젝트 update
         stop_and_start_service()
 
-        # 첫 번째 Spring 프로젝트의 상태를 폴링하여 확인
         check_health("http://localhost:8080/api/appInfo/health-check")
 
-        # 두 번째 Spring 프로젝트 시작
         start_command2 = "docker-compose -f ./docker-compose.yml up -d trendy_tracker2"
         run_subprocess(start_command2)
 
@@ -58,11 +52,9 @@ def run_subprocess(command):
 
 
 def stop_and_start_service():
-    # 첫 번째 Spring 프로젝트 중지
     stop_command = "docker-compose stop trendy_tracker"
     run_subprocess(stop_command)
 
-    # 첫 번째 Spring 프로젝트 다시 시작
     start_command = "docker-compose -f ./docker-compose.yml up -d trendy_tracker"   
     run_subprocess(start_command)
 
@@ -75,16 +67,13 @@ def check_health(api_url):
         try:
             response = requests.get(api_url)
             if response.status_code == 200:
-                # API 정상 응답을 받으면 종료
                 logging.info("API 정상 동작 확인")
                 return
         except Exception as e:
             logging.warning(f"API 폴링 중 오류 발생: {str(e)}")
 
-        # 정상 응답이 아닌 경우 잠시 대기 후 다시 시도
         time.sleep(interval_seconds)
 
-    # 최대 시도 횟수를 넘어갈 경우 예외 처리
     raise Exception("API가 정상적으로 동작하지 않습니다.")
 
 
