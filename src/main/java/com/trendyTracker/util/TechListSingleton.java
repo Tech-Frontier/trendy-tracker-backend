@@ -1,9 +1,10 @@
-package com.trendyTracker.util;
+package com.trendyTracker.Util;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.trendyTracker.Job.domain.Tech;
+import com.trendyTracker.Domain.Jobs.Techs.Tech;
+
 
 public class TechListSingleton {
     // TODO 분산 시스템을 고려하면 Redis 로 변환 필요

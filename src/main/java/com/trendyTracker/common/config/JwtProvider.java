@@ -1,4 +1,4 @@
-package com.trendyTracker.common.config;
+package com.trendyTracker.Common.Config;
 
 import java.security.Key;
 import java.util.Date;
@@ -6,7 +6,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.trendyTracker.Appservice.domain.User;
+import com.trendyTracker.Domain.AppService.Users.User;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -17,8 +17,6 @@ import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtProvider {
-    // TODO 분산 시스템을 고려하면 Redis 로 변환 필요
-
     @Value("${jwt.secret_key}")
     private String secret_key;
 
@@ -43,14 +41,14 @@ public class JwtProvider {
                 .compact();
     }
 
-    protected Date getCurrentTime(){
+    public Date getCurrentTime(){
     /*
      * 현재 시간을 반환 for TestCode
      */
         return new Date();
     }
 
-    protected Date calculateExpirationDate(Date now){
+    public Date calculateExpirationDate(Date now){
     /*
      *  만료 날짜를 15일 (24시간 x 60분 x 60초 x 1000밀리초) 후로 설정
      */

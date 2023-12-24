@@ -7,8 +7,8 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.kafka.annotation.EnableKafka;
 
-import com.trendyTracker.Job.service.RecruitService;
-import com.trendyTracker.Job.service.TechService;
+import com.trendyTracker.Domain.Jobs.Recruits.RecruitService;
+import com.trendyTracker.Domain.Jobs.Techs.TechService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,6 +31,6 @@ public class TrendyTrackerApplication implements CommandLineRunner{
         techService.getTechList();
 
         System.out.println("init get total job cnt.");
-        recruitService.getTotalJobCnt();
+        recruitService.getTotalCnt();
     }
 }

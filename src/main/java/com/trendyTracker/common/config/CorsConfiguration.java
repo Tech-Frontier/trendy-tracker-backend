@@ -1,4 +1,4 @@
-package com.trendyTracker.common.config;
+package com.trendyTracker.Common.Config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

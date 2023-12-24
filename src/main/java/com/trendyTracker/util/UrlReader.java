@@ -1,4 +1,4 @@
-package com.trendyTracker.util;
+package com.trendyTracker.Util;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,8 +21,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.trendyTracker.Job.domain.Tech;
-import com.trendyTracker.Job.dto.JobInfoDto;
+import com.trendyTracker.Domain.Jobs.Recruits.Dto.JobScrapInfoDto;
+import com.trendyTracker.Domain.Jobs.Techs.Tech;
 
 public class UrlReader {
     static Logger logger = LoggerFactory.getLogger(UrlReader.class);
@@ -30,7 +30,7 @@ public class UrlReader {
     // 웹 페이지 로딩을 위한 대기 시간 (초 단위)
     private static final int PAGE_LOAD_TIMEOUT = 10;
 
-    public static JobInfoDto getUrlContent(String url) throws IOException {
+    public static JobScrapInfoDto getUrlContent(String url) throws IOException {
         List<Tech> techList = TechListSingleton.getInstance().getTechList();
         WebDriver driver = setChromeDriver();
         
@@ -59,10 +59,10 @@ public class UrlReader {
 
             Set<Tech> techSet = techList.stream()
                 .filter(tech -> englishWords.stream()
-                .anyMatch(word -> tech.getTech_name().equalsIgnoreCase(word)))
+                .anyMatch(word -> tech.getTechName().equalsIgnoreCase(word)))
                 .collect(Collectors.toSet());
 
-            return new JobInfoDto(title, techSet);
+            return new JobScrapInfoDto(title, techSet);
 
         } catch(Exception ex){
             logger.error(ex.getMessage());

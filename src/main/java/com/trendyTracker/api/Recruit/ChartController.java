@@ -1,4 +1,4 @@
-package com.trendyTracker.api.Recruit;
+package com.trendyTracker.Api.Recruit;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.trendyTracker.Job.domain.Model.ChartInfo;
-import com.trendyTracker.Job.service.ChartService;
-import com.trendyTracker.common.config.logging.Loggable;
-import com.trendyTracker.common.response.Response;
+import com.trendyTracker.Common.Logging.Loggable;
+import com.trendyTracker.Common.Response.Response;
+import com.trendyTracker.Domain.Jobs.statistics.StaticsService;
+import com.trendyTracker.Domain.Jobs.statistics.Dto.ChartInfo;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 public class ChartController {
     @Autowired
-    private final ChartService chartService;
+    private final StaticsService chartService;
 
     @Operation(summary = "기간별 Tech 통계 조회")
     @GetMapping(value = "/techs")

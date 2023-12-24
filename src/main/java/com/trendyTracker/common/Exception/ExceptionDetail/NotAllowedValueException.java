@@ -1,4 +1,4 @@
-package com.trendyTracker.common.Exception.ExceptionDetail;
+package com.trendyTracker.Common.Exception.ExceptionDetail;
 
 public class NotAllowedValueException extends Exception {
     public NotAllowedValueException(String message) {

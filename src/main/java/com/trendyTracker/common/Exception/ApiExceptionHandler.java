@@ -1,4 +1,4 @@
-package com.trendyTracker.common.Exception;
+package com.trendyTracker.Common.Exception;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,9 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.trendyTracker.common.Exception.ExceptionDetail.AlreadyExistException;
-import com.trendyTracker.common.Exception.ExceptionDetail.NoResultException;
-import com.trendyTracker.common.Exception.ExceptionDetail.NotAllowedValueException;
+import com.trendyTracker.Common.Exception.ExceptionDetail.AlreadyExistException;
+import com.trendyTracker.Common.Exception.ExceptionDetail.NoResultException;
+import com.trendyTracker.Common.Exception.ExceptionDetail.NotAllowedValueException;
 
 import jakarta.validation.ValidationException;
 
