@@ -8,7 +8,6 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import com.trendyTracker.Domain.Subscription.SubscribeTemplates.Template;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

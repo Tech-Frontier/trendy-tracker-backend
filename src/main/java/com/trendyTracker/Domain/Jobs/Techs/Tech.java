@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.trendyTracker.Domain.Jobs.RecruitTechs.RecruitTech;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

@@ -10,7 +10,6 @@ import org.hibernate.annotations.OnDeleteAction;
 import com.trendyTracker.Domain.Jobs.Companies.Company;
 import com.trendyTracker.Domain.Jobs.RecruitTechs.RecruitTech;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

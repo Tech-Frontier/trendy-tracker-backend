@@ -18,7 +18,6 @@ import com.trendyTracker.Domain.Jobs.RecruitTechs.RecruitTech;
 import com.trendyTracker.Domain.Jobs.RecruitTechs.RecruitTechRepository;
 import com.trendyTracker.Domain.Jobs.Recruits.Dto.JobScrapInfoDto;
 import com.trendyTracker.Domain.Jobs.Techs.Tech;
-import com.trendyTracker.Domain.Jobs.Techs.TechRepository;
 import com.trendyTracker.Util.JobTotalCntSingleton;
 import com.trendyTracker.Util.TechUtils;
 import com.trendyTracker.Util.UrlReader;
@@ -33,7 +32,6 @@ public class RecruitService {
     private final CompanyRepository companyRepository;
     private final RecruitRepository recruitRepository;
     private final RecruitTechRepository recruitTechRepository;
-    private final TechRepository techRepository;
 
     JobTotalCntSingleton recruitSingleton = JobTotalCntSingleton.getInstance();
 

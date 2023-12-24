@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.trendyTracker.Domain.Subscription.Schedulings.Scheduling;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -39,8 +38,7 @@ public class Template {
 
     @OneToMany(
         mappedBy = "template",
-        fetch = FetchType.LAZY,
-        cascade = CascadeType.PERSIST
+        fetch = FetchType.LAZY        
         )
     private List<Scheduling> schedulings = new ArrayList<>();
 
