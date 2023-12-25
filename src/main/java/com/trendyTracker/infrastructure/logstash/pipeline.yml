@@ -1,2 +1,0 @@
-- pipeline.id: trendy-tracker
-  path.config: "config/logstash.conf"
