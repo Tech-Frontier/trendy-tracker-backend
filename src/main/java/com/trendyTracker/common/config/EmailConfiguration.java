@@ -1,4 +1,4 @@
-package com.trendyTracker.Common.config;
+package com.trendyTracker.Common.Config;
 
 import java.util.Properties;
 
