@@ -18,6 +18,7 @@ import org.openqa.selenium.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.trendyTracker.Common.Exception.ExceptionDetail.NoResultException;
 import com.trendyTracker.Common.Exception.ExceptionDetail.NotAllowedValueException;
 import com.trendyTracker.Domain.Jobs.Techs.Tech;
 import com.trendyTracker.Domain.Jobs.Techs.Tech.TechType;
@@ -40,7 +41,7 @@ public class RecruitServiceTest {
     static long recruit_id = 0L;
 
     @BeforeAll
-    public void setUpBeforeClass() throws IOException {
+    public void setUpBeforeClass() throws IOException, NoResultException {
         List<Tech> techList = new ArrayList<>();
         techList.add(new Tech("Java", TechType.LANGUAGE));
         techList.add(new Tech("C#", TechType.LANGUAGE));
@@ -60,7 +61,7 @@ public class RecruitServiceTest {
     }
 
     @Test
-    void testRegistRecruit() throws IOException {
+    void testRegistRecruit() throws IOException, NoResultException {
         // given
 
         // when
@@ -186,7 +187,7 @@ public class RecruitServiceTest {
     }
 
     @Test
-    void testUpdateRecruitInfo() throws IOException {
+    void testUpdateRecruitInfo() throws IOException, NoResultException {
         // given
 
         // when

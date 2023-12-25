@@ -10,6 +10,7 @@ import org.apache.kafka.common.security.oauthbearer.internals.secured.ValidateEx
 import org.openqa.selenium.NotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.trendyTracker.Common.Exception.ExceptionDetail.NoResultException;
 import com.trendyTracker.Common.Exception.ExceptionDetail.NotAllowedValueException;
 import com.trendyTracker.Domain.Jobs.Companies.Company;
 import com.trendyTracker.Domain.Jobs.Companies.CompanyRepository;
@@ -22,7 +23,6 @@ import com.trendyTracker.Util.JobTotalCntSingleton;
 import com.trendyTracker.Util.TechUtils;
 import com.trendyTracker.Util.UrlReader;
 
-import jakarta.persistence.NoResultException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
@@ -73,7 +73,7 @@ public class RecruitService {
     
 
     @Transactional
-    public Recruit registRecruit(String url, String company, String jobCategory) throws IOException{
+    public Recruit registRecruit(String url, String company, String jobCategory) throws IOException, NoResultException{
     /*
      * url , company, jobCategory 를 활용해 채용공고 등록
      */
@@ -126,7 +126,7 @@ public class RecruitService {
     }
 
     @Transactional
-    public Recruit updateRecruitInfo(String url) throws IOException{
+    public Recruit updateRecruitInfo(String url) throws IOException, NoResultException{
     /*
      * 기존 채용공고 새로 Scrapping
      */
