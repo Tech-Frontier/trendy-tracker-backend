@@ -54,7 +54,7 @@ public class SwaggerConfig {
         public GroupedOpenApi adminApi() {
                 return GroupedOpenApi.builder()
                                 .group("admin")
-                                .packagesToScan("com.trendyTracker.api")
+                                .packagesToScan("com.trendyTracker.Api")
                                 .addOperationCustomizer(new OperationCustomizer() {
                                         @Override
                                         public io.swagger.v3.oas.models.Operation customize(

@@ -1,4 +1,4 @@
-package com.trendyTracker.Common.config;
+package com.trendyTracker.Common.Config;
 
 import java.security.Key;
 import java.util.Date;
