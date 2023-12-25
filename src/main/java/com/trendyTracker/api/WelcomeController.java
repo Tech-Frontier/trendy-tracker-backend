@@ -1,4 +1,4 @@
-package com.trendyTracker.api;
+package com.trendyTracker.Api;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

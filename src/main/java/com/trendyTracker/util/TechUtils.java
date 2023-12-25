@@ -1,4 +1,4 @@
-package com.trendyTracker.util;
+package com.trendyTracker.Util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.trendyTracker.Domain.Jobs.Techs.Tech;
 
-import com.trendyTracker.Job.domain.Tech;
 
 public class TechUtils {
     
@@ -34,15 +34,15 @@ public class TechUtils {
 
         return techNameList.stream()
             .filter(techName -> Arrays.stream(techs)
-            .anyMatch(tech -> techName.getTech_name().equalsIgnoreCase(tech)))
-            .map(techName -> new Tech(techName.getTech_name(), techName.getType()))
+            .anyMatch(tech -> techName.getTechName().equalsIgnoreCase(tech)))
+            .map(techName -> new Tech(techName.getTechName(), techName.getType()))
             .collect(Collectors.toList());
     }
-    
+
     public static List<String> getTechNameList(Set<Tech> techs) {
         List<String> techList = new ArrayList<>();
         for (Tech tech : techs) {
-            techList.add(tech.getTech_name());
+            techList.add(tech.getTechName());
         }
         return techList;
     }
@@ -50,7 +50,7 @@ public class TechUtils {
     public static List<String> getTechNameList(List<Tech> techs) {
         List<String> techList = new ArrayList<>();
         for (Tech tech : techs) {
-            techList.add(tech.getTech_name());
+            techList.add(tech.getTechName());
         }
         return techList;
     }

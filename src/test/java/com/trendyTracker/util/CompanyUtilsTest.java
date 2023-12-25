@@ -1,11 +1,12 @@
 package com.trendyTracker.util;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import com.trendyTracker.Job.domain.Company.CompanyCategory;
+import com.trendyTracker.Domain.Jobs.Companies.Company.CompanyCategory;
+import com.trendyTracker.Util.CompanyUtils;
 
 public class CompanyUtilsTest {
     @Test
@@ -15,7 +16,7 @@ public class CompanyUtilsTest {
         // when 
         CompanyCategory makeCompanyCategory = CompanyUtils.makeCompanyCategory(category);
         // then 
-        Assertions.assertThat(makeCompanyCategory.name()).isEqualTo("Series_A");
+        assertEquals(makeCompanyCategory.name(), "Series_A");
     }
 
     @Test

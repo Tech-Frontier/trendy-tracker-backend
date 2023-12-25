@@ -1,4 +1,4 @@
-package com.trendyTracker.api.Recruit;
+package com.trendyTracker.Api.Recruit;
 
 import java.util.List;
 import java.util.UUID;
@@ -8,20 +8,20 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.trendyTracker.Job.domain.Company;
-import com.trendyTracker.Job.domain.Model.CompanyInfo;
-import com.trendyTracker.Job.service.CompanyService;
-import com.trendyTracker.common.Exception.ExceptionDetail.NoResultException;
-import com.trendyTracker.common.config.logging.Loggable;
-import com.trendyTracker.common.response.Response;
-import com.trendyTracker.util.CompanyUtils;
+import com.trendyTracker.Common.Exception.ExceptionDetail.NoResultException;
+import com.trendyTracker.Common.Logging.Loggable;
+import com.trendyTracker.Common.Response.Response;
+import com.trendyTracker.Domain.Jobs.Companies.Company;
+import com.trendyTracker.Domain.Jobs.Companies.CompanyService;
+import com.trendyTracker.Domain.Jobs.Companies.Vo.CompanyInfo;
+import com.trendyTracker.Util.CompanyUtils;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -38,19 +38,20 @@ public class CompanyController {
     @Autowired
     private final CompanyService companyService;
 
-
     @Operation(summary = "회사 등록")
     @PostMapping(value = "/regist")
     public Response<Void> registCompany(
         @RequestBody @Validated registCompanyRequest registRequest,
         HttpServletRequest request, HttpServletResponse response
     ){
-
         var group = registRequest.companyGroup;
         var company = registRequest.companyName;
         var category = CompanyUtils.makeCompanyCategory(registRequest.companyCategory);
 
-        companyService.registCompany(new CompanyInfo(group, category, company));
+        if(companyService.isExist(company))
+            return Response.fail(400, "해당 회사명은 이미 존재합니다");
+
+        companyService.regist(new CompanyInfo(group, category, company));
 
         addHeader(request, response);
         return Response.success(200, "정상적으로 회사가 등록되었습니다.");
@@ -66,9 +67,9 @@ public class CompanyController {
         var category = CompanyUtils.makeCompanyCategory(updateRequest.companyCategory);
         
         Company company = companyService.updateCategory(companyName, category);
-        var companyInfo = new CompanyInfo(company.getCompany_group(),
-        company.getCompany_category(),
-        company.getCompany_name());
+        var companyInfo = new CompanyInfo(company.getCompanyGroup(),
+                                    company.getCompanyCategory(),
+                                    company.getCompanyName());
         
         addHeader(request, response);
         return Response.success(200, "회사 규모를 변경했습니다",companyInfo);        
@@ -84,9 +85,9 @@ public class CompanyController {
         var group = updateRequest.companyGroup;
 
         Company company = companyService.updateGroup(companyName, group);
-         var companyInfo = new CompanyInfo(company.getCompany_group(),
-        company.getCompany_category(),
-        company.getCompany_name());
+        var companyInfo = new CompanyInfo(company.getCompanyGroup(),
+                                    company.getCompanyCategory(),
+                                    company.getCompanyName());
 
         addHeader(request, response);
         return Response.success(200, "회사 그룹을 변경했습니다",companyInfo);     
@@ -108,7 +109,7 @@ public class CompanyController {
         HttpServletRequest request, HttpServletResponse response
     ) throws NoResultException{
         var group = groupRequest.companyGroup;
-        List<CompanyInfo> companyGroup = companyService.getCompanyGroup(group);
+        List<CompanyInfo> companyGroup = companyService.getCompanyGroupList(group);
 
         addHeader(request, response);
         return Response.success(200, "정상적으로 조회되었습니다",companyGroup);

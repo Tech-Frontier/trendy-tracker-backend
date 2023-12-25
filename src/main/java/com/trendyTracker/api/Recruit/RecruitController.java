@@ -1,8 +1,7 @@
-package com.trendyTracker.api.Recruit;
+package com.trendyTracker.Api.Recruit;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -19,27 +18,27 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.trendyTracker.Job.domain.Recruit;
-import com.trendyTracker.Job.dto.RecruitDto;
-import com.trendyTracker.Job.service.RecruitService;
-import com.trendyTracker.common.Exception.ExceptionDetail.AlreadyExistException;
-import com.trendyTracker.common.Exception.ExceptionDetail.NoResultException;
-import com.trendyTracker.common.Exception.ExceptionDetail.NotAllowedValueException;
-import com.trendyTracker.common.config.logging.Loggable;
-import com.trendyTracker.common.response.Response;
-import com.trendyTracker.infrastructure.kafka.KafkaProducer;
-import com.trendyTracker.util.JobTotalCntSingleton;
+import com.trendyTracker.Adaptors.MessagingSystem.KafkaProducer;
+import com.trendyTracker.Common.Exception.ExceptionDetail.AlreadyExistException;
+import com.trendyTracker.Common.Exception.ExceptionDetail.NoResultException;
+import com.trendyTracker.Common.Exception.ExceptionDetail.NotAllowedValueException;
+import com.trendyTracker.Common.Logging.Loggable;
+import com.trendyTracker.Common.Response.Response;
+import com.trendyTracker.Domain.Jobs.Recruits.Recruit;
+import com.trendyTracker.Domain.Jobs.Recruits.RecruitService;
+import com.trendyTracker.Domain.Jobs.Recruits.Dto.RecruitInfoDto;
+import com.trendyTracker.Util.JobTotalCntSingleton;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.ValidationException;
 import jakarta.validation.constraints.NotNull;
-import jakarta.xml.bind.ValidationException;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+
 
 @Loggable
 @Tag(name = "Recruit", description = "채용 공고")
@@ -56,9 +55,7 @@ public class RecruitController {
     public Response<Void> regisitJobPostion(
         @RequestBody @Validated recruitRegistRequest recruitRequest,
         HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException, AlreadyExistException {
-        Optional<Recruit> recruitExist = recruitService.isRecruitExist(recruitRequest.url);
-        
-        if(recruitExist.isPresent())
+        if(recruitService.isExsit(recruitRequest.url))
             throw new AlreadyExistException("해당 공고가 존재합니다");
 
         HashMap<String, String> paramMap = new HashMap<>();
@@ -78,7 +75,7 @@ public class RecruitController {
         @RequestBody @Validated recruitUpdateRequest recruitRequest,
         HttpServletRequest request, HttpServletResponse response) throws NotAllowedValueException, JsonProcessingException {
         
-        recruitService.getRecruitInfo(recruitRequest.url);
+        recruitService.getRecruit(recruitRequest.url);
 
         HashMap<String, String> paramMap = new HashMap<>();
         paramMap.put("url", recruitRequest.url);
@@ -92,18 +89,18 @@ public class RecruitController {
 
     @Operation(summary = "채용 공고 조회")
     @GetMapping(value = "/id/{recruit_id}")
-    public Response<RecruitDto> getRecruitDetail(
+    public Response<RecruitInfoDto> getRecruitDetail(
         @PathVariable(name = "recruit_id") Long recruit_id,
         HttpServletRequest request, HttpServletResponse response) {
 
-        Recruit recruit = recruitService.getRecruitInfo(recruit_id);
-        RecruitDto recruitDto = new RecruitDto(
+        Recruit recruit = recruitService.getRecruit(recruit_id);
+        RecruitInfoDto recruitDto = new RecruitInfoDto(
             recruit.getId(),
             recruit.getCompany(), 
             recruit.getJobCategory(),
             recruit.getUrl(),
             recruit.getTitle(),
-            recruit.getCreate_time(),
+            recruit.getCreateAt(),
             recruit.getTechList());
 
 
@@ -125,21 +122,21 @@ public class RecruitController {
 
     @Operation(summary = "채용 공고 기술 수정")
     @PutMapping(value = "update/id/{recruit_id}")
-    public Response<RecruitDto> updateRecruit(
+    public Response<RecruitInfoDto> updateRecruit(
         @PathVariable(name = "recruit_id") Long recruit_id,
         @RequestParam(name ="tech",required = true) String[] techs,
         HttpServletRequest request, HttpServletResponse response) throws NotAllowedValueException {
         
-        Recruit recruit = recruitService.updateRecruitTechs(recruit_id,techs);
-        RecruitDto recruitDto = new RecruitDto(
-        recruit.getId(),
-        recruit.getCompany(), 
-        recruit.getJobCategory(),
-        recruit.getUrl(),
-        recruit.getTitle(),
-        recruit.getCreate_time(),
-        recruit.getTechList()
-        );
+        Recruit recruit = recruitService.updaRecruitTechs(recruit_id,techs);
+        RecruitInfoDto recruitDto = new RecruitInfoDto(
+            recruit.getId(),
+            recruit.getCompany(), 
+            recruit.getJobCategory(),
+            recruit.getUrl(),
+            recruit.getTitle(),
+            recruit.getCreateAt(),
+            recruit.getTechList()
+            );
 
         addHeader(request, response);
         return Response.success(200, "공고 스택이 변경되었습니다.",recruitDto);
@@ -157,16 +154,16 @@ public class RecruitController {
         HttpServletRequest request, HttpServletResponse response) throws NoResultException, ValidationException {
         
         HashMap<String,Object> result = new HashMap<>();
-        List<Recruit> recruitList = recruitService.getRecruitList(companies,jobCategories,techs,pageNo,pageSize);    
+        List<Recruit> recruitList = recruitService.getRecuitList(companies,jobCategories,techs,pageNo,pageSize);    
                         
-        List<RecruitDto> recruitDtoList = recruitList.stream().map(recruit -> {      
-        return new RecruitDto(
+        List<RecruitInfoDto> recruitDtoList = recruitList.stream().map(recruit -> {      
+        return new RecruitInfoDto(
             recruit.getId(),
             recruit.getCompany(),
             recruit.getJobCategory(),
             recruit.getUrl(),
             recruit.getTitle(),
-            recruit.getCreate_time(),
+            recruit.getCreateAt(),
             recruit.getTechList()
         );
         }).collect(Collectors.toList());

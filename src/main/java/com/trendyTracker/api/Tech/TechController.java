@@ -1,9 +1,10 @@
-package com.trendyTracker.api.Tech;
+package com.trendyTracker.Api.Tech;
 
 
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
-import org.json.JSONArray;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,11 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.trendyTracker.Job.domain.Tech.TechType;
-import com.trendyTracker.Job.service.TechService;
-import com.trendyTracker.common.Exception.ExceptionDetail.AlreadyExistException;
-import com.trendyTracker.common.config.logging.Loggable;
-import com.trendyTracker.common.response.Response;
+import com.trendyTracker.Common.Exception.ExceptionDetail.AlreadyExistException;
+import com.trendyTracker.Common.Logging.Loggable;
+import com.trendyTracker.Common.Response.Response;
+import com.trendyTracker.Domain.Jobs.Techs.Tech;
+import com.trendyTracker.Domain.Jobs.Techs.TechService;
+import com.trendyTracker.Domain.Jobs.Techs.Tech.TechType;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -40,10 +42,10 @@ public class TechController {
     @PostMapping(value = "/stack/create")
     public Response<String> registTechStack(@RequestBody @Validated techRequest techRequest,
     HttpServletRequest request, HttpServletResponse response) throws AlreadyExistException {
-        String registTechStack = techService.registTechStack(techRequest.tech, techRequest.type);
+        Tech registTechStack = techService.registTechStack(techRequest.getTech(), techRequest.getType());
 
         addHeader(request, response);
-        return Response.success(200, "개발 스택이 등록되었습니다", registTechStack);
+        return Response.success(200, "개발 스택이 등록되었습니다", registTechStack.getTechName());
     }
 
     @Operation(summary = "기술 스택 제거")
@@ -59,10 +61,10 @@ public class TechController {
     @Operation(summary = "기술 스택 목록 조회")
     @GetMapping(value = "/stack/list")
     public Response<Object> getTechStackList(HttpServletRequest request, HttpServletResponse response) {
-        JSONArray techList = techService.getTechList();
+        List<Map<String, String>> techList = techService.getTechList();
 
         addHeader(request, response);
-        return Response.success(200, "개발 스택 목록이 조회됐습니다", techList.toList());
+        return Response.success(200, "개발 스택 목록이 조회됐습니다", techList);
     }
 
     private void addHeader(HttpServletRequest request, HttpServletResponse response) {

@@ -8,18 +8,23 @@ import java.util.Date;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.trendyTracker.Appservice.domain.User;
+import com.trendyTracker.Common.Config.JwtProvider;
+import com.trendyTracker.Domain.AppService.Users.User;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.security.Keys;
 
+
 @SpringBootTest
 public class JwtProviderTest {
+    @InjectMocks
     private JwtProvider jwtProvider;
     @Mock
     private User mockUser;
@@ -29,19 +34,20 @@ public class JwtProviderTest {
 
     @BeforeEach
     public void setUp() {
+        MockitoAnnotations.openMocks(this);
         jwtProvider = new JwtProvider(secretKey);
         
-        Mockito.when(mockUser.getId()).thenReturn(1L);
-        Mockito.when(mockUser.getEmail()).thenReturn(testEmail);
+        when(mockUser.getId()).thenReturn(1L);
+        when(mockUser.getEmail()).thenReturn(testEmail);
     }
 
     @Test
     public void testCreateToken() {
         // given
-        long currentTimeMillis = 1609459200000L; // 예: 2021-01-01 00:00:00
+        long currentTimeMillis = 1609459200000L; // 2021-01-01 00:00:00
         Date fixedNow = new Date(currentTimeMillis);
 
-        long expirationTimeMillis = 1611014400000L; // 예: 2021-01-20 00:00:00
+        long expirationTimeMillis = 1611014400000L; // 2021-01-20 00:00:00
         Date fixedExpiration = new Date(expirationTimeMillis);
 
         JwtProvider jwtProviderSpy = Mockito.spy(jwtProvider);

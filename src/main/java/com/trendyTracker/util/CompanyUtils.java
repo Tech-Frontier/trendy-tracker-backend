@@ -1,6 +1,6 @@
-package com.trendyTracker.util;
+package com.trendyTracker.Util;
 
-import com.trendyTracker.Job.domain.Company.CompanyCategory;
+import com.trendyTracker.Domain.Jobs.Companies.Company.CompanyCategory;
 
 public class CompanyUtils {
 
