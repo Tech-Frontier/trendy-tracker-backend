@@ -10,6 +10,10 @@ import org.apache.kafka.common.security.oauthbearer.internals.secured.ValidateEx
 import org.openqa.selenium.NotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.trendyTracker.Adaptors.CacheMemory.RecruitsCacheImpl;
+import com.trendyTracker.Adaptors.CacheMemory.TechsCacheImpl;
 import com.trendyTracker.Common.Exception.ExceptionDetail.NoResultException;
 import com.trendyTracker.Common.Exception.ExceptionDetail.NotAllowedValueException;
 import com.trendyTracker.Domain.Jobs.Companies.Company;
@@ -19,7 +23,6 @@ import com.trendyTracker.Domain.Jobs.RecruitTechs.RecruitTech;
 import com.trendyTracker.Domain.Jobs.RecruitTechs.RecruitTechRepository;
 import com.trendyTracker.Domain.Jobs.Recruits.Dto.JobScrapInfoDto;
 import com.trendyTracker.Domain.Jobs.Techs.Tech;
-import com.trendyTracker.Util.JobTotalCntSingleton;
 import com.trendyTracker.Util.TechUtils;
 import com.trendyTracker.Util.UrlReader;
 
@@ -32,8 +35,9 @@ public class RecruitService {
     private final CompanyRepository companyRepository;
     private final RecruitRepository recruitRepository;
     private final RecruitTechRepository recruitTechRepository;
+    private final RecruitsCacheImpl recruitsCache;
+    private final TechsCacheImpl techsCache;
 
-    JobTotalCntSingleton recruitSingleton = JobTotalCntSingleton.getInstance();
 
     public Recruit getRecruit(long id){
     /*
@@ -64,20 +68,15 @@ public class RecruitService {
     }
 
     public long getTotalCnt(){
-        long cnt = recruitRepository.count();
-        // Singleton 데이터 삽입
-        recruitSingleton.setTotalCnt(cnt);
-
-        return cnt;
+        return recruitRepository.count();
     }
-    
 
     @Transactional
     public Recruit registRecruit(String url, String company, String jobCategory) throws IOException, NoResultException{
     /*
      * url , company, jobCategory 를 활용해 채용공고 등록
      */
-        JobScrapInfoDto urlContent = UrlReader.getUrlContent(url);
+        JobScrapInfoDto urlContent = UrlReader.getUrlContent(url,techsCache);
 
         if(urlContent.techSet().isEmpty())
             throw new NoResultException("해당 url 에서 tech 가 발견되지 않았습니다");
@@ -88,7 +87,7 @@ public class RecruitService {
                 return companyRepository.save(new Company(companyInfo));
             });
         
-        recruitSingleton.increaseCnt();
+        recruitsCache.increaseJobCnt();
         
         Recruit recruit = recruitRepository.save(
             new Recruit(url, urlContent.title(), findCompany, jobCategory));
@@ -107,19 +106,19 @@ public class RecruitService {
         recruit.deleteRecruit();
 
         recruitRepository.delete(recruit);
-        getTotalCnt();
+        recruitsCache.decreaseJobCnt();
     }
 
     @Transactional
-    public Recruit updaRecruitTechs(long id, String[] techs) throws NotAllowedValueException{
+    public Recruit updaRecruitTechs(long id, String[] techs) throws NotAllowedValueException, JsonMappingException, JsonProcessingException{
     /*
      * 채용공고 기술 스택 변경
      */
         Recruit recruit = getRecruit(id);
-        if(TechUtils.isTechNotExist(techs))
+        if(TechUtils.isTechNotExist(techs,techsCache))
             throw new NotAllowedValueException("존재하지 않는 기술이 존재합니다");
 
-        List<Tech> techList = TechUtils.makeTechs(techs);
+        List<Tech> techList = TechUtils.makeTechs(techs, techsCache);
 
         saveRecruitTechs(techList,recruit);        
         return recruit;
@@ -131,7 +130,7 @@ public class RecruitService {
      * 기존 채용공고 새로 Scrapping
      */
         Recruit recruit = getRecruit(url);
-        JobScrapInfoDto urlContent = UrlReader.getUrlContent(url);
+        JobScrapInfoDto urlContent = UrlReader.getUrlContent(url, techsCache);
 
         if(urlContent.techSet().isEmpty())
             throw new NoResultException("해당 url 에서 tech 가 발견되지 않았습니다");

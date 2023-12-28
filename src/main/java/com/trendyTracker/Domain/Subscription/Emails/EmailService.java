@@ -1,9 +1,6 @@
 package com.trendyTracker.Domain.Subscription.Emails;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 import org.springframework.mail.javamail.JavaMailSender;
@@ -12,21 +9,19 @@ import org.springframework.stereotype.Service;
 
 import com.trendyTracker.Domain.Subscription.Emails.Vo.EmailValidation;
 
-import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 
 @Service
 public class EmailService {
     private final JavaMailSender mailSender;
+    private final EmailValidationCache emailValidationCache;
 
-    // TODO 분산 시스템을 고려하면 Redis 변환 필요
-    private List<EmailValidation> tempEmailList = new ArrayList<>();
-
-    public EmailService(JavaMailSender mailSender){
+    public EmailService(JavaMailSender mailSender, EmailValidationCache emailValidationCache){
         this.mailSender = mailSender;
+        this.emailValidationCache = emailValidationCache;
     }
 
-    public String sendVerificationEmail(String to) throws MessagingException{
+    public String sendVerificationEmail(String to) throws Exception{
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message,true, "UTF-8");
         String verificationCode = generateVerificationCode();
@@ -93,22 +88,22 @@ public class EmailService {
         return verificationCode;
     }    
 
-    public Boolean verifyCode(String email, String code){
+    public Boolean verifyCode(String email, String code) throws Exception{
     /*
      * email 과 code 가 일치하면서 3분 이내일 경우
      */
-        Optional<EmailValidation> validate = tempEmailList.stream()
-            .filter(x -> x.getEmail().equals(email) && x.getValidateCode().equals(code))
-            .findFirst();
+        var validation = emailValidationCache.getEmailValidation(email);
+        if(validation.isEmpty())
+            return false;
         
-        if(validate.isEmpty()) 
+        EmailValidation emailValidation = validation.get();
+        if(!emailValidation.getValidateCode().equals(code))
+            return false;
+        
+        if(LocalDateTime.now().isAfter(emailValidation.getCreateTime().plusMinutes(3)))
             return false;
 
-        var validation = validate.get();
-        if(LocalDateTime.now().isAfter(validation.getCreateTime().plusMinutes(3)))
-            return false;
-        
-        tempEmailList.remove(validation);
+        emailValidationCache.deleteKey(email);
         return true;
     }
 
@@ -124,17 +119,15 @@ public class EmailService {
         return numbers;
     }
 
-    private void addEmailValidation(String email, String verificationCode) {
+    private void addEmailValidation(String email, String verificationCode) throws Exception {
         /*
          * 이메일 인증 코드 발행
          */
-        Optional<EmailValidation> validate = tempEmailList.stream()
-                .filter(x -> x.getEmail().equals(email))
-                .findFirst();
-
-        if (validate.isPresent())
-            tempEmailList.remove(validate.get());
-
-        tempEmailList.add(new EmailValidation(email, verificationCode));
+        var validation = emailValidationCache.getEmailValidation(email);
+        if(validation.isPresent())
+            emailValidationCache.deleteKey(email);
+        
+        var emailValidation = new EmailValidation(email, verificationCode);
+        emailValidationCache.storeEmailValidation(emailValidation);
     }
 }

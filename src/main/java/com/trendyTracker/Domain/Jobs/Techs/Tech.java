@@ -3,6 +3,7 @@ package com.trendyTracker.Domain.Jobs.Techs;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.trendyTracker.Domain.Jobs.RecruitTechs.RecruitTech;
 
 import jakarta.persistence.Column;
@@ -44,6 +45,7 @@ public class Tech {
         mappedBy = "tech",
         fetch = FetchType.LAZY        
     )
+    @JsonIgnore
     private List<RecruitTech> recruitTechs = new ArrayList<>();
 
     public Tech(String tech, TechType type){
