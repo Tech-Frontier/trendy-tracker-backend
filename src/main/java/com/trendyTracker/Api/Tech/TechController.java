@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.trendyTracker.Common.Exception.ExceptionDetail.AlreadyExistException;
 import com.trendyTracker.Common.Logging.Loggable;
 import com.trendyTracker.Common.Response.Response;
@@ -35,7 +36,7 @@ import lombok.Data;
 @RestController
 @AllArgsConstructor
 public class TechController {
-
+    
     private final TechService techService;
 
     @Operation(summary = "기술 스택 등록")
@@ -60,7 +61,7 @@ public class TechController {
 
     @Operation(summary = "기술 스택 목록 조회")
     @GetMapping(value = "/stack/list")
-    public Response<Object> getTechStackList(HttpServletRequest request, HttpServletResponse response) {
+    public Response<Object> getTechStackList(HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
         List<Map<String, String>> techList = techService.getTechList();
 
         addHeader(request, response);

@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.trendyTracker.Adaptors.CacheMemory.RecruitsCacheImpl;
 import com.trendyTracker.Adaptors.MessagingSystem.KafkaProducer;
 import com.trendyTracker.Common.Exception.ExceptionDetail.AlreadyExistException;
 import com.trendyTracker.Common.Exception.ExceptionDetail.NoResultException;
@@ -27,7 +29,6 @@ import com.trendyTracker.Common.Response.Response;
 import com.trendyTracker.Domain.Jobs.Recruits.Recruit;
 import com.trendyTracker.Domain.Jobs.Recruits.RecruitService;
 import com.trendyTracker.Domain.Jobs.Recruits.Dto.RecruitInfoDto;
-import com.trendyTracker.Util.JobTotalCntSingleton;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -48,6 +49,8 @@ import lombok.RequiredArgsConstructor;
 public class RecruitController {
     @Autowired
     private KafkaProducer kafkaProducer;
+    @Autowired
+    private final RecruitsCacheImpl redisManager;
     private final RecruitService recruitService; 
 
     @Operation(summary = "채용 공고 등록")
@@ -125,7 +128,7 @@ public class RecruitController {
     public Response<RecruitInfoDto> updateRecruit(
         @PathVariable(name = "recruit_id") Long recruit_id,
         @RequestParam(name ="tech",required = true) String[] techs,
-        HttpServletRequest request, HttpServletResponse response) throws NotAllowedValueException {
+        HttpServletRequest request, HttpServletResponse response) throws NotAllowedValueException, JsonMappingException, JsonProcessingException {
         
         Recruit recruit = recruitService.updaRecruitTechs(recruit_id,techs);
         RecruitInfoDto recruitDto = new RecruitInfoDto(
@@ -168,10 +171,9 @@ public class RecruitController {
         );
         }).collect(Collectors.toList());
         
-        // Singleton 데이터 조회
-        JobTotalCntSingleton jobTotalCntSingleton = JobTotalCntSingleton.getInstance();
+        Long jobCnt = redisManager.getJobCnt();
         result.put("recruitList", recruitDtoList);
-        result.put("totalCount", jobTotalCntSingleton.getTotalCnt());
+        result.put("totalCount", jobCnt);
         result.put("filterCount", recruitDtoList.size());
         
         addHeader(request, response);

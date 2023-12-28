@@ -3,13 +3,19 @@ package com.trendyTracker.Domain.Subscription.Emails;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.mail.javamail.JavaMailSender;
 
-import jakarta.mail.MessagingException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.trendyTracker.Adaptors.CacheMemory.EmailValidationCacheImpl;
+import com.trendyTracker.Domain.Subscription.Emails.Vo.EmailValidation;
+
 import jakarta.mail.internet.MimeMessage;
 
 public class EmailServiceTest {
@@ -18,21 +24,23 @@ public class EmailServiceTest {
     private JavaMailSender mailSender;
     @Mock
     private MimeMessage mockMimeMessage;
+    @Mock
+    private EmailValidationCacheImpl redisManager;
 
     private EmailService emailService;
 
+    private final String email = "test@example.com";
+
     @BeforeEach
-    void setUp() {
+    void setUp() throws JsonMappingException, JsonProcessingException {
         MockitoAnnotations.openMocks(this);
         when(mailSender.createMimeMessage()).thenReturn(mockMimeMessage);
-        emailService = new EmailService(mailSender);
+
+        emailService = new EmailService(mailSender, redisManager);
     }
 
     @Test
-    void testSendVerificationEmail() throws MessagingException {
-        // given
-        String email = "test@example.com";
-
+    void testSendVerificationEmail() throws Exception {
         // when 
         String verificationCode = emailService.sendVerificationEmail(email);
         verify(mailSender).send(mockMimeMessage);
@@ -43,10 +51,11 @@ public class EmailServiceTest {
     }
 
     @Test
-    void testVerifyCode() throws MessagingException {
+    void testVerifyCode() throws Exception {
         // given 
-        String email = "test@example.com";
         String verificationCode = emailService.sendVerificationEmail(email);
+        var emailValidation = new EmailValidation(email, verificationCode);
+        when(redisManager.getEmailValidation(email)).thenReturn(Optional.of(emailValidation));
 
         // when 
         boolean isCodeValid = emailService.verifyCode(email, verificationCode);
