@@ -63,6 +63,9 @@ dependencies {
 
 	// Apache kafka
 	implementation 'org.springframework.kafka:spring-kafka:3.0.9'
+
+	// redis
+	implementation 'redis.clients:jedis:5.1.0'
 	
 }
 
