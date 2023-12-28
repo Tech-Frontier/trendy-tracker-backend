@@ -45,7 +45,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
 
 	// json
-	implementation 'org.json:json:20230618'
+	implementation 'org.json:json:20231013'
+
+	// jackson-datatype
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.16.1'
 	
 	// mail 
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
