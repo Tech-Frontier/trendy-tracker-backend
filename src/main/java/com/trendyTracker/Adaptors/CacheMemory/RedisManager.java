@@ -1,58 +1,56 @@
 package com.trendyTracker.Adaptors.CacheMemory;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
+import jakarta.annotation.PostConstruct;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 @Component
-public class RedisManager {
-    @Value("${mail.host}")
+public abstract class RedisManager {
+    @Value("${redis.host}")
     private String host;
 
-    @Value("${mail.port}")
+    @Value("${redis.port}")
     private int port;
-
-    private final JedisPool jedisPool;
+    
+    private ObjectMapper mapper = new ObjectMapper();
+    private JedisPool jedisPool;
 
     public RedisManager(){
         JedisPoolConfig poolConfig = new JedisPoolConfig();
         this.jedisPool = new JedisPool(poolConfig, host, port);
+        this.mapper.registerModule(new JavaTimeModule());
     }
 
     public RedisManager(JedisPool jedisPool){
         this.jedisPool = new JedisPool();
+        this.mapper.registerModule(new JavaTimeModule());
     }
 
-    public void storeValue(String key, String value) {
-        try (Jedis jedis = jedisPool.getResource()) {
-            jedis.set(key, value);
-        }
+    @PostConstruct
+    public void init() {
+        JedisPoolConfig poolConfig = new JedisPoolConfig();
+        this.jedisPool = new JedisPool(poolConfig, host, port);
+        this.mapper.registerModule(new JavaTimeModule());
     }
 
-    public String getValue(String key) {
-        try (Jedis jedis = jedisPool.getResource()) {
-            return jedis.get(key);
-        }
+    protected ObjectMapper getMapper(){
+        return this.mapper;
     }
 
-    public void storeList(String key, List<String> values){
+    protected JedisPool getJedisPool(){
+        return this.jedisPool;
+    }
+    
+    public void deleteKey(String key){
         try(Jedis jedis = jedisPool.getResource()){
             jedis.del(key);
-            for(String value: values){
-                jedis.rpush(key, value);
-            }
         }
     }
-
-    public List<String> getLiset(String key){
-        try(Jedis jedis = jedisPool.getResource()){
-            return jedis.lrange(key, 0,-1);
-        }
-    }
-
 }
