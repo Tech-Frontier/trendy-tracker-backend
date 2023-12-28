@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.trendyTracker.Common.Logging.Loggable;
 import com.trendyTracker.Common.Response.Response;
-import com.trendyTracker.Domain.Jobs.statistics.StaticsService;
-import com.trendyTracker.Domain.Jobs.statistics.Dto.ChartInfo;
+import com.trendyTracker.Domain.Jobs.Statistics.StaticsService;
+import com.trendyTracker.Domain.Jobs.Statistics.Dto.ChartInfo;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;

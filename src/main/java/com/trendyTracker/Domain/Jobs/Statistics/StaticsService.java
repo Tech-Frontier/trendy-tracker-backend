@@ -1,10 +1,10 @@
-package com.trendyTracker.Domain.Jobs.statistics;
+package com.trendyTracker.Domain.Jobs.Statistics;
 
 import java.time.LocalDate;
 
 import org.springframework.stereotype.Service;
 
-import com.trendyTracker.Domain.Jobs.statistics.Dto.ChartInfo;
+import com.trendyTracker.Domain.Jobs.Statistics.Dto.ChartInfo;
 
 import lombok.RequiredArgsConstructor;
 

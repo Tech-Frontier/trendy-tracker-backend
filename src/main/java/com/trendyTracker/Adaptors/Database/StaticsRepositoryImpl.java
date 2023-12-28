@@ -10,8 +10,8 @@ import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.trendyTracker.Domain.Jobs.RecruitTechs.QRecruitTech;
 import com.trendyTracker.Domain.Jobs.Recruits.QRecruit;
-import com.trendyTracker.Domain.Jobs.statistics.StaticsRepository;
-import com.trendyTracker.Domain.Jobs.statistics.Dto.ChartInfo;
+import com.trendyTracker.Domain.Jobs.Statistics.StaticsRepository;
+import com.trendyTracker.Domain.Jobs.Statistics.Dto.ChartInfo;
 
 import jakarta.persistence.EntityManager;
 
