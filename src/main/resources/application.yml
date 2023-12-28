@@ -38,3 +38,7 @@ logging:
 
 kafka:
   bootstrap-servers: 
+
+redis:
+  host: 
+  port: 
