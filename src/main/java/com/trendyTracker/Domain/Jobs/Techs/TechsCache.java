@@ -2,6 +2,8 @@ package com.trendyTracker.Domain.Jobs.Techs;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 

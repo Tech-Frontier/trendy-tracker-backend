@@ -36,7 +36,10 @@ public class RecruitsCacheImpl extends RedisManager implements RecruitCache{
     public void increaseJobCnt(){
         try(Jedis jedis = getJedisPool().getResource()){
             String cnt = jedis.get(key);
-            jedis.set(key, String.valueOf(Long.parseLong(cnt) + 1));
+            if(cnt == null)
+                jedis.set(key, String.valueOf(getTotalJobCount() + 1));
+            else 
+                jedis.set(key, String.valueOf(Long.parseLong(cnt) + 1));
         }
     }
 
@@ -44,7 +47,10 @@ public class RecruitsCacheImpl extends RedisManager implements RecruitCache{
     public void decreaseJobCnt(){
         try(Jedis jedis = getJedisPool().getResource()){
             String cnt = jedis.get(key);
-            jedis.set(key, String.valueOf(Long.parseLong(cnt) - 1));
+            if(cnt == null)
+                jedis.set(key, String.valueOf(getTotalJobCount() - 1));
+            else 
+                jedis.set(key, String.valueOf(Long.parseLong(cnt) - 1));
         }
     }
 
