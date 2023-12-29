@@ -18,11 +18,11 @@ import org.openqa.selenium.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.trendyTracker.Adaptors.CacheMemory.TechsCacheImpl;
 import com.trendyTracker.Common.Exception.ExceptionDetail.NoResultException;
 import com.trendyTracker.Common.Exception.ExceptionDetail.NotAllowedValueException;
 import com.trendyTracker.Domain.Jobs.Techs.Tech;
 import com.trendyTracker.Domain.Jobs.Techs.Tech.TechType;
-import com.trendyTracker.Util.TechListSingleton;
 
 import jakarta.transaction.Transactional;
 
@@ -32,7 +32,9 @@ import jakarta.transaction.Transactional;
 @TestInstance(Lifecycle.PER_CLASS)
 public class RecruitServiceTest {
     @Autowired
-    private RecruitService recruitService;    
+    private RecruitService recruitService; 
+    @Autowired   
+    private TechsCacheImpl techsCache;
   
     static String url = "https://www.owl-dev.me/blog/72";
     static String title = "Docker + RaspberryPi 환경에서 Selenium 동작시키기";
@@ -48,8 +50,7 @@ public class RecruitServiceTest {
         techList.add(new Tech("Spring", TechType.FRAMEWORK));
         techList.add(new Tech("Docker", TechType.TOOLS));
         
-        TechListSingleton instance = TechListSingleton.getInstance();
-        instance.setTechList(techList);
+        techsCache.storeTechList(techList);
 
         recruit_id = recruitService.registRecruit(url, company, jobCategory).getId();
     }

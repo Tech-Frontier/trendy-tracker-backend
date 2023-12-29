@@ -22,7 +22,7 @@ public class EmailConfiguration {
     @Value("${mail.password}")
     private String password;
 
-     @Bean
+    @Bean
     public JavaMailSender javaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost(host);

@@ -7,14 +7,18 @@ import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.trendyTracker.Adaptors.CacheMemory.TechsCacheImpl;
 import com.trendyTracker.Domain.Jobs.Recruits.Dto.JobScrapInfoDto;
 import com.trendyTracker.Util.TechUtils;
 import com.trendyTracker.Util.UrlReader;
 
 @SpringBootTest
 public class UrlReaderTest {
+    @Autowired
+    TechsCacheImpl techsCache;
 
     @Test
     @DisplayName("url 정보 파싱")
@@ -23,7 +27,7 @@ public class UrlReaderTest {
         var testUrl = "https://www.owl-dev.me/blog/62";
 
         // when
-        JobScrapInfoDto jobInfo = UrlReader.getUrlContent(testUrl);
+        JobScrapInfoDto jobInfo = UrlReader.getUrlContent(testUrl, techsCache);
 
         // then
         List<String> techList = TechUtils.getTechNameList(jobInfo.techSet());

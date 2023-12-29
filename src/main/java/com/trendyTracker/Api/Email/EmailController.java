@@ -17,7 +17,6 @@ import com.trendyTracker.Domain.Subscription.Emails.EmailService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.Email;
@@ -39,7 +38,7 @@ public class EmailController {
     @Operation(summary = "이메일 인증 번호 발송") 
     @PostMapping(value = "/signup/send")
     public Response<Void> sendVerificationEmail(@RequestBody @Validated emailRequest emailRequest,
-    HttpServletRequest request, HttpServletResponse response) throws MessagingException{
+    HttpServletRequest request, HttpServletResponse response) throws Exception {
         emailService.sendVerificationEmail(emailRequest.email);
 
         addHeader(request, response);
@@ -49,7 +48,7 @@ public class EmailController {
     @Operation(summary = "이메일 인증번호 검증")
     @PostMapping(value = "/signup/verify")
     public Response<String> verifyValidationCode(@RequestBody emailValidationRequest validationRequest,
-    HttpServletRequest request, HttpServletResponse response){
+    HttpServletRequest request, HttpServletResponse response) throws Exception{
         Boolean verifyCode = emailService.verifyCode(validationRequest.email, validationRequest.code);
 
         addHeader(request, response);

@@ -1,0 +1,16 @@
+version: '3.3'
+
+networks: 
+  my_network: 
+    driver: bridge
+
+
+services:
+  redis:
+    image: redis:latest
+    restart: always
+    networks:
+      - my_network
+    container_name: redis
+    ports:
+      - "6379:6379"

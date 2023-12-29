@@ -8,9 +8,10 @@ import java.util.stream.Collectors;
 import org.openqa.selenium.NotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.trendyTracker.Adaptors.CacheMemory.TechsCacheImpl;
 import com.trendyTracker.Common.Exception.ExceptionDetail.AlreadyExistException;
 import com.trendyTracker.Domain.Jobs.Techs.Tech.TechType;
-import com.trendyTracker.Util.TechListSingleton;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class TechService {
     
     private final TechRepository techRepository;
+    private final TechsCacheImpl techsCache;
 
     @Transactional
     public Tech registTechStack(String tech, TechType type) throws AlreadyExistException{
@@ -39,13 +41,12 @@ public class TechService {
         return "successfully deleted";
     }
 
-    public List<Map<String,String>> getTechList(){
+    public List<Map<String,String>> getTechList() throws JsonProcessingException{
         List<Tech> techList = techRepository.findAll();
         if(techList.isEmpty())
             return new ArrayList<>();
 
-        TechListSingleton instance = TechListSingleton.getInstance();
-        instance.setTechList(techList);
+        techsCache.storeTechList(techList);
 
         return techList.stream()
                 .map(tech -> Map.of(

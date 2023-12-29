@@ -21,6 +21,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.trendyTracker.Adaptors.CacheMemory.TechsCacheImpl;
 import com.trendyTracker.Domain.Jobs.Recruits.Dto.JobScrapInfoDto;
 import com.trendyTracker.Domain.Jobs.Techs.Tech;
 
@@ -30,8 +31,9 @@ public class UrlReader {
     // 웹 페이지 로딩을 위한 대기 시간 (초 단위)
     private static final int PAGE_LOAD_TIMEOUT = 10;
 
-    public static JobScrapInfoDto getUrlContent(String url) throws IOException {
-        List<Tech> techList = TechListSingleton.getInstance().getTechList();
+    public static JobScrapInfoDto getUrlContent(String url, TechsCacheImpl redisManager) throws IOException {
+        
+        List<Tech> techList = redisManager.getTechList();
         WebDriver driver = setChromeDriver();
         
         try {

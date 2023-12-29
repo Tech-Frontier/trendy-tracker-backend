@@ -7,6 +7,7 @@ networks:
 services:
   logstash:
     image: docker.elastic.co/logstash/logstash:8.1.2-arm64
+    restart: always
     networks:
       - my_network
     container_name: logstash   
@@ -15,6 +16,7 @@ services:
 
   kibana:
     image: docker.elastic.co/kibana/kibana:8.1.2-arm64
+    restart: always
     container_name: kibana
     networks:
       - my_network
@@ -25,6 +27,7 @@ services:
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.2.2.arm64
+    restart: always
     networks:
       - my_network
     ports:
@@ -36,6 +39,7 @@ services:
 
   kafka-1:
     image: confluentinc/cp-kafka:7.2.2.arm64
+    restart: always
     networks:
       - my_network
     ports:
@@ -56,6 +60,7 @@ services:
 
   kafka-2:
     image: confluentinc/cp-kafka:7.2.2.arm64
+    restart: always
     networks:
       - my_network
     ports:
@@ -76,6 +81,7 @@ services:
     
   kafka-3:
     image: confluentinc/cp-kafka:7.2.2.arm64
+    restart: always
     networks:
       - my_network
     ports:

@@ -6,33 +6,34 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.trendyTracker.Adaptors.CacheMemory.TechsCacheImpl;
 import com.trendyTracker.Domain.Jobs.Techs.Tech;
 
 
 public class TechUtils {
     
-    public static Boolean isTechNotExist(String[] techs){
+    public static Boolean isTechNotExist(String[] techs, TechsCacheImpl techsCache) throws JsonMappingException, JsonProcessingException{
     /*
      * techs 중 기술스택에 없는 것 체크 합니다.
      */
-        var instance = TechListSingleton.getInstance();
-        List<String> techNameList = getTechNameList(instance.getTechList());
+        List<Tech> techList = techsCache.getTechList();
 
         for (String tech : techs) {
-            if(!techNameList.stream().anyMatch(t -> t.equalsIgnoreCase(tech)))
+            if(!techList.stream().anyMatch(t -> t.getTechName().equalsIgnoreCase(tech)))
                 return true;
         }
         return false;
     }
 
-    public static List<Tech> makeTechs(String[] techs){
+    public static List<Tech> makeTechs(String[] techs, TechsCacheImpl techsCache) throws JsonMappingException, JsonProcessingException{
     /*
      * techs 를 List<Tech> 로 변환 합니다.
      */
-        var instance = TechListSingleton.getInstance();
-        List<Tech> techNameList = instance.getTechList();
+        List<Tech> techList = techsCache.getTechList();
 
-        return techNameList.stream()
+        return techList.stream()
             .filter(techName -> Arrays.stream(techs)
             .anyMatch(tech -> techName.getTechName().equalsIgnoreCase(tech)))
             .map(techName -> new Tech(techName.getTechName(), techName.getType()))
