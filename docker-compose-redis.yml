@@ -8,6 +8,7 @@ networks:
 services:
   redis:
     image: redis:latest
+    restart: always
     networks:
       - my_network
     container_name: redis
