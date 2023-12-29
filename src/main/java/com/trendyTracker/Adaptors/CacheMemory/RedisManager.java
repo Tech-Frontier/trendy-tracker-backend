@@ -29,7 +29,7 @@ public abstract class RedisManager {
     }
 
     public RedisManager(JedisPool jedisPool){
-        this.jedisPool = new JedisPool();
+        this.jedisPool = jedisPool;
         this.mapper.registerModule(new JavaTimeModule());
     }
 
