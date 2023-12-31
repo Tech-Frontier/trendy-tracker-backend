@@ -73,9 +73,11 @@ Objective 2
 
 <br/>
 
-2. **디렉터리 구조**  <br/> 
+### **디렉터리 구조**  
 아키텍처 관점에서, **도메인주도 설계**와, **헥사고날 아키텍처**를 반영해 구성합니다. \
 Domain 영역에서 각 도메인영역을 **레이어드 아키텍처로** 구현하면서, 실제 구현부는 Interface (Port) 로 결합을 분리하고, Adaptor 영역에서 실질적으로 구현합니다.
+
+<br/>
 
 > Domain (도메인)
 - 비즈니스의 핵심 도메인 영역을 집중시킵니다 
@@ -100,128 +102,7 @@ Domain 영역에서 각 도메인영역을 **레이어드 아키텍처로** 구�
 > Infrastructure (인프라)
 -  ELK 스택을 위한 환경 설정 파일을 관리하는 폴더입니다 
 
-```
-/trendyTracker/
-├── Adaptors
-│   ├── CacheMemory
-│   │   ├── EmailValidationCacheImpl.java
-│   │   ├── RecruitsCacheImpl.java
-│   │   ├── RedisManager.java
-│   │   └── TechsCacheImpl.java
-│   ├── Database
-│   │   ├── CompanyRepositorylmpl.java
-│   │   ├── RecruitRepositoryImpl.java
-│   │   └── StaticsRepositoryImpl.java
-│   └── MessagingSystem
-│       ├── KafkaProducer.java
-│       └── RecruitConsumerImpl.java
-├── Api
-│   ├── AppInfo
-│   │   └── AppInfoController.java
-│   ├── Email
-│   │   └── EmailController.java
-│   ├── Recruit
-│   │   ├── ChartController.java
-│   │   ├── CompanyController.java
-│   │   └── RecruitController.java
-│   ├── Tech
-│   │   └── TechController.java
-│   └── WelcomeController.java
-├── Common
-│   ├── Config
-│   │   ├── CorsConfiguration.java
-│   │   ├── EmailConfiguration.java
-│   │   ├── JwtProvider.java
-│   │   └── SwaggerConfig.java
-│   ├── Exception
-│   │   ├── ApiError.java
-│   │   ├── ApiExceptionHandler.java
-│   │   └── ExceptionDetail
-│   │       ├── AlreadyExistException.java
-│   │       ├── NoResultException.java
-│   │       └── NotAllowedValueException.java
-│   ├── Interceptor
-│   │   ├── InterCeptorConfig.java
-│   │   ├── JwtInterceptor.java
-│   │   └── UUIDInterceptor.java
-│   ├── Logging
-│   │   ├── LogAspect.java
-│   │   └── Loggable.java
-│   └── Response
-│       └── Response.java
-├── Domain
-│   ├── AppService
-│   │   ├── UserSubscribeCompanies
-│   │   │   ├── UserSubscribeCompanies.java
-│   │   │   └── UserSubscribeCompaniesRepository.java
-│   │   ├── UserSubscribeTemplates
-│   │   │   ├── UserSubscribeTemplates.java
-│   │   │   └── UserSubscribeTemplatesRepository.java
-│   │   └── Users
-│   │       ├── User.java
-│   │       └── UserRepository.java
-│   ├── Jobs
-│   │   ├── Companies
-│   │   │   ├── Company.java
-│   │   │   ├── CompanyRepository.java
-│   │   │   ├── CompanyRepositoryCustom.java
-│   │   │   ├── CompanyService.java
-│   │   │   └── Vo
-│   │   │       └── CompanyInfo.java
-│   │   ├── RecruitTechs
-│   │   │   ├── RecruitTech.java
-│   │   │   └── RecruitTechRepository.java
-│   │   ├── Recruits
-│   │   │   ├── Dto
-│   │   │   │   ├── JobScrapInfoDto.java
-│   │   │   │   └── RecruitInfoDto.java
-│   │   │   ├── Recruit.java
-│   │   │   ├── RecruitCache.java
-│   │   │   ├── RecruitConsumer.java
-│   │   │   ├── RecruitRepository.java
-│   │   │   ├── RecruitRepositoryCustom.java
-│   │   │   └── RecruitService.java
-│   │   ├── Statistics
-│   │   │   ├── Dto
-│   │   │   │   └── ChartInfo.java
-│   │   │   ├── StaticsRepository.java
-│   │   │   └── StaticsService.java
-│   │   └── Techs
-│   │       ├── Tech.java
-│   │       ├── TechRepository.java
-│   │       ├── TechService.java
-│   │       └── TechsCache.java
-│   └── Subscription
-│       ├── Emails
-│       │   ├── EmailService.java
-│       │   ├── EmailValidationCache.java
-│       │   └── Vo
-│       │       └── EmailValidation.java
-│       ├── Schedulings
-│       │   ├── Scheduling.java
-│       │   └── SchedulingRepository.java
-│       └── SubscribeTemplates
-│           ├── Template.java
-│           └── TemplateRepository.java
-├── Infrastructure 
-│   ├── elasticsearch
-│   │   ├── README.me
-│   │   └── elasticsearch.yml
-│   ├── kibana
-│   │   └── kibana.yml
-│   └── logstash
-│       ├── log4j2.properties
-│       ├── logstash.conf
-│       ├── logstash.yml
-│       ├── pipeline.yml
-│       └── pipelines.yml
-├── TrendyTrackerApplication.java
-└── Util
-    ├── CompanyUtils.java
-    ├── TechUtils.java
-    └── UrlReader.java
-
-```
+<br/>
 
 ## CI/CD 
 > github action 
