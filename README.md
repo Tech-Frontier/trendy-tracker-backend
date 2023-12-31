@@ -66,11 +66,12 @@ Objective 2
 ## Setting
 ### 구성
 
-1. 분산 시스템을 고려하여, 현재 기준 2대의 RaspberryPi 4 8GB 서버에서 구동된다. 
+1. 분산 시스템을 고려하여, 3대의 RaspberryPi 서버에서 구동된다. 
  > 1. Postgre + Elastic Search (DB 서버)
- > 2. Spring boot + kafka + zookeeper + kibana + logstash (Backend 서버)
+ > 2. Kafka + Kafka ui + Zookeeper + Kibana + Logstash (InfraStructure 서버)
+>  3. Spring boot 2개 + Redis (Backend 서버)
 
-2. Project 의 아래 경로는 각 logstash, kibana, elasticsearch 에 대한 환경설정 폴더를 만들고 <br/>
+2. Project 'Infrastructure' 디렉터리 하위에 각 logstash, kibana, elasticsearch 에 대한 환경설정 폴더를 만들고 <br/>
    docker volume 으로 지정해 docker-compose.yml 을 실행 시 같이 반영되어 실행된다.
 ```
 src/main/java/com/trendyTracker/infrastructure/
@@ -79,7 +80,7 @@ src/main/java/com/trendyTracker/infrastructure/
 
 ### 실행 방법
 
-#### DB 서버 (Raspberry Pi 4)
+> #### DB 서버 (Raspberry Pi 4)
 
 1. **DB 서버**에서 해당 프로젝트를 git clone 후 '**docker-compose-elasticsearch.yml**' 파일을 실행한다
 ```
@@ -91,10 +92,11 @@ docker-compose -f docker-compose-elasticsearch.yml up -d
 docker exec -it elasticsearch bash
 bin/elasticsearch-service-tokens create elastic/kibana jinsu
 ```
+<br/>
 
-#### Backend 서버 (Raspberry Pi 4) 
+> #### Infrastructure 서버 (Raspberry Pi 4) 
 
-3.  **Backend 서버** 에도 해당 프로젝트를 git clone 한 후, elasticsearch 에서 발급된 토큰을 Project kibana 설정폴더의 **kibana.yml** 의 토큰에 기입해준다.
+1.  **Infrastructure 서버** 에도 해당 프로젝트를 git clone 한 후, elasticsearch 에서 발급된 토큰을 Project kibana 설정폴더의 **kibana.yml** 의 토큰에 기입해준다.
 ```
 git clone https://github.com/Tech-Frontier/trendy-tracker-backend.git
 
@@ -102,7 +104,28 @@ src/main/java/com/trendyTracker/infrastructure/kibana/kibana.yml
 elasticsearch.serviceAccountToken: "여기에 기입"
 ```
 
-4. Project root directory 의 docker-compose.yml 파일에서 **"trendy_tracker"** 에 대한 **'DB', 'Token'** 환경변수를 변경한다.
+2. logstash 설정파일에서, DB 서버의 **elasticsearch** 의 주소를 바라보도록 변경해준다.
+```
+[logstash.conf]
+path: src/main/java/com/trendyTracker/infrastructure/logstash/logstash.conf
+update: hosts => ["http://owl-dev.me:9200"]
+
+[logstash.yml]
+path: src/main/java/com/trendyTracker/infrastructure/logstash/logstash.yml
+update: xpack.monitoring.elasticsearch.hosts: ["http://owl-dev.me:9200"]
+```
+
+3. elasticsearch 연동을 위한 세팅 후 docker-compose, docker-compose-redis 파일을 실행한다
+```
+docker-compose -f docker-compose-infra.yml up -d
+docker-compose -f docker-compose-redis.yml up -d 
+```
+
+<br/>
+
+> #### Backend 서버 (Raspberry Pi 5) 
+
+1. Project root directory 의 docker-compose.yml 파일에서 **"trendy_tracker"** 에 대한 **'DB', 'Token'** 환경변수를 변경한다.
 ```
  environment:
     SERVER_PORT:                  #수정 필요
@@ -118,18 +141,7 @@ elasticsearch.serviceAccountToken: "여기에 기입"
     LOGGING_LEVEL_ORG_APACHE_KAFKA: "off"
 ```
 
-5. logstash 설정파일에서, DB 서버의 **elasticsearch** 의 주소를 바라보도록 변경해준다.
-```
-[logstash.conf]
-path: src/main/java/com/trendyTracker/infrastructure/logstash/logstash.conf
-update: hosts => ["http://owl-dev.me:9200"]
-
-[logstash.yml]
-path: src/main/java/com/trendyTracker/infrastructure/logstash/logstash.yml
-update: xpack.monitoring.elasticsearch.hosts: ["http://owl-dev.me:9200"]
-```
-
-6. 'docker-compose.yml' 파일을 실행한다
+2. 'docker-compose.yml' 파일을 실행한다
 ```
 docker-compose -f docker-compose.yml up -d 
 ```
@@ -164,9 +176,7 @@ db 모델링 히스토리 PR (Pull Request) <br/>
 > Trendy-Tracker 의 로깅 시스템은 ELK 스택을 활용해서 Elasticsearch DB 에 저장하고, Kibana 를 통해서 지표를 보여주는 역할을 한다. <br/>
 
 - kafka -> logstash -> elasticsearch -> kibana
-
-![kibana](https://github.com/Tech-Frontier/trendy-tracker-backend/assets/19955904/1516f679-4e78-47c6-be4e-0f0e32d37668)
-
+![kibana](https://github.com/Tech-Frontier/trendy-tracker-backend/assets/19955904/10111319-b95f-4c12-a524-9ef0db144c2d)
 <br/>
 
 #### 로그 수집 내용
