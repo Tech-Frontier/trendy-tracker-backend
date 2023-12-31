@@ -38,6 +38,7 @@ Objective 2
   <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=PostgreSQL&logoColor=white"/></a>&nbsp 
   <img src="https://img.shields.io/badge/Jpa-67A4AC?style=flat-square&logo=Jpa&logoColor=white"/></a>&nbsp 
   <img src="https://img.shields.io/badge/QueryDsl-7D929E?style=flat-square&logo=QueryDsl&logoColor=white"/></a>&nbsp 
+  <img src="https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=Redis&logoColor=white"/></a>&nbsp 
   <br/>
    <img src="https://img.shields.io/badge/RaspberryPi-A22846?style=flat-square&logo=RaspBerryPi&logoColor=white"/></a>&nbsp 
   <img src="https://img.shields.io/badge/Linux-E95420?style=flat-square&logo=Linux&logoColor=white"/></a>&nbsp 
