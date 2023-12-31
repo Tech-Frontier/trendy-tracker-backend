@@ -106,7 +106,7 @@ public class LogAspect {
             }
         }
 
-        paramValues.add(System.currentTimeMillis() - requestStartTimes.getOrDefault(uuid.toString(), 0L));
+        paramValues.add(System.currentTimeMillis() - requestStartTimes.getOrDefault(uuid.toString(), 0L)+ "ms");
         return paramValues;
     }
 
