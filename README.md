@@ -71,80 +71,134 @@ Objective 2
  > 2. Kafka + Kafka ui + Zookeeper + Kibana + Logstash (InfraStructure 서버)
 >  3. Spring boot 2개 + Redis (Backend 서버)
 
-2. Project 'Infrastructure' 디렉터리 하위에 각 logstash, kibana, elasticsearch 에 대한 환경설정 폴더를 만들고 <br/>
-   docker volume 으로 지정해 docker-compose.yml 을 실행 시 같이 반영되어 실행된다.
-```
-src/main/java/com/trendyTracker/infrastructure/
-```
-
-
-### 실행 방법
-
-> #### DB 서버 (Raspberry Pi 4)
-
-1. **DB 서버**에서 해당 프로젝트를 git clone 후 '**docker-compose-elasticsearch.yml**' 파일을 실행한다
-```
-git clone https://github.com/Tech-Frontier/trendy-tracker-backend.git
-docker-compose -f docker-compose-elasticsearch.yml up -d 
-```
-2. DB 서버에서 **'Elastic Search'** 를 구동 후에 **Kibana** 와 연동하기 위한 아래 인증 토큰을 발행한다.
-```
-docker exec -it elasticsearch bash
-bin/elasticsearch-service-tokens create elastic/kibana jinsu
-```
 <br/>
 
-> #### Infrastructure 서버 (Raspberry Pi 4) 
+2. **디렉터리 구조**  <br/> 
+아키텍처 관점에서, **도메인주도 설계**와, **헥사고날 아키텍처**를 반영해 구성합니다. \
+Domain 영역에서 각 도메인영역을 **레이어드 아키텍처로** 구현하면서, 실제 구현부는 Interface (Port) 로 결합을 분리하고, Adaptor 영역에서 실질적으로 구현합니다. 
+```
+/trendyTracker/
+├── Adaptors
+│   ├── CacheMemory
+│   │   ├── EmailValidationCacheImpl.java
+│   │   ├── RecruitsCacheImpl.java
+│   │   ├── RedisManager.java
+│   │   └── TechsCacheImpl.java
+│   ├── Database
+│   │   ├── CompanyRepositorylmpl.java
+│   │   ├── RecruitRepositoryImpl.java
+│   │   └── StaticsRepositoryImpl.java
+│   └── MessagingSystem
+│       ├── KafkaProducer.java
+│       └── RecruitConsumerImpl.java
+├── Api
+│   ├── AppInfo
+│   │   └── AppInfoController.java
+│   ├── Email
+│   │   └── EmailController.java
+│   ├── Recruit
+│   │   ├── ChartController.java
+│   │   ├── CompanyController.java
+│   │   └── RecruitController.java
+│   ├── Tech
+│   │   └── TechController.java
+│   └── WelcomeController.java
+├── Common
+│   ├── Config
+│   │   ├── CorsConfiguration.java
+│   │   ├── EmailConfiguration.java
+│   │   ├── JwtProvider.java
+│   │   └── SwaggerConfig.java
+│   ├── Exception
+│   │   ├── ApiError.java
+│   │   ├── ApiExceptionHandler.java
+│   │   └── ExceptionDetail
+│   │       ├── AlreadyExistException.java
+│   │       ├── NoResultException.java
+│   │       └── NotAllowedValueException.java
+│   ├── Interceptor
+│   │   ├── InterCeptorConfig.java
+│   │   ├── JwtInterceptor.java
+│   │   └── UUIDInterceptor.java
+│   ├── Logging
+│   │   ├── LogAspect.java
+│   │   └── Loggable.java
+│   └── Response
+│       └── Response.java
+├── Domain
+│   ├── AppService
+│   │   ├── UserSubscribeCompanies
+│   │   │   ├── UserSubscribeCompanies.java
+│   │   │   └── UserSubscribeCompaniesRepository.java
+│   │   ├── UserSubscribeTemplates
+│   │   │   ├── UserSubscribeTemplates.java
+│   │   │   └── UserSubscribeTemplatesRepository.java
+│   │   └── Users
+│   │       ├── User.java
+│   │       └── UserRepository.java
+│   ├── Jobs
+│   │   ├── Companies
+│   │   │   ├── Company.java
+│   │   │   ├── CompanyRepository.java
+│   │   │   ├── CompanyRepositoryCustom.java
+│   │   │   ├── CompanyService.java
+│   │   │   └── Vo
+│   │   │       └── CompanyInfo.java
+│   │   ├── RecruitTechs
+│   │   │   ├── RecruitTech.java
+│   │   │   └── RecruitTechRepository.java
+│   │   ├── Recruits
+│   │   │   ├── Dto
+│   │   │   │   ├── JobScrapInfoDto.java
+│   │   │   │   └── RecruitInfoDto.java
+│   │   │   ├── Recruit.java
+│   │   │   ├── RecruitCache.java
+│   │   │   ├── RecruitConsumer.java
+│   │   │   ├── RecruitRepository.java
+│   │   │   ├── RecruitRepositoryCustom.java
+│   │   │   └── RecruitService.java
+│   │   ├── Statistics
+│   │   │   ├── Dto
+│   │   │   │   └── ChartInfo.java
+│   │   │   ├── StaticsRepository.java
+│   │   │   └── StaticsService.java
+│   │   └── Techs
+│   │       ├── Tech.java
+│   │       ├── TechRepository.java
+│   │       ├── TechService.java
+│   │       └── TechsCache.java
+│   └── Subscription
+│       ├── Emails
+│       │   ├── EmailService.java
+│       │   ├── EmailValidationCache.java
+│       │   └── Vo
+│       │       └── EmailValidation.java
+│       ├── Schedulings
+│       │   ├── Scheduling.java
+│       │   └── SchedulingRepository.java
+│       └── SubscribeTemplates
+│           ├── Template.java
+│           └── TemplateRepository.java
+├── Infrastructure 
+│   ├── elasticsearch
+│   │   ├── README.me
+│   │   └── elasticsearch.yml
+│   ├── kibana
+│   │   └── kibana.yml
+│   └── logstash
+│       ├── log4j2.properties
+│       ├── logstash.conf
+│       ├── logstash.yml
+│       ├── pipeline.yml
+│       └── pipelines.yml
+├── TrendyTrackerApplication.java
+└── Util
+    ├── CompanyUtils.java
+    ├── TechUtils.java
+    └── UrlReader.java
 
-1.  **Infrastructure 서버** 에도 해당 프로젝트를 git clone 한 후, elasticsearch 에서 발급된 토큰을 Project kibana 설정폴더의 **kibana.yml** 의 토큰에 기입해준다.
-```
-git clone https://github.com/Tech-Frontier/trendy-tracker-backend.git
-
-src/main/java/com/trendyTracker/infrastructure/kibana/kibana.yml
-elasticsearch.serviceAccountToken: "여기에 기입"
 ```
 
-2. logstash 설정파일에서, DB 서버의 **elasticsearch** 의 주소를 바라보도록 변경해준다.
-```
-[logstash.conf]
-path: src/main/java/com/trendyTracker/infrastructure/logstash/logstash.conf
-update: hosts => ["http://owl-dev.me:9200"]
-
-[logstash.yml]
-path: src/main/java/com/trendyTracker/infrastructure/logstash/logstash.yml
-update: xpack.monitoring.elasticsearch.hosts: ["http://owl-dev.me:9200"]
-```
-
-3. elasticsearch 연동을 위한 세팅 후 docker-compose, docker-compose-redis 파일을 실행한다
-```
-docker-compose -f docker-compose-infra.yml up -d
-docker-compose -f docker-compose-redis.yml up -d 
-```
-
-<br/>
-
-> #### Backend 서버 (Raspberry Pi 5) 
-
-1. Project root directory 의 docker-compose.yml 파일에서 **"trendy_tracker"** 에 대한 **'DB', 'Token'** 환경변수를 변경한다.
-```
- environment:
-    SERVER_PORT:                  #수정 필요
-    SPRING_DATASOURCE_URL:        #수정 필요
-    SPRING_DATASOURCE_USERNAME:   #수정 필요
-    SPRING_DATASOURCE_PASSWORD:   #수정 필요
-    TOKEN_VALUE:                  #수정 필요
-    SPRING_DATASOURCE_DRIVER_CLASS_NAME:  org.postgresql.Driver
-    SPRING_JPA_HIBERNATE_DDL_AUTO: update
-    SPRING_JPA_HIBERNATE_SHOW_SQL: "off"
-    SPRING_JPA_HIBERNATE_FORMAT_SQL: "off"
-    SPRING_KAFKA_BOOTSTRAP_SERVERS: localhost:9092,localhost:9093,localhost:9094
-    LOGGING_LEVEL_ORG_APACHE_KAFKA: "off"
-```
-
-2. 'docker-compose.yml' 파일을 실행한다
-```
-docker-compose -f docker-compose.yml up -d 
-```
 
 ## CI/CD 
 > github action 
@@ -201,3 +255,73 @@ https://www.owl-dev.me/blog/72
 
 - 채용공고 API 성능개선 \
 https://www.notion.so/API-2200569dcfba4bf0a8ad95674a59c9f6
+
+
+
+### 실행 방법
+
+> #### DB 서버 (Raspberry Pi 4)
+
+1. **DB 서버**에서 해당 프로젝트를 git clone 후 '**docker-compose-elasticsearch.yml**' 파일을 실행한다
+```
+git clone https://github.com/Tech-Frontier/trendy-tracker-backend.git
+docker-compose -f docker-compose-elasticsearch.yml up -d 
+```
+2. DB 서버에서 **'Elastic Search'** 를 구동 후에 **Kibana** 와 연동하기 위한 아래 인증 토큰을 발행한다.
+```
+docker exec -it elasticsearch bash
+bin/elasticsearch-service-tokens create elastic/kibana jinsu
+```
+<br/>
+
+> #### Infrastructure 서버 (Raspberry Pi 4) 
+
+1.  **Infrastructure 서버** 에도 해당 프로젝트를 git clone 한 후, elasticsearch 에서 발급된 토큰을 Project kibana 설정폴더의 **kibana.yml** 의 토큰에 기입해준다.
+```
+git clone https://github.com/Tech-Frontier/trendy-tracker-backend.git
+
+src/main/java/com/trendyTracker/infrastructure/kibana/kibana.yml
+elasticsearch.serviceAccountToken: "여기에 기입"
+```
+
+2. logstash 설정파일에서, DB 서버의 **elasticsearch** 의 주소를 바라보도록 변경해준다.
+```
+[logstash.conf]
+path: src/main/java/com/trendyTracker/infrastructure/logstash/logstash.conf
+update: hosts => ["http://owl-dev.me:9200"]
+
+[logstash.yml]
+path: src/main/java/com/trendyTracker/infrastructure/logstash/logstash.yml
+update: xpack.monitoring.elasticsearch.hosts: ["http://owl-dev.me:9200"]
+```
+
+3. elasticsearch 연동을 위한 세팅 후 docker-compose, 파일을 실행한다
+```
+docker-compose -f docker-compose-infra.yml up -d
+```
+
+<br/>
+
+> #### Backend 서버 (Raspberry Pi 5) 
+
+1. Project root directory 의 docker-compose.yml 파일에서 **"trendy_tracker"** 에 대한 **'DB', 'Token'** 환경변수를 변경한다.
+```
+ environment:
+    SERVER_PORT:                  #수정 필요
+    SPRING_DATASOURCE_URL:        #수정 필요
+    SPRING_DATASOURCE_USERNAME:   #수정 필요
+    SPRING_DATASOURCE_PASSWORD:   #수정 필요
+    TOKEN_VALUE:                  #수정 필요
+    SPRING_DATASOURCE_DRIVER_CLASS_NAME:  org.postgresql.Driver
+    SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    SPRING_JPA_HIBERNATE_SHOW_SQL: "off"
+    SPRING_JPA_HIBERNATE_FORMAT_SQL: "off"
+    SPRING_KAFKA_BOOTSTRAP_SERVERS: localhost:9092,localhost:9093,localhost:9094
+    LOGGING_LEVEL_ORG_APACHE_KAFKA: "off"
+```
+
+2. 'docker-compose.yml' , 'docker-compose-redis.yml' 파일을 실행한다
+```
+docker-compose -f docker-compose.yml up -d
+docker-compose -f docker-compose-redis.yml up -d  
+```
