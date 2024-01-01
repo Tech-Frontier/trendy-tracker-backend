@@ -66,10 +66,23 @@ Objective 2
 ## Setting
 ### 구성
 
-1. 분산 시스템을 고려하여, 3대의 RaspberryPi 서버에서 구동된다. 
- > 1. Postgre + Elastic Search (DB 서버)
- > 2. Kafka + Kafka ui + Zookeeper + Kibana + Logstash (InfraStructure 서버)
->  3. Spring boot 2개 + Redis (Backend 서버)
+1. 분산 시스템을 고려하여, 3대의 RaspberryPi 서버에서 구동된다.
+   
+- **( DB 서버 )**  PostgreSql + Elastic Search 
+> docker-compose-elasticsearch.yml
+
+- **( InfraStructure 서버 )** Kafka + Kafka ui + Zookeeper + Kibana + Logstash 
+> docker-compose-infra.yml
+
+- **( Backend 서버 )**  Spring boot 2개 
+> docker-compose.yml
+
+- **( Redis 서버 )** Redis
+> docker-compose-redis.yml
+
+<br/>
+
+![architecutre](https://github.com/Tech-Frontier/trendy-tracker-backend/assets/19955904/d3cfcbb1-e4b6-4c9b-8890-06fda5c90cc8)
 
 <br/>
 
