@@ -32,6 +32,8 @@ services:
       MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: "true"
       MAIL_PROPERTIES_MAIL_SMTP_AUTH:  "true"
       JWT_SECRET_KEY: 
+      REDIS_HOST: 
+      REDIS_PORT: 6379
 
 
   trendy_tracker2:
@@ -61,3 +63,5 @@ services:
       MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: "true"
       MAIL_PROPERTIES_MAIL_SMTP_AUTH:  "true"
       JWT_SECRET_KEY: 
+      REDIS_HOST: 
+      REDIS_PORT: 6379
