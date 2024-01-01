@@ -21,7 +21,7 @@ services:
     networks:
       - my_network
     volumes:
-      - ./src/main/java/com/trendyTracker/Infrastructure/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
+      - ./src/main/java/com/trendyTracker/Infrastructure/kibana:/usr/share/kibana/config
     ports:
       - "5601:5601"
 
