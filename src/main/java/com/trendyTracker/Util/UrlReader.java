@@ -3,7 +3,7 @@ package com.trendyTracker.Util;
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -50,14 +50,24 @@ public class UrlReader {
             WebElement bodyElement = driver.findElement(By.tagName("body"));
             String pageSource = bodyElement.getText();
 
-            // 영어 단어를 추출하는 정규 표현식
+            // English
             String regex = "\\b[a-zA-Z+#.-]+\\b";
+            // C#,F#,C++,ASP.NET,.NET,Node.js,Vue.js
+            String customRegex = "C#|F#|C++|\\bASP\\.NET\\b|\\b.NET\\b|\\bNode\\.js\\b|\\bVue\\.js\\b";
+
             Pattern pattern = Pattern.compile(regex);
+            Pattern customPattern = Pattern.compile(customRegex);
+
             Matcher matcher = pattern.matcher(pageSource);
-            List<String> englishWords = new ArrayList<>();
+            Matcher customMatcher = customPattern.matcher(pageSource);
+
+             Set<String> englishWords = new HashSet<String>();
 
             while (matcher.find()) 
                 englishWords.add(matcher.group());
+
+            while (customMatcher.find())
+                englishWords.add(customMatcher.group());
 
             Set<Tech> techSet = techList.stream()
                 .filter(tech -> englishWords.stream()

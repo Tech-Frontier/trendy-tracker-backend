@@ -120,7 +120,7 @@ public class RecruitService {
 
         List<Tech> techList = TechUtils.makeTechs(techs, techsCache);
 
-        saveRecruitTechs(techList,recruit);        
+        updateRecruitTechs(techList,recruit);        
         return recruit;
     }
 
@@ -135,7 +135,8 @@ public class RecruitService {
         if(urlContent.techSet().isEmpty())
             throw new NoResultException("해당 url 에서 tech 가 발견되지 않았습니다");
         
-        saveRecruitTechs(urlContent, recruit);        
+        var techList = new ArrayList<>(urlContent.techSet());            
+        updateRecruitTechs(techList, recruit);        
         return recruit;
     }
 
@@ -194,10 +195,15 @@ public class RecruitService {
     }
 
     @Transactional
-    private void saveRecruitTechs(List<Tech> techList, Recruit recruit) {
+    private void updateRecruitTechs(List<Tech> techList, Recruit recruit) {
     /*
-     * 채용기술 저장
+     * 채용기술 변경
      */
+        var recruitTechs = recruit.getRecruitTechs();        
+        for(RecruitTech recruitTech : recruitTechs){
+            recruitTechRepository.delete(recruitTech);
+        }
+
         for(Tech tech : techList){
             RecruitTech recruitTech = new RecruitTech(recruit, tech);
             recruitTechRepository.save(recruitTech);
