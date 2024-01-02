@@ -51,7 +51,7 @@ public class UrlReader {
             String pageSource = bodyElement.getText();
 
             // 영어 단어를 추출하는 정규 표현식
-            String regex = "\\b[a-zA-Z+#]+\\b";
+            String regex = "\\b[a-zA-Z+#.-]+\\b";
             Pattern pattern = Pattern.compile(regex);
             Matcher matcher = pattern.matcher(pageSource);
             List<String> englishWords = new ArrayList<>();
