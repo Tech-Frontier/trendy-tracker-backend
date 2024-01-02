@@ -90,6 +90,9 @@ Objective 2
 아키텍처 관점에서, **도메인주도 설계**와, **헥사고날 아키텍처**를 반영해 구성합니다. \
 Domain 영역에서 각 도메인영역을 **레이어드 아키텍처로** 구현하면서, 실제 구현부는 Interface (Port) 로 결합을 분리하고, Adaptor 영역에서 실질적으로 구현합니다.
 
+![Architecture2](https://github.com/Tech-Frontier/trendy-tracker-backend/assets/19955904/19000ed6-6f8b-45c0-9c03-c387b1a2b105)
+
+
 <br/>
 
 > Domain (도메인)
