@@ -82,7 +82,8 @@ Objective 2
 
 <br/>
 
-![architecutre](https://github.com/Tech-Frontier/trendy-tracker-backend/assets/19955904/d3cfcbb1-e4b6-4c9b-8890-06fda5c90cc8)
+![Architecture](https://github.com/Tech-Frontier/trendy-tracker-backend/assets/19955904/c0df66a7-eed8-45d9-b98f-e2f67d91d71c)
+
 
 <br/>
 
@@ -121,7 +122,7 @@ Domain 영역에서 각 도메인영역을 **레이어드 아키텍처로** 구�
 <br/>
 
 ## CI/CD 
-![CI-CD](https://github.com/Tech-Frontier/trendy-tracker-backend/assets/19955904/bc2654bd-8108-41c6-a502-ee5607c43bca)
+![CI-CD](https://github.com/Tech-Frontier/trendy-tracker-backend/assets/19955904/8cb5c4c5-4d8c-4bc1-a941-b88b902c1906)
 
 <br/>
 
@@ -170,6 +171,8 @@ db 모델링 히스토리 PR (Pull Request) <br/>
 - header         (UUID * api 응답에도 같이 header에 남겨 디버깅 을 용이하게 합니다)
 <br/>
 
+- kafka-ui
+  
 ![image](https://github.com/Tech-Frontier/trendy-tracker-backend/assets/19955904/0ebe71d6-e0eb-4d11-b6d7-0f74cbaa4de2)
 
 
@@ -180,20 +183,21 @@ db 모델링 히스토리 PR (Pull Request) <br/>
 https://www.owl-dev.me/blog/72
 
 - 채용공고 API 성능개선 \
-https://www.notion.so/API-2200569dcfba4bf0a8ad95674a59c9f6
+https://www.owl-dev.me/blog/71
 
+<br/>
 
 
 ### 실행 방법
 
 > #### DB 서버 (Raspberry Pi 4)
 
-1. **DB 서버**에서 해당 프로젝트를 git clone 후 '**docker-compose-elasticsearch.yml**' 파일을 실행한다
+1. 해당 서버에서 git clone 후 '**docker-compose-elasticsearch.yml**' 파일을 실행한다
 ```
 git clone https://github.com/Tech-Frontier/trendy-tracker-backend.git
 docker-compose -f docker-compose-elasticsearch.yml up -d 
 ```
-2. DB 서버에서 **'Elastic Search'** 를 구동 후에 **Kibana** 와 연동하기 위한 아래 인증 토큰을 발행한다.
+2. **'Elastic Search'** 를 구동 후에 **Kibana** 와 연동하기 위한 아래 인증 토큰을 발행한다.
 ```
 docker exec -it elasticsearch bash
 bin/elasticsearch-service-tokens create elastic/kibana jinsu
@@ -202,7 +206,7 @@ bin/elasticsearch-service-tokens create elastic/kibana jinsu
 
 > #### Infrastructure 서버 (Raspberry Pi 4) 
 
-1.  **Infrastructure 서버** 에도 해당 프로젝트를 git clone 한 후, elasticsearch 에서 발급된 토큰을 Project kibana 설정폴더의 **kibana.yml** 의 토큰에 기입해준다.
+1.  해당 서버에도 프로젝트를 git clone 한 후, elasticsearch 에서 발급된 토큰을 Project kibana 설정폴더의 **kibana.yml** 의 토큰에 기입해준다.
 ```
 git clone https://github.com/Tech-Frontier/trendy-tracker-backend.git
 
