@@ -41,6 +41,7 @@ public class TechService {
         return "successfully deleted";
     }
 
+
     public List<Map<String,String>> getTechList() throws JsonProcessingException{
         List<Tech> techList = techRepository.findAll();
         if(techList.isEmpty())
@@ -54,5 +55,17 @@ public class TechService {
                     "type", tech.getType().name()
                 ))
                 .collect(Collectors.toList());
+    }
+
+    public List<String> getTechList(TechType techType){
+        List<Tech> techList = techRepository.findAll();
+        List<String> results = new ArrayList<>();
+
+        for(Tech tech : techList){
+            if(tech.getType().equals(techType)){
+                results.add(tech.getTechName());
+            }
+        }
+        return results;
     }
 }

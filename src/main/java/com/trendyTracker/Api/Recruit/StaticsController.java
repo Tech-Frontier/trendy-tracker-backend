@@ -14,6 +14,7 @@ import com.trendyTracker.Common.Logging.Loggable;
 import com.trendyTracker.Common.Response.Response;
 import com.trendyTracker.Domain.Jobs.Statistics.StaticsService;
 import com.trendyTracker.Domain.Jobs.Statistics.Dto.ChartInfo;
+import com.trendyTracker.Domain.Jobs.Techs.Tech.TechType;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/chart")
 @RequiredArgsConstructor
 @RestController
-public class ChartController {
+public class StaticsController {
     @Autowired
     private final StaticsService chartService;
 
@@ -33,9 +34,10 @@ public class ChartController {
     public Response<ChartInfo> getChartInfo (
         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate,
+        @RequestParam TechType techType,
         HttpServletRequest request, HttpServletResponse response 
     ){        
-        ChartInfo techCharts = chartService.getTechCharts(fromDate, toDate);
+        ChartInfo techCharts = chartService.getTechCharts(fromDate, toDate, techType);
 
         addHeader(request, response);
         return Response.success(200, "차트 조회를 완료했습니다",techCharts);
