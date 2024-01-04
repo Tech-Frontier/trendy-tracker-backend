@@ -185,6 +185,9 @@ https://www.owl-dev.me/blog/72
 - 채용공고 API 성능개선 \
 https://www.owl-dev.me/blog/71
 
+- Kafka Q&A 모음 \
+https://www.owl-dev.me/blog/73
+
 <br/>
 
 
