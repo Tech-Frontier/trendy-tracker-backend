@@ -11,7 +11,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.trendyTracker.Common.Exception.ExceptionDetail.NoResultException;
 import com.trendyTracker.Domain.Jobs.Statistics.Dto.ChartInfo;
+import com.trendyTracker.Domain.Jobs.Statistics.Dto.TrendInfo;
 import com.trendyTracker.Domain.Jobs.Techs.TechService;
 import com.trendyTracker.Domain.Jobs.Techs.Tech.TechType;
 
@@ -54,5 +56,17 @@ public class StaticsServiceTest {
         // then
         HashMap<String, Long> chart = techCharts.chart();
         assertTrue(techList.containsAll(chart.keySet()));
+    }
+
+    @Test
+    void testgetTrendsByJava() throws NoResultException{
+        // given
+        String techName ="Java";
+
+        // when
+        List<TrendInfo> trends = staticsService.getTrends(techName);
+
+        // then 
+        assertTrue(trends.size() >1);
     }
 }

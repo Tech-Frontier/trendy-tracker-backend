@@ -61,7 +61,7 @@ public class UrlReader {
             Matcher matcher = pattern.matcher(pageSource);
             Matcher customMatcher = customPattern.matcher(pageSource);
 
-             Set<String> englishWords = new HashSet<String>();
+            Set<String> englishWords = new HashSet<String>();
 
             while (matcher.find()) 
                 englishWords.add(matcher.group());
