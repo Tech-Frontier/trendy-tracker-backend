@@ -157,7 +157,9 @@ db 모델링 히스토리 PR (Pull Request) <br/>
 > Trendy-Tracker 의 로깅 시스템은 ELK 스택을 활용해서 Elasticsearch DB 에 저장하고, Kibana 를 통해서 지표를 보여주는 역할을 한다. <br/>
 
 - kafka -> logstash -> elasticsearch -> kibana
-![kibana](https://github.com/Tech-Frontier/trendy-tracker-backend/assets/19955904/10111319-b95f-4c12-a524-9ef0db144c2d)
+![kibana](https://github.com/Tech-Frontier/trendy-tracker-backend/assets/19955904/0bd61259-ab6c-4c55-8457-ad050749fbc2)
+
+
 <br/>
 
 #### 로그 수집 내용
