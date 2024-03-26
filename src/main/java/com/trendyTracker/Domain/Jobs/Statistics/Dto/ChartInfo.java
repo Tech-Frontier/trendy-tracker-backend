@@ -1,4 +1,4 @@
-package com.trendyTracker.Domain.Jobs.Statistics.Dto;
+package com.trendytracker.Domain.Jobs.Statistics.Dto;
 
 import java.time.LocalDate;
 import java.util.HashMap;

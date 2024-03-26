@@ -1,16 +1,16 @@
-package com.trendyTracker.Domain.Jobs.Statistics;
+package com.trendytracker.Domain.Jobs.Statistics;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.trendyTracker.Common.Exception.ExceptionDetail.NoResultException;
-import com.trendyTracker.Domain.Jobs.Statistics.Dto.ChartInfo;
-import com.trendyTracker.Domain.Jobs.Statistics.Dto.TrendInfo;
-import com.trendyTracker.Domain.Jobs.Techs.Tech;
-import com.trendyTracker.Domain.Jobs.Techs.TechRepository;
-import com.trendyTracker.Domain.Jobs.Techs.Tech.TechType;
+import com.trendytracker.Common.Exception.ExceptionDetail.NoResultException;
+import com.trendytracker.Domain.Jobs.Statistics.Dto.ChartInfo;
+import com.trendytracker.Domain.Jobs.Statistics.Dto.TrendInfo;
+import com.trendytracker.Domain.Jobs.Techs.Tech;
+import com.trendytracker.Domain.Jobs.Techs.TechRepository;
+import com.trendytracker.Domain.Jobs.Techs.Tech.TechType;
 
 import lombok.RequiredArgsConstructor;
 

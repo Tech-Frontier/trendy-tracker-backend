@@ -1,8 +1,8 @@
-package com.trendyTracker.Domain.Jobs.Companies.Vo;
+package com.trendytracker.Domain.Jobs.Companies.Vo;
 
 import java.util.Objects;
 
-import com.trendyTracker.Domain.Jobs.Companies.Company.CompanyCategory;
+import com.trendytracker.Domain.Jobs.Companies.Company.CompanyCategory;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;

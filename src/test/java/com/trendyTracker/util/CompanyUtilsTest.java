@@ -1,12 +1,12 @@
-package com.trendyTracker.util;
+package com.trendytracker.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import com.trendyTracker.Domain.Jobs.Companies.Company.CompanyCategory;
-import com.trendyTracker.Util.CompanyUtils;
+import com.trendytracker.Domain.Jobs.Companies.Company.CompanyCategory;
+import com.trendytracker.Util.CompanyUtils;
 
 public class CompanyUtilsTest {
     @Test

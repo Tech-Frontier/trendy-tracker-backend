@@ -1,10 +1,10 @@
-package com.trendyTracker.Api.AppInfo;
+package com.trendytracker.Api.AppInfo;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.trendyTracker.Common.Logging.Loggable;
+import com.trendytracker.Common.Logging.Loggable;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

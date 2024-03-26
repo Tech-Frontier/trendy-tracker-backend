@@ -1,4 +1,4 @@
-package com.trendyTracker.Domain.Jobs.Companies;
+package com.trendytracker.Domain.Jobs.Companies;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -9,9 +9,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.trendyTracker.Common.Exception.ExceptionDetail.NoResultException;
-import com.trendyTracker.Domain.Jobs.Companies.Company.CompanyCategory;
-import com.trendyTracker.Domain.Jobs.Companies.Vo.CompanyInfo;
+import com.trendytracker.Common.Exception.ExceptionDetail.NoResultException;
+import com.trendytracker.Domain.Jobs.Companies.Company;
+import com.trendytracker.Domain.Jobs.Companies.CompanyRepository;
+import com.trendytracker.Domain.Jobs.Companies.CompanyService;
+import com.trendytracker.Domain.Jobs.Companies.Company.CompanyCategory;
+import com.trendytracker.Domain.Jobs.Companies.Vo.CompanyInfo;
 
 import jakarta.transaction.Transactional;
 

@@ -1,4 +1,4 @@
-package com.trendyTracker.Adaptors.MessagingSystem;
+package com.trendytracker.Adaptors.MessagingSystem;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -16,9 +16,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.trendyTracker.Domain.Jobs.Recruits.Recruit;
-import com.trendyTracker.Domain.Jobs.Recruits.RecruitConsumer;
-import com.trendyTracker.Domain.Jobs.Recruits.RecruitService;
+import com.trendytracker.Domain.Jobs.Recruits.Recruit;
+import com.trendytracker.Domain.Jobs.Recruits.RecruitConsumer;
+import com.trendytracker.Domain.Jobs.Recruits.RecruitService;
 
 @Service
 public class RecruitConsumerImpl implements RecruitConsumer<ConsumerRecord<String, String>>{    

@@ -1,4 +1,4 @@
-package com.trendyTracker.Common.Logging;
+package com.trendytracker.Common.Logging;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.trendyTracker.Adaptors.MessagingSystem.KafkaProducer;
+import com.trendytracker.Adaptors.MessagingSystem.KafkaProducer;
 
 import org.springframework.web.bind.annotation.RequestParam;
 

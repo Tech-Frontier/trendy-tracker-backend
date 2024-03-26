@@ -1,4 +1,4 @@
-package com.trendyTracker.Domain.Subscription.Emails;
+package com.trendytracker.Domain.Subscription.Emails;
 
 import java.time.LocalDateTime;
 import java.util.Random;
@@ -7,7 +7,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import com.trendyTracker.Domain.Subscription.Emails.Vo.EmailValidation;
+import com.trendytracker.Domain.Subscription.Emails.Vo.EmailValidation;
 
 import jakarta.mail.internet.MimeMessage;
 

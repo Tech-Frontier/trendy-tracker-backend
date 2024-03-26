@@ -1,4 +1,4 @@
-package com.trendyTracker.Util;
+package com.trendytracker.Util;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,9 +21,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.trendyTracker.Adaptors.CacheMemory.TechsCacheImpl;
-import com.trendyTracker.Domain.Jobs.Recruits.Dto.JobScrapInfoDto;
-import com.trendyTracker.Domain.Jobs.Techs.Tech;
+import com.trendytracker.Adaptors.CacheMemory.TechsCacheImpl;
+import com.trendytracker.Domain.Jobs.Recruits.Dto.JobScrapInfoDto;
+import com.trendytracker.Domain.Jobs.Techs.Tech;
 
 public class UrlReader {
     static Logger logger = LoggerFactory.getLogger(UrlReader.class);

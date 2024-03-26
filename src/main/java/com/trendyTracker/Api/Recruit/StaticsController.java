@@ -1,4 +1,4 @@
-package com.trendyTracker.Api.Recruit;
+package com.trendytracker.Api.Recruit;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.trendyTracker.Common.Exception.ExceptionDetail.NoResultException;
-import com.trendyTracker.Common.Logging.Loggable;
-import com.trendyTracker.Common.Response.Response;
-import com.trendyTracker.Domain.Jobs.Statistics.StaticsService;
-import com.trendyTracker.Domain.Jobs.Statistics.Dto.ChartInfo;
-import com.trendyTracker.Domain.Jobs.Statistics.Dto.TrendInfo;
-import com.trendyTracker.Domain.Jobs.Techs.Tech.TechType;
+import com.trendytracker.Common.Exception.ExceptionDetail.NoResultException;
+import com.trendytracker.Common.Logging.Loggable;
+import com.trendytracker.Common.Response.Response;
+import com.trendytracker.Domain.Jobs.Statistics.StaticsService;
+import com.trendytracker.Domain.Jobs.Statistics.Dto.ChartInfo;
+import com.trendytracker.Domain.Jobs.Statistics.Dto.TrendInfo;
+import com.trendytracker.Domain.Jobs.Techs.Tech.TechType;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,4 +1,4 @@
-package com.trendyTracker.Domain.Jobs.Companies;
+package com.trendytracker.Domain.Jobs.Companies;
 
 import java.util.List;
 import java.util.Optional;

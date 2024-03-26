@@ -1,4 +1,4 @@
-package com.trendyTracker.Common.Exception;
+package com.trendytracker.Common.Exception;
 
 import java.util.List;
 

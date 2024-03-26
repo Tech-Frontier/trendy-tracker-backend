@@ -1,4 +1,4 @@
-package com.trendyTracker;
+package com.trendytracker;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -7,8 +7,8 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.kafka.annotation.EnableKafka;
 
-import com.trendyTracker.Domain.Jobs.Recruits.RecruitService;
-import com.trendyTracker.Domain.Jobs.Techs.TechService;
+import com.trendytracker.Domain.Jobs.Recruits.RecruitService;
+import com.trendytracker.Domain.Jobs.Techs.TechService;
 
 import lombok.RequiredArgsConstructor;
 

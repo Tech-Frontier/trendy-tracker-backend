@@ -1,4 +1,4 @@
-package com.trendyTracker.Domain.AppService.UserSubscribeTemplates;
+package com.trendytracker.Domain.AppService.UserSubscribeTemplates;
 
 import java.time.LocalDateTime;
 
@@ -6,7 +6,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import com.trendyTracker.Domain.AppService.Users.User;
+import com.trendytracker.Domain.AppService.Users.User;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

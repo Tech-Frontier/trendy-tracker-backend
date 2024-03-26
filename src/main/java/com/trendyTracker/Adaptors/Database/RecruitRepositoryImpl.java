@@ -1,4 +1,4 @@
-package com.trendyTracker.Adaptors.Database;
+package com.trendytracker.Adaptors.Database;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,10 +7,10 @@ import org.springframework.stereotype.Repository;
 
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.trendyTracker.Domain.Jobs.RecruitTechs.QRecruitTech;
-import com.trendyTracker.Domain.Jobs.Recruits.QRecruit;
-import com.trendyTracker.Domain.Jobs.Recruits.Recruit;
-import com.trendyTracker.Domain.Jobs.Recruits.RecruitRepositoryCustom;
+import com.trendytracker.Domain.Jobs.RecruitTechs.QRecruitTech;
+import com.trendytracker.Domain.Jobs.Recruits.QRecruit;
+import com.trendytracker.Domain.Jobs.Recruits.Recruit;
+import com.trendytracker.Domain.Jobs.Recruits.RecruitRepositoryCustom;
 
 import jakarta.persistence.EntityManager;
 

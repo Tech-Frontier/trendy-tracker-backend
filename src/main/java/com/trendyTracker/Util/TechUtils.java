@@ -1,4 +1,4 @@
-package com.trendyTracker.Util;
+package com.trendytracker.Util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.trendyTracker.Adaptors.CacheMemory.TechsCacheImpl;
-import com.trendyTracker.Domain.Jobs.Techs.Tech;
+import com.trendytracker.Adaptors.CacheMemory.TechsCacheImpl;
+import com.trendytracker.Domain.Jobs.Techs.Tech;
 
 
 public class TechUtils {

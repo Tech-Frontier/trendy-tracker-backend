@@ -1,4 +1,4 @@
-package com.trendyTracker.common.config;
+package com.trendytracker.common.config;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -14,8 +14,8 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.trendyTracker.Common.Config.JwtProvider;
-import com.trendyTracker.Domain.AppService.Users.User;
+import com.trendytracker.Common.Config.JwtProvider;
+import com.trendytracker.Domain.AppService.Users.User;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;

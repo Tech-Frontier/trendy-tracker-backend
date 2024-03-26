@@ -1,8 +1,8 @@
-package com.trendyTracker.Domain.Jobs.Recruits.Dto;
+package com.trendytracker.Domain.Jobs.Recruits.Dto;
 
 import java.util.Set;
 
-import com.trendyTracker.Domain.Jobs.Techs.Tech;
+import com.trendytracker.Domain.Jobs.Techs.Tech;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

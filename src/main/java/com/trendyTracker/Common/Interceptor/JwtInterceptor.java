@@ -1,4 +1,4 @@
-package com.trendyTracker.Common.Interceptor;
+package com.trendytracker.Common.Interceptor;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 

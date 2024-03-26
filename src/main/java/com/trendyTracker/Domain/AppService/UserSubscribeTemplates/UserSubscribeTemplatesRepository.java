@@ -1,4 +1,4 @@
-package com.trendyTracker.Domain.AppService.UserSubscribeTemplates;
+package com.trendytracker.Domain.AppService.UserSubscribeTemplates;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

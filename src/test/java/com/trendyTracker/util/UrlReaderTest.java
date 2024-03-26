@@ -1,4 +1,4 @@
-package com.trendyTracker.util;
+package com.trendytracker.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -10,10 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.trendyTracker.Adaptors.CacheMemory.TechsCacheImpl;
-import com.trendyTracker.Domain.Jobs.Recruits.Dto.JobScrapInfoDto;
-import com.trendyTracker.Util.TechUtils;
-import com.trendyTracker.Util.UrlReader;
+import com.trendytracker.Adaptors.CacheMemory.TechsCacheImpl;
+import com.trendytracker.Domain.Jobs.Recruits.Dto.JobScrapInfoDto;
+import com.trendytracker.Util.TechUtils;
+import com.trendytracker.Util.UrlReader;
 
 @SpringBootTest
 public class UrlReaderTest {

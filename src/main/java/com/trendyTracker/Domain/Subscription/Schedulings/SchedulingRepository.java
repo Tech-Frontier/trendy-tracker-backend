@@ -1,4 +1,4 @@
-package com.trendyTracker.Domain.Subscription.Schedulings;
+package com.trendytracker.Domain.Subscription.Schedulings;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

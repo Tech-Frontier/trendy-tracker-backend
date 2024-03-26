@@ -1,4 +1,4 @@
-package com.trendyTracker.Domain.Jobs.Companies;
+package com.trendytracker.Domain.Jobs.Companies;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,9 +7,9 @@ import java.util.Optional;
 import org.openqa.selenium.NotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.trendyTracker.Common.Exception.ExceptionDetail.NoResultException;
-import com.trendyTracker.Domain.Jobs.Companies.Company.CompanyCategory;
-import com.trendyTracker.Domain.Jobs.Companies.Vo.CompanyInfo;
+import com.trendytracker.Common.Exception.ExceptionDetail.NoResultException;
+import com.trendytracker.Domain.Jobs.Companies.Company.CompanyCategory;
+import com.trendytracker.Domain.Jobs.Companies.Vo.CompanyInfo;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

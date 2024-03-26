@@ -1,4 +1,4 @@
-package com.trendyTracker.Domain.Subscription.Emails.Vo;
+package com.trendytracker.Domain.Subscription.Emails.Vo;
 
 import java.time.LocalDateTime;
 

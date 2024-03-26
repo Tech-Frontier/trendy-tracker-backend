@@ -1,4 +1,4 @@
-package com.trendyTracker.Api.Email;
+package com.trendytracker.Api.Email;
 
 import java.util.UUID;
 
@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.trendyTracker.Common.Config.JwtProvider;
-import com.trendyTracker.Common.Logging.Loggable;
-import com.trendyTracker.Common.Response.Response;
-import com.trendyTracker.Domain.AppService.Users.User;
-import com.trendyTracker.Domain.Subscription.Emails.EmailService;
+import com.trendytracker.Common.Config.JwtProvider;
+import com.trendytracker.Common.Logging.Loggable;
+import com.trendytracker.Common.Response.Response;
+import com.trendytracker.Domain.AppService.Users.User;
+import com.trendytracker.Domain.Subscription.Emails.EmailService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;

@@ -1,10 +1,10 @@
-package com.trendyTracker.Domain.Jobs.RecruitTechs;
+package com.trendytracker.Domain.Jobs.RecruitTechs;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import com.trendyTracker.Domain.Jobs.Recruits.Recruit;
-import com.trendyTracker.Domain.Jobs.Techs.Tech;
+import com.trendytracker.Domain.Jobs.Recruits.Recruit;
+import com.trendytracker.Domain.Jobs.Techs.Tech;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

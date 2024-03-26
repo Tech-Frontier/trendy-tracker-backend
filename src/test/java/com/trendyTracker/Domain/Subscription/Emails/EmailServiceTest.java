@@ -1,4 +1,4 @@
-package com.trendyTracker.Domain.Subscription.Emails;
+package com.trendytracker.Domain.Subscription.Emails;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -13,8 +13,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.trendyTracker.Adaptors.CacheMemory.EmailValidationCacheImpl;
-import com.trendyTracker.Domain.Subscription.Emails.Vo.EmailValidation;
+import com.trendytracker.Adaptors.CacheMemory.EmailValidationCacheImpl;
+import com.trendytracker.Domain.Subscription.Emails.EmailService;
+import com.trendytracker.Domain.Subscription.Emails.Vo.EmailValidation;
 
 import jakarta.mail.internet.MimeMessage;
 

@@ -1,10 +1,10 @@
-package com.trendyTracker.Api.Recruit;
+package com.trendytracker.Api.Recruit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import com.trendyTracker.Domain.Jobs.Techs.Tech.TechType;
+import com.trendytracker.Domain.Jobs.Techs.Tech.TechType;
 
 public class StaticsControllerTest {
     @Test

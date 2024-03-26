@@ -1,4 +1,4 @@
-package com.trendyTracker.Domain.Jobs.Recruits;
+package com.trendytracker.Domain.Jobs.Recruits;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -18,11 +18,13 @@ import org.openqa.selenium.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.trendyTracker.Adaptors.CacheMemory.TechsCacheImpl;
-import com.trendyTracker.Common.Exception.ExceptionDetail.NoResultException;
-import com.trendyTracker.Common.Exception.ExceptionDetail.NotAllowedValueException;
-import com.trendyTracker.Domain.Jobs.Techs.Tech;
-import com.trendyTracker.Domain.Jobs.Techs.Tech.TechType;
+import com.trendytracker.Adaptors.CacheMemory.TechsCacheImpl;
+import com.trendytracker.Common.Exception.ExceptionDetail.NoResultException;
+import com.trendytracker.Common.Exception.ExceptionDetail.NotAllowedValueException;
+import com.trendytracker.Domain.Jobs.Recruits.Recruit;
+import com.trendytracker.Domain.Jobs.Recruits.RecruitService;
+import com.trendytracker.Domain.Jobs.Techs.Tech;
+import com.trendytracker.Domain.Jobs.Techs.Tech.TechType;
 
 import jakarta.transaction.Transactional;
 

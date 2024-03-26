@@ -1,4 +1,4 @@
-package com.trendyTracker.Domain.Jobs.Techs;
+package com.trendytracker.Domain.Jobs.Techs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,9 +9,9 @@ import org.openqa.selenium.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.trendyTracker.Adaptors.CacheMemory.TechsCacheImpl;
-import com.trendyTracker.Common.Exception.ExceptionDetail.AlreadyExistException;
-import com.trendyTracker.Domain.Jobs.Techs.Tech.TechType;
+import com.trendytracker.Adaptors.CacheMemory.TechsCacheImpl;
+import com.trendytracker.Common.Exception.ExceptionDetail.AlreadyExistException;
+import com.trendytracker.Domain.Jobs.Techs.Tech.TechType;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

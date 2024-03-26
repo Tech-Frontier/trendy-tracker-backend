@@ -1,4 +1,4 @@
-package com.trendyTracker.Adaptors.CacheMemory;
+package com.trendytracker.Adaptors.CacheMemory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -10,7 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.trendyTracker.Domain.Jobs.Recruits.RecruitRepository;
+import com.trendytracker.Adaptors.CacheMemory.RecruitsCacheImpl;
+import com.trendytracker.Domain.Jobs.Recruits.RecruitRepository;
 
 import jakarta.transaction.Transactional;
 import redis.clients.jedis.JedisPool;

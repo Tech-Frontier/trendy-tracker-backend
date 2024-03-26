@@ -1,4 +1,4 @@
-package com.trendyTracker.Adaptors.CacheMemory;
+package com.trendytracker.Adaptors.CacheMemory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -11,7 +11,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.trendyTracker.Domain.Subscription.Emails.Vo.EmailValidation;
+import com.trendytracker.Adaptors.CacheMemory.EmailValidationCacheImpl;
+import com.trendytracker.Adaptors.CacheMemory.RedisManager;
+import com.trendytracker.Domain.Subscription.Emails.Vo.EmailValidation;
 
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;

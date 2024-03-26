@@ -1,4 +1,4 @@
-package com.trendyTracker.Adaptors.CacheMemory;
+package com.trendytracker.Adaptors.CacheMemory;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

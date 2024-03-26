@@ -1,4 +1,4 @@
-package com.trendyTracker.Domain.Jobs.Recruits;
+package com.trendytracker.Domain.Jobs.Recruits;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -7,8 +7,8 @@ import java.util.List;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import com.trendyTracker.Domain.Jobs.Companies.Company;
-import com.trendyTracker.Domain.Jobs.RecruitTechs.RecruitTech;
+import com.trendytracker.Domain.Jobs.Companies.Company;
+import com.trendytracker.Domain.Jobs.RecruitTechs.RecruitTech;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

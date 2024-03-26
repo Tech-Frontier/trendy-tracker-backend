@@ -1,9 +1,9 @@
-package com.trendyTracker.Domain.Jobs.Recruits.Dto;
+package com.trendytracker.Domain.Jobs.Recruits.Dto;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.trendyTracker.Domain.Jobs.Companies.Company;
+import com.trendytracker.Domain.Jobs.Companies.Company;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

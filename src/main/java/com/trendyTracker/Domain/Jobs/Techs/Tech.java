@@ -1,10 +1,10 @@
-package com.trendyTracker.Domain.Jobs.Techs;
+package com.trendytracker.Domain.Jobs.Techs;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.trendyTracker.Domain.Jobs.RecruitTechs.RecruitTech;
+import com.trendytracker.Domain.Jobs.RecruitTechs.RecruitTech;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

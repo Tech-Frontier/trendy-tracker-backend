@@ -1,10 +1,10 @@
-package com.trendyTracker.Domain.Subscription.SubscribeTemplates;
+package com.trendytracker.Domain.Subscription.SubscribeTemplates;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.trendyTracker.Domain.Subscription.Schedulings.Scheduling;
+import com.trendytracker.Domain.Subscription.Schedulings.Scheduling;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

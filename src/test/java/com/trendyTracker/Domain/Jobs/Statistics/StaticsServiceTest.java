@@ -1,4 +1,4 @@
-package com.trendyTracker.Domain.Jobs.Statistics;
+package com.trendytracker.Domain.Jobs.Statistics;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -11,11 +11,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.trendyTracker.Common.Exception.ExceptionDetail.NoResultException;
-import com.trendyTracker.Domain.Jobs.Statistics.Dto.ChartInfo;
-import com.trendyTracker.Domain.Jobs.Statistics.Dto.TrendInfo;
-import com.trendyTracker.Domain.Jobs.Techs.TechService;
-import com.trendyTracker.Domain.Jobs.Techs.Tech.TechType;
+import com.trendytracker.Common.Exception.ExceptionDetail.NoResultException;
+import com.trendytracker.Domain.Jobs.Statistics.StaticsService;
+import com.trendytracker.Domain.Jobs.Statistics.Dto.ChartInfo;
+import com.trendytracker.Domain.Jobs.Statistics.Dto.TrendInfo;
+import com.trendytracker.Domain.Jobs.Techs.TechService;
+import com.trendytracker.Domain.Jobs.Techs.Tech.TechType;
 
 
 @SpringBootTest

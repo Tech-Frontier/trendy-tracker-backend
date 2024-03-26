@@ -1,4 +1,4 @@
-package com.trendyTracker.Api.Recruit;
+package com.trendytracker.Api.Recruit;
 
 import java.util.List;
 import java.util.UUID;
@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.trendyTracker.Common.Exception.ExceptionDetail.NoResultException;
-import com.trendyTracker.Common.Logging.Loggable;
-import com.trendyTracker.Common.Response.Response;
-import com.trendyTracker.Domain.Jobs.Companies.Company;
-import com.trendyTracker.Domain.Jobs.Companies.CompanyService;
-import com.trendyTracker.Domain.Jobs.Companies.Vo.CompanyInfo;
-import com.trendyTracker.Util.CompanyUtils;
+import com.trendytracker.Common.Exception.ExceptionDetail.NoResultException;
+import com.trendytracker.Common.Logging.Loggable;
+import com.trendytracker.Common.Response.Response;
+import com.trendytracker.Domain.Jobs.Companies.Company;
+import com.trendytracker.Domain.Jobs.Companies.CompanyService;
+import com.trendytracker.Domain.Jobs.Companies.Vo.CompanyInfo;
+import com.trendytracker.Util.CompanyUtils;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;

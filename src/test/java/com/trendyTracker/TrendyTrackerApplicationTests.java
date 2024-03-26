@@ -1,4 +1,4 @@
-package com.trendyTracker;
+package com.trendytracker;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

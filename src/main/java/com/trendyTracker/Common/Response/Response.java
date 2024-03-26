@@ -1,4 +1,4 @@
-package com.trendyTracker.Common.Response;
+package com.trendytracker.Common.Response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

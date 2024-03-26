@@ -1,4 +1,4 @@
-package com.trendyTracker.Adaptors.MessagingSystem;
+package com.trendytracker.Adaptors.MessagingSystem;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;

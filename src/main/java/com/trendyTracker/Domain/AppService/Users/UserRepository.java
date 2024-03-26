@@ -1,4 +1,4 @@
-package com.trendyTracker.Domain.AppService.Users;
+package com.trendytracker.Domain.AppService.Users;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

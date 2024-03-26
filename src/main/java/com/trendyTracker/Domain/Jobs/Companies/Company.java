@@ -1,11 +1,11 @@
-package com.trendyTracker.Domain.Jobs.Companies;
+package com.trendytracker.Domain.Jobs.Companies;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.trendyTracker.Domain.Jobs.Companies.Vo.CompanyInfo;
-import com.trendyTracker.Domain.Jobs.Recruits.Recruit;
+import com.trendytracker.Domain.Jobs.Companies.Vo.CompanyInfo;
+import com.trendytracker.Domain.Jobs.Recruits.Recruit;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

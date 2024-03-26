@@ -1,4 +1,4 @@
-package com.trendyTracker.Common.Config;
+package com.trendytracker.Common.Config;
 
 import java.security.Key;
 import java.util.Date;
@@ -6,7 +6,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.trendyTracker.Domain.AppService.Users.User;
+import com.trendytracker.Domain.AppService.Users.User;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;

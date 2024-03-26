@@ -1,4 +1,4 @@
-package com.trendyTracker.Api.Tech;
+package com.trendytracker.Api.Tech;
 
 
 import java.util.List;
@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.trendyTracker.Common.Exception.ExceptionDetail.AlreadyExistException;
-import com.trendyTracker.Common.Logging.Loggable;
-import com.trendyTracker.Common.Response.Response;
-import com.trendyTracker.Domain.Jobs.Techs.Tech;
-import com.trendyTracker.Domain.Jobs.Techs.TechService;
-import com.trendyTracker.Domain.Jobs.Techs.Tech.TechType;
+import com.trendytracker.Common.Exception.ExceptionDetail.AlreadyExistException;
+import com.trendytracker.Common.Logging.Loggable;
+import com.trendytracker.Common.Response.Response;
+import com.trendytracker.Domain.Jobs.Techs.Tech;
+import com.trendytracker.Domain.Jobs.Techs.TechService;
+import com.trendytracker.Domain.Jobs.Techs.Tech.TechType;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;

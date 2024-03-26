@@ -1,4 +1,4 @@
-package com.trendyTracker.Adaptors.CacheMemory;
+package com.trendytracker.Adaptors.CacheMemory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -13,9 +13,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.trendyTracker.Domain.Jobs.Techs.Tech;
-import com.trendyTracker.Domain.Jobs.Techs.TechRepository;
-import com.trendyTracker.Domain.Jobs.Techs.Tech.TechType;
+import com.trendytracker.Adaptors.CacheMemory.TechsCacheImpl;
+import com.trendytracker.Domain.Jobs.Techs.Tech;
+import com.trendytracker.Domain.Jobs.Techs.TechRepository;
+import com.trendytracker.Domain.Jobs.Techs.Tech.TechType;
 
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;

@@ -1,4 +1,4 @@
-package com.trendyTracker.Adaptors.Database;
+package com.trendytracker.Adaptors.Database;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,9 +9,9 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import jakarta.persistence.EntityManager;
 
-import com.trendyTracker.Domain.Jobs.Companies.Company;
-import com.trendyTracker.Domain.Jobs.Companies.CompanyRepositoryCustom;
-import com.trendyTracker.Domain.Jobs.Companies.QCompany;
+import com.trendytracker.Domain.Jobs.Companies.Company;
+import com.trendytracker.Domain.Jobs.Companies.CompanyRepositoryCustom;
+import com.trendytracker.Domain.Jobs.Companies.QCompany;
 
 
 @Repository

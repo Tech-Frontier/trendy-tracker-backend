@@ -1,4 +1,4 @@
-package com.trendyTracker.Domain.Jobs.Recruits;
+package com.trendytracker.Domain.Jobs.Recruits;
 
 import org.springframework.stereotype.Repository;
 

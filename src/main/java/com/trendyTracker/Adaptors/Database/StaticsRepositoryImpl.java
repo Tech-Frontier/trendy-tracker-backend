@@ -1,4 +1,4 @@
-package com.trendyTracker.Adaptors.Database;
+package com.trendytracker.Adaptors.Database;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -9,14 +9,14 @@ import org.springframework.stereotype.Repository;
 
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.trendyTracker.Domain.Jobs.RecruitTechs.QRecruitTech;
-import com.trendyTracker.Domain.Jobs.Recruits.QRecruit;
-import com.trendyTracker.Domain.Jobs.Statistics.StaticsRepository;
-import com.trendyTracker.Domain.Jobs.Statistics.Dto.ChartInfo;
-import com.trendyTracker.Domain.Jobs.Statistics.Dto.TrendInfo;
-import com.trendyTracker.Domain.Jobs.Techs.QTech;
-import com.trendyTracker.Domain.Jobs.Techs.Tech;
-import com.trendyTracker.Domain.Jobs.Techs.Tech.TechType;
+import com.trendytracker.Domain.Jobs.RecruitTechs.QRecruitTech;
+import com.trendytracker.Domain.Jobs.Recruits.QRecruit;
+import com.trendytracker.Domain.Jobs.Statistics.StaticsRepository;
+import com.trendytracker.Domain.Jobs.Statistics.Dto.ChartInfo;
+import com.trendytracker.Domain.Jobs.Statistics.Dto.TrendInfo;
+import com.trendytracker.Domain.Jobs.Techs.QTech;
+import com.trendytracker.Domain.Jobs.Techs.Tech;
+import com.trendytracker.Domain.Jobs.Techs.Tech.TechType;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;

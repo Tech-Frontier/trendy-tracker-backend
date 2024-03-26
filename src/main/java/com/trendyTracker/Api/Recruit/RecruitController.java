@@ -1,4 +1,4 @@
-package com.trendyTracker.Api.Recruit;
+package com.trendytracker.Api.Recruit;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,16 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.trendyTracker.Adaptors.CacheMemory.RecruitsCacheImpl;
-import com.trendyTracker.Adaptors.MessagingSystem.KafkaProducer;
-import com.trendyTracker.Common.Exception.ExceptionDetail.AlreadyExistException;
-import com.trendyTracker.Common.Exception.ExceptionDetail.NoResultException;
-import com.trendyTracker.Common.Exception.ExceptionDetail.NotAllowedValueException;
-import com.trendyTracker.Common.Logging.Loggable;
-import com.trendyTracker.Common.Response.Response;
-import com.trendyTracker.Domain.Jobs.Recruits.Recruit;
-import com.trendyTracker.Domain.Jobs.Recruits.RecruitService;
-import com.trendyTracker.Domain.Jobs.Recruits.Dto.RecruitInfoDto;
+import com.trendytracker.Adaptors.CacheMemory.RecruitsCacheImpl;
+import com.trendytracker.Adaptors.MessagingSystem.KafkaProducer;
+import com.trendytracker.Common.Exception.ExceptionDetail.AlreadyExistException;
+import com.trendytracker.Common.Exception.ExceptionDetail.NoResultException;
+import com.trendytracker.Common.Exception.ExceptionDetail.NotAllowedValueException;
+import com.trendytracker.Common.Logging.Loggable;
+import com.trendytracker.Common.Response.Response;
+import com.trendytracker.Domain.Jobs.Recruits.Recruit;
+import com.trendytracker.Domain.Jobs.Recruits.RecruitService;
+import com.trendytracker.Domain.Jobs.Recruits.Dto.RecruitInfoDto;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;

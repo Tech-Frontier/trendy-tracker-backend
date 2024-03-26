@@ -1,4 +1,4 @@
-package com.trendyTracker.Adaptors.CacheMemory;
+package com.trendytracker.Adaptors.CacheMemory;
 
 import java.util.Optional;
 
@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.trendyTracker.Domain.Subscription.Emails.EmailValidationCache;
-import com.trendyTracker.Domain.Subscription.Emails.Vo.EmailValidation;
+import com.trendytracker.Domain.Subscription.Emails.EmailValidationCache;
+import com.trendytracker.Domain.Subscription.Emails.Vo.EmailValidation;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;

@@ -1,4 +1,4 @@
-package com.trendyTracker.Domain.Jobs.Companies;
+package com.trendytracker.Domain.Jobs.Companies;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

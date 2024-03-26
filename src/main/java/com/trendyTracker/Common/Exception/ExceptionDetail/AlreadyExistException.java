@@ -1,4 +1,4 @@
-package com.trendyTracker.Common.Exception.ExceptionDetail;
+package com.trendytracker.Common.Exception.ExceptionDetail;
 
 public class AlreadyExistException extends Exception {
     public AlreadyExistException(String message) {

@@ -1,10 +1,10 @@
-package com.trendyTracker.Adaptors.CacheMemory;
+package com.trendytracker.Adaptors.CacheMemory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.trendyTracker.Domain.Jobs.Recruits.RecruitCache;
-import com.trendyTracker.Domain.Jobs.Recruits.RecruitRepository;
+import com.trendytracker.Domain.Jobs.Recruits.RecruitCache;
+import com.trendytracker.Domain.Jobs.Recruits.RecruitRepository;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;

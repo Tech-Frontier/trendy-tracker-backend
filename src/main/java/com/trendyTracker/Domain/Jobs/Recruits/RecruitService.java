@@ -1,4 +1,4 @@
-package com.trendyTracker.Domain.Jobs.Recruits;
+package com.trendytracker.Domain.Jobs.Recruits;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,19 +12,19 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.trendyTracker.Adaptors.CacheMemory.RecruitsCacheImpl;
-import com.trendyTracker.Adaptors.CacheMemory.TechsCacheImpl;
-import com.trendyTracker.Common.Exception.ExceptionDetail.NoResultException;
-import com.trendyTracker.Common.Exception.ExceptionDetail.NotAllowedValueException;
-import com.trendyTracker.Domain.Jobs.Companies.Company;
-import com.trendyTracker.Domain.Jobs.Companies.CompanyRepository;
-import com.trendyTracker.Domain.Jobs.Companies.Vo.CompanyInfo;
-import com.trendyTracker.Domain.Jobs.RecruitTechs.RecruitTech;
-import com.trendyTracker.Domain.Jobs.RecruitTechs.RecruitTechRepository;
-import com.trendyTracker.Domain.Jobs.Recruits.Dto.JobScrapInfoDto;
-import com.trendyTracker.Domain.Jobs.Techs.Tech;
-import com.trendyTracker.Util.TechUtils;
-import com.trendyTracker.Util.UrlReader;
+import com.trendytracker.Adaptors.CacheMemory.RecruitsCacheImpl;
+import com.trendytracker.Adaptors.CacheMemory.TechsCacheImpl;
+import com.trendytracker.Common.Exception.ExceptionDetail.NoResultException;
+import com.trendytracker.Common.Exception.ExceptionDetail.NotAllowedValueException;
+import com.trendytracker.Domain.Jobs.Companies.Company;
+import com.trendytracker.Domain.Jobs.Companies.CompanyRepository;
+import com.trendytracker.Domain.Jobs.Companies.Vo.CompanyInfo;
+import com.trendytracker.Domain.Jobs.RecruitTechs.RecruitTech;
+import com.trendytracker.Domain.Jobs.RecruitTechs.RecruitTechRepository;
+import com.trendytracker.Domain.Jobs.Recruits.Dto.JobScrapInfoDto;
+import com.trendytracker.Domain.Jobs.Techs.Tech;
+import com.trendytracker.Util.TechUtils;
+import com.trendytracker.Util.UrlReader;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
