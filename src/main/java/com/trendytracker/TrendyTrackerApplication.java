@@ -7,8 +7,8 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.kafka.annotation.EnableKafka;
 
-import com.trendytracker.Domain.Jobs.Recruits.RecruitService;
-import com.trendytracker.Domain.Jobs.Techs.TechService;
+import com.trendytracker.domain.job.tech.TechService;
+import com.trendytracker.domain.job.recruit.RecruitService;
 
 import lombok.RequiredArgsConstructor;
 

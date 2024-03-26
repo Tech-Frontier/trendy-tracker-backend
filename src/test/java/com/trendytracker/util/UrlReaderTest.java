@@ -10,10 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.trendytracker.Adaptors.CacheMemory.TechsCacheImpl;
-import com.trendytracker.Domain.Jobs.Recruits.Dto.JobScrapInfoDto;
-import com.trendytracker.Util.TechUtils;
-import com.trendytracker.Util.UrlReader;
+import com.trendytracker.adaptors.cache.TechsCacheImpl;
+import com.trendytracker.domain.job.recruit.dto.JobScrapInfoDto;
 
 @SpringBootTest
 public class UrlReaderTest {

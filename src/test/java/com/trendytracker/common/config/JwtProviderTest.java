@@ -14,8 +14,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.trendytracker.Common.Config.JwtProvider;
-import com.trendytracker.Domain.AppService.Users.User;
+import com.trendytracker.domain.appservice.user.User;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;

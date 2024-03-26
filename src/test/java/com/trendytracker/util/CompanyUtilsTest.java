@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import com.trendytracker.Domain.Jobs.Companies.Company.CompanyCategory;
-import com.trendytracker.Util.CompanyUtils;
+import com.trendytracker.domain.job.company.Company.CompanyCategory;
+import com.trendytracker.util.CompanyUtils;
 
 public class CompanyUtilsTest {
     @Test
